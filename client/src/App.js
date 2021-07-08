@@ -12,7 +12,7 @@ function App() {
   return (
     <React.Fragment>
       <Router>
-        <h1>This is my time balancing app</h1>
+        <h1>This is my MERN template</h1>
         <Switch>
           <Route path="/home" exact>
             <Home />
