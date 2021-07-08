@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from "react-router-dom";
+
+import Home from "./pages/Home/Home";
 
 function App() {
-  const [text, setText] = useState("");
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(`/api`);
-      console.log(result.data.data);
-      setText(result.data.data);
-    };
-    fetchData();
-  }, []);
   return (
-    <div className="App">
-      <p>{text}</p>
-    </div>
+    <React.Fragment>
+      <Router>
+        <h1>This is my time balancing app</h1>
+        <Switch>
+          <Route path="/home" exact>
+            <Home />
+          </Route>
+          <Redirect to="/home"></Redirect>
+        </Switch>
+      </Router>
+    </React.Fragment>
   );
 }
 
