@@ -6,7 +6,6 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Main from "./pages/Main/Main";

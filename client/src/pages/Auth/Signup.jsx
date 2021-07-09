@@ -45,6 +45,7 @@ function Signup() {
 
   return (
     <div>
+      <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -62,8 +63,10 @@ function Signup() {
         ></input>
         <button type="submit">Submit</button>
       </form>
-      {popout && authMsg && (
+      {popout && authMsg ? (
         <AuthPopout handleClose={togglePopup} authMsg={authMsg} />
+      ) : (
+        <p></p>
       )}
     </div>
   );
