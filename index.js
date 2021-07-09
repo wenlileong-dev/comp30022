@@ -1,9 +1,11 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 require("./models/db");
 const templateRouter = require("./routes/templateRouter");
+const authRouter = require("./routes/authRoute");
 
 let port = process.env.PORT || 5000;
 
@@ -12,7 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json({ urlencoded: true }));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(cookieParser());
 app.use("/api", templateRouter);
+app.use("/api/auth", authRouter);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));

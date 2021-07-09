@@ -7,17 +7,26 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import Main from "./pages/Main/Main";
 
 function App() {
   return (
     <React.Fragment>
       <Router>
-        <h1>This is my MERN template</h1>
+        <h1>Time Balancing App</h1>
         <Switch>
-          <Route path="/home" exact>
-            <Home />
+          <Route path="/login" exact>
+            <Login />
           </Route>
-          <Redirect to="/home"></Redirect>
+          <Route path="/signup" exact>
+            <Signup />
+          </Route>
+          <Route path="/">
+            <Main />
+          </Route>
+          <Redirect to="/"></Redirect>
         </Switch>
       </Router>
     </React.Fragment>
