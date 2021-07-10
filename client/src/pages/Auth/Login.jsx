@@ -43,9 +43,17 @@ function Login() {
     });
   };
 
+  const handleLogout = async () => {
+    axios.get(`/api/auth/logout`).then((res) => {
+      //   console.log(res);
+      console.log(res.data);
+      setAuthMsg(res.data);
+      togglePopup();
+    });
+  };
+
   return (
     <div>
-      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -63,11 +71,11 @@ function Login() {
         ></input>
         <button type="submit">Submit</button>
       </form>
-
-      {popout && authMsg ? (
+      <button type="button" onClick={handleLogout}>
+        Logout
+      </button>
+      {popout && authMsg && (
         <AuthPopout handleClose={togglePopup} authMsg={authMsg} />
-      ) : (
-        <p></p>
       )}
     </div>
   );

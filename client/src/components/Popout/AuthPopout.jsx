@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 require("./Popout.css");
 
 function AuthPopout(props) {
-  const directLogin = () => {
-    window.location.href = "/login";
-  };
   return (
     <div className="popup-box">
       <div className="box">
@@ -16,11 +13,9 @@ function AuthPopout(props) {
           <p>{props.authMsg.msg}</p>
           <p>
             {props.authMsg.status === 200 ? (
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             ) : (
-              <button type="button" onClick={directLogin}>
-                Try Again
-              </button>
+              <Link to="/login">Try Again</Link>
             )}
           </p>
         </div>
