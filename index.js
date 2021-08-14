@@ -19,6 +19,8 @@ app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
+//bug fix testing
+
 app.listen(port, () => {
   console.log(`The server is runnning at port ${port}`);
 });
