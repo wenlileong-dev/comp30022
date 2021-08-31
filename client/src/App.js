@@ -7,15 +7,18 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
+import Calendar from "./pages/Calendar/Calendar";
 
 function App() {
   return (
     <React.Fragment>
       <Router>
-        <h1>This is my MERN template</h1>
         <Switch>
           <Route path="/home" exact>
             <Home />
+          </Route>
+          <Route path="/calendar" exact>
+            <Calendar />
           </Route>
           <Redirect to="/home"></Redirect>
         </Switch>

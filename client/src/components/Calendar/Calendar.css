@@ -1,0 +1,26 @@
+.calendar-title {
+  text-align: center;
+}
+.calendar-month {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 1rem;
+}
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: 1rem 0;
+}
+
+.calendar-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-container p:first-child {
+  grid-column: 6;
+}
+
+.calendar-day {
+  height: 6rem;
+}
