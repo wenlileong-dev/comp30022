@@ -7,8 +7,9 @@ const eventSchema = new mongoose.Schema(
     date: { type: Date },
     time: { type: String },
     people: { type: [String] },
-    eventType: { type: String, enum: ["online", "face-to-face"] },
+    eventType: { type: String, enum: ["online", "offline"] },
     location: { type: String },
+    meetingNotes: { type: String, default: "" },
   },
   {
     toJSON: { virtuals: true },

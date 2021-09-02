@@ -12,7 +12,7 @@ function CalendarDays(props) {
   return (
     <div className="calendar-container">
       {[...Array(firstDay.getDay())].map((day, index) => {
-        return <CalendarDay day="" />;
+        return <CalendarDay day="" key={`a${index}`} />;
       })}
       {[...Array(daysInMonth)].map((day, index) => {
         return (

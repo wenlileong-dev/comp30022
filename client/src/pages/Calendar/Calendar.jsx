@@ -17,7 +17,7 @@ function Calendar() {
       setEvents(result.data.data);
     };
     fetchData();
-  }, [month]);
+  }, [month, year]);
 
   //next month
   const nextMonth = () => {

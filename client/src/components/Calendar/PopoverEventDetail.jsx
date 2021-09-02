@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import PopoverEventComponent from "./PopoverEventComponent";
 
 function PopoverEventDetail(props) {
   return (
     <React.Fragment>
-      <div>
+      <Grid container spacing={3}>
         {props.events &&
-          props.events.map((event) => {
+          props.events.map((event, index) => {
             return (
-              <div className="event-detail">
-                <p>
-                  {event.time} {event.title}
-                </p>
-                <p>{event.description}</p>
-                <p>{event.people.toString()}</p>
-              </div>
+              <PopoverEventComponent
+                event={event}
+                setEvent={props.setEventDetail}
+                openEditEvent={props.toggleEditEvent}
+                key={index}
+              />
             );
           })}
-      </div>
-
-      <Button variant="outlined" color="primary" onClick={props.toggleAddEvent}>
+      </Grid>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={props.toggleAddEvent}
+        id="add-event-button"
+      >
         + New Event
       </Button>
     </React.Fragment>

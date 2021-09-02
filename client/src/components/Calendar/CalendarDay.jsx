@@ -25,8 +25,12 @@ function CalendarDay(props) {
         <p>{props.day}</p>
         <div>
           {props.event &&
-            props.event.map((event) => {
-              return <p className="calendar-event">{event.title}</p>;
+            props.event.map((event, index) => {
+              return (
+                <p className="calendar-event" key={index}>
+                  {event.title}
+                </p>
+              );
             })}
         </div>
         {isPopupOpen && (

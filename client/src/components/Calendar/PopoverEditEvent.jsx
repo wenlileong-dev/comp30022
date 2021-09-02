@@ -7,17 +7,18 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
-function PopoverAddEvent(props) {
-  let today = new Date(props.year, props.month, props.day);
-  today.setDate(today.getDate() + 1);
-  let [title, setTitle] = useState("");
-  let [description, setDescription] = useState("");
-  let [date, setDate] = useState(today.toISOString().slice(0, 10));
-  let [time, setTime] = useState("");
-  let [people, setPeople] = useState("");
-  let [eventType, setEventType] = useState("");
-  let [location, setLocation] = useState("");
-
+function PopoverEditEvent(props) {
+  let day = new Date(props.eventDetail.date);
+  let [title, setTitle] = useState(props.eventDetail.title);
+  let [description, setDescription] = useState(props.eventDetail.description);
+  let [date, setDate] = useState(day.toISOString().slice(0, 10));
+  let [time, setTime] = useState(props.eventDetail.time);
+  let [people, setPeople] = useState(props.eventDetail.people.toString());
+  let [eventType, setEventType] = useState(props.eventDetail.eventType);
+  let [location, setLocation] = useState(props.eventDetail.location);
+  let [meetingNotes, setMeetingNotes] = useState(
+    props.eventDetail.meetingNotes
+  );
   function handleTitle(event) {
     setTitle(event.target.value);
   }
@@ -39,6 +40,9 @@ function PopoverAddEvent(props) {
   function handleLocation(e) {
     setLocation(e.target.value);
   }
+  function handleMeetingNotes(e) {
+    setMeetingNotes(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -48,9 +52,11 @@ function PopoverAddEvent(props) {
       date: undefined,
       time: undefined,
       people: undefined,
-      eventtype: undefined,
+      eventType: undefined,
       location: undefined,
+      meetingNotes: undefined,
     };
+    input.eventID = props.eventDetail._id;
     if (title) {
       input.title = title;
     }
@@ -72,13 +78,24 @@ function PopoverAddEvent(props) {
     if (location) {
       input.location = location;
     }
-    axios.post(`/api/calendar`, input).then((res) => {
+    if (meetingNotes) {
+      input.meetingNotes = meetingNotes;
+    }
+    console.log(input);
+    axios.put(`/api/calendar`, input).then((res) => {
       console.log(res.data);
+      window.location.href = `/calendar`;
+    });
+  }
+
+  function handleDelEvent() {
+    axios.delete(`/api/calendar/${props.eventDetail._id}`).then((res) => {
       window.location.href = `/calendar`;
     });
   }
   return (
     <React.Fragment>
+      <h2>Details</h2>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -146,7 +163,6 @@ function PopoverAddEvent(props) {
                   id: "age-native-simple",
                 }}
               >
-                <option aria-label="None" value="" />
                 <option value="online">Online</option>
                 <option value="offline">Offline</option>
               </Select>
@@ -160,9 +176,29 @@ function PopoverAddEvent(props) {
               value={location}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12}>
+            <TextField
+              label="Meeting Notes"
+              multiline
+              rows={4}
+              className="form-input"
+              onChange={handleMeetingNotes}
+              value={meetingNotes}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <Button variant="outlined" color="primary" type="submit">
-              Add Event
+              Update Event
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              type="button"
+              onClick={handleDelEvent}
+            >
+              Delete Event
             </Button>
           </Grid>
         </Grid>
@@ -171,4 +207,4 @@ function PopoverAddEvent(props) {
   );
 }
 
-export default PopoverAddEvent;
+export default PopoverEditEvent;

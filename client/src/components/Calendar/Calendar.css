@@ -17,18 +17,21 @@
   grid-template-columns: repeat(7, 1fr);
 }
 
-.calendar-container p:first-child {
-  grid-column: 6;
-}
-
 .calendar-day {
-  height: 6rem;
+  min-height: 5rem;
+  border: 1px solid #f3e9d8;
+  padding-left: 0.5rem;
+  /* height: 6rem; */
 }
 
 .calendar-event {
   line-height: 0%;
 }
-
+@media only screen and (max-width: 600px) {
+  .calendar-event {
+    font-size: small;
+  }
+}
 /*Popup */
 
 .popup-box {
@@ -74,7 +77,15 @@
 .event-detail {
   background-color: bisque;
   padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem;
+}
+
+#space-btw-event-button {
+  margin-right: 5px;
+}
+
+#add-event-button {
+  margin-top: 1rem;
 }
 
 .form-input {

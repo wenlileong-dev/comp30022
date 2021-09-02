@@ -60,3 +60,40 @@ exports.getEvents = async (req, res) => {
 
   res.json({ status: 200, data: result });
 };
+
+exports.updateEvent = async (req, res) => {
+  let {
+    title,
+    description,
+    date,
+    time,
+    people,
+    eventType,
+    location,
+    meetingNotes,
+    eventID,
+  } = req.body;
+  people = people.split(",");
+
+  let updateEvent = await Event.findByIdAndUpdate(
+    eventID,
+    {
+      title,
+      description,
+      date,
+      time,
+      people,
+      eventType,
+      location,
+      meetingNotes,
+    },
+    { overwrite: true, new: true }
+  );
+  res.json({ status: 200, data: updateEvent });
+};
+
+exports.deleteEvent = async (req, res) => {
+  let eventID = req.params.id;
+  await Event.findByIdAndDelete(eventID);
+  res.json({ status: 200, msg: "event deleted" });
+};
