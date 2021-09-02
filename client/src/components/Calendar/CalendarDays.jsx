@@ -15,7 +15,7 @@ function CalendarDays(props) {
         return <CalendarDay day="" />;
       })}
       {[...Array(daysInMonth)].map((day, index) => {
-        return <CalendarDay day={index + 1} />;
+        return <CalendarDay day={index + 1} event={props.events[index]} />;
       })}
     </div>
   );

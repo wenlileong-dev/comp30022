@@ -24,3 +24,7 @@
 .calendar-day {
   height: 6rem;
 }
+
+.calendar-event {
+  line-height: 0%;
+}
