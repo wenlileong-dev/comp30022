@@ -10,6 +10,7 @@ function Calendar() {
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
 
+  //fetch the events of the month
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(`/api/calendar/${month}/${year}`);
@@ -18,6 +19,7 @@ function Calendar() {
     fetchData();
   }, [month]);
 
+  //next month
   const nextMonth = () => {
     if (month !== 11) {
       setMonth(month + 1);
@@ -27,6 +29,7 @@ function Calendar() {
     }
   };
 
+  //previous month
   const prevMonth = () => {
     if (month !== 0) {
       setMonth(month - 1);
