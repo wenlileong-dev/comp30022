@@ -19,14 +19,6 @@ function PopoverEventDetail(props) {
             );
           })}
       </Grid>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.toggleAddEvent}
-        id="add-event-button"
-      >
-        + New Event
-      </Button>
     </React.Fragment>
   );
 }

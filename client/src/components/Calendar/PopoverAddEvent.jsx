@@ -8,8 +8,7 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
 function PopoverAddEvent(props) {
-  let today = new Date(props.year, props.month, props.day);
-  today.setDate(today.getDate() + 1);
+  let today = new Date();
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(today.toISOString().slice(0, 10));
@@ -114,6 +113,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               label="Time"
               type="time"
               className="form-input"
@@ -137,15 +137,7 @@ function PopoverAddEvent(props) {
           <Grid item xs={12} sm={6}>
             <FormControl className="form-input">
               <InputLabel>Event Type</InputLabel>
-              <Select
-                native
-                value={eventType}
-                onChange={handleEventType}
-                inputProps={{
-                  name: "age",
-                  id: "age-native-simple",
-                }}
-              >
+              <Select native value={eventType} onChange={handleEventType}>
                 <option aria-label="None" value="" />
                 <option value="online">Online</option>
                 <option value="offline">Offline</option>

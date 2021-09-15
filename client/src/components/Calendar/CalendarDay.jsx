@@ -35,6 +35,7 @@ function CalendarDay(props) {
         </div>
         {isPopupOpen && (
           <CalendarPopup
+            renderType="day-events"
             events={props.event}
             handleClose={handleClose}
             year={props.year}

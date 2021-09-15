@@ -4,7 +4,9 @@ const Event = require("./../models/event");
 exports.addEvent = async (req, res) => {
   let { title, description, date, time, people, eventType, location } =
     req.body;
-  people = people.split(",");
+  if (people) {
+    people = people.split(",");
+  }
   const newEvent = new Event({
     title,
     description,
@@ -73,8 +75,9 @@ exports.updateEvent = async (req, res) => {
     meetingNotes,
     eventID,
   } = req.body;
-  people = people.split(",");
-
+  if (people) {
+    people = people.split(",");
+  }
   let updateEvent = await Event.findByIdAndUpdate(
     eventID,
     {

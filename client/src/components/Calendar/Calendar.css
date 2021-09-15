@@ -1,5 +1,6 @@
 .calendar-title {
   text-align: center;
+  margin: 1% 0;
 }
 .calendar-month {
   font-size: 2rem;
@@ -85,7 +86,7 @@
 }
 
 #add-event-button {
-  margin-top: 1rem;
+  text-align: right;
 }
 
 .form-input {

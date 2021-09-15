@@ -133,6 +133,7 @@ function PopoverEditEvent(props) {
             <TextField
               label="Time"
               type="time"
+              required
               className="form-input"
               value={time}
               onChange={handleTime}

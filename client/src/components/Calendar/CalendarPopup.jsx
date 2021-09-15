@@ -6,17 +6,14 @@ import PopoverEditEvent from "./PopoverEditEvent";
 
 function CalendarPopup(props) {
   // let [isOpen, setIsOpen] = useState(false);
-  let [isOpen, setIsOpen] = useState(0);
+  let [isOpen, setIsOpen] = useState(props.renderType);
   let [eventDetail, setEventDetail] = useState({});
   // function toggleOpen() {
   //   setIsOpen(!isOpen);
   // }
-  function openAddEvent() {
-    setIsOpen(1);
-  }
 
   function oepnEventDetail() {
-    setIsOpen(2);
+    setIsOpen("event-detail");
   }
 
   return (
@@ -26,22 +23,23 @@ function CalendarPopup(props) {
           <span className="close-icon" onClick={props.handleClose}>
             x
           </span>
-          {isOpen === 0 && (
+          {isOpen === "day-events" && (
             <PopoverEventDetail
               events={props.events}
               setEventDetail={setEventDetail}
               toggleEditEvent={oepnEventDetail}
-              toggleAddEvent={openAddEvent}
             />
           )}
-          {isOpen === 1 && (
+          {isOpen === "new-event" && (
             <PopoverAddEvent
               year={props.year}
               month={props.month}
               day={props.day}
             />
           )}
-          {isOpen === 2 && <PopoverEditEvent eventDetail={eventDetail} />}
+          {isOpen === "event-detail" && (
+            <PopoverEditEvent eventDetail={eventDetail} />
+          )}
         </div>
       </div>
     </React.Fragment>
