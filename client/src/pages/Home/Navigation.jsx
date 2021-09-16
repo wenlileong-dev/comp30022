@@ -19,8 +19,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 
 import "./Navigation.css";
-import NavigationContent from "./NavigationContent";
-import { set } from "mongoose";
+import Content from "./Content";
 
 const drawerWidth = 240;
 
@@ -87,9 +86,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Navigation(props) {
   const classes = useStyles();
-  //   let history = useHistory();
-  //   let [page, setPage] = useState(props.pageTitle);
-  //   let page = window.location.pathname.substring(1);
   let [page, setPage] = useState(window.location.pathname.substring(1));
   if (!page) {
     setPage("dashboard");
@@ -169,7 +165,7 @@ function Navigation(props) {
 
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <NavigationContent page={page} />
+          <Content page={page} />
         </main>
       </div>
     </React.Fragment>

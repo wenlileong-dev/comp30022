@@ -1,9 +1,9 @@
 import React from "react";
-import Account from "../../pages/Account";
-import Calendar from "../../pages/Calendar";
-import Contact from "../../pages/Contact";
-import Dashboard from "../../pages/Dashboard";
-function NavigationContent(props) {
+import Account from "../Account";
+import Calendar from "../Calendar";
+import Contact from "../Contact";
+import Dashboard from "../Dashboard";
+function Content(props) {
   return (
     <React.Fragment>
       {props.page === "account" && <Account />}
@@ -14,4 +14,4 @@ function NavigationContent(props) {
   );
 }
 
-export default NavigationContent;
+export default Content;
