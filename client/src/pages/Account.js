@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function Account() {
   const classes = useStyles();
   let history = useHistory();
 
@@ -91,11 +91,11 @@ function App() {
       pathname: "/contact"
     })
   }
-  const onAccount = () => {
-    history.push({
-      pathname: "/account"
-    })
-  }
+//   const onAccount = () => {
+//     history.push({
+//       pathname: "/account"
+//     })
+//   }
   const onCalendar = () => {
     history.push({
       pathname: "/calendar"
@@ -113,7 +113,7 @@ function App() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Main Page
+            Account
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,7 +146,7 @@ function App() {
             <ListItemIcon>
               <AccountCircleIcon/>
             </ListItemIcon>
-            <ListItemText primary="Account" onClick={onAccount}/>
+            <ListItemText primary="Account" />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
@@ -158,13 +158,13 @@ function App() {
             <ListItemIcon>
               <PermContactCalendarIcon />
             </ListItemIcon>
-            <ListItemText primary="Contact" onClick={onContact}/>
+            <ListItemText primary="Contact" onClick={onContact} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <CalendarTodayIcon />
             </ListItemIcon>
-            <ListItemText primary="Calendar" onClick={onCalendar}/>
+            <ListItemText primary="Calendar" onClick={onCalendar} />
           </ListItem>
         </List>
       </Drawer>
@@ -172,7 +172,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-          xxxxxxx
+            Account page
         </Typography>
         <Typography paragraph>
           xxx
@@ -183,4 +183,4 @@ function App() {
   );
 }
 
-export default App;
+export default Account;

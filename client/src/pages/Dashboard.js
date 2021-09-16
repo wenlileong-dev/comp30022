@@ -82,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+
+function Dashboard() {
   const classes = useStyles();
   let history = useHistory();
 
@@ -101,11 +102,11 @@ function App() {
       pathname: "/calendar"
     })
   }
-  const onDashboard = () => {
-    history.push({
-      pathname: "/dashboard"
-    })
-  }
+  // const onDashboard = () => {
+  //   history.push({
+  //     pathname: "/dashboard"
+  //   })
+  // }
 
   return (
     <div className={classes.root}>
@@ -113,7 +114,7 @@ function App() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Main Page
+            Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,25 +147,25 @@ function App() {
             <ListItemIcon>
               <AccountCircleIcon/>
             </ListItemIcon>
-            <ListItemText primary="Account" onClick={onAccount}/>
+            <ListItemText primary="Account" onClick={onAccount} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" onClick={onDashboard}/>
+            <ListItemText primary="Dashboard" />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <PermContactCalendarIcon />
             </ListItemIcon>
-            <ListItemText primary="Contact" onClick={onContact}/>
+            <ListItemText primary="Contact" onClick={onContact} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <CalendarTodayIcon />
             </ListItemIcon>
-            <ListItemText primary="Calendar" onClick={onCalendar}/>
+            <ListItemText primary="Calendar" onClick={onCalendar} />
           </ListItem>
         </List>
       </Drawer>
@@ -172,7 +173,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-          xxxxxxx
+          Dashboard page
         </Typography>
         <Typography paragraph>
           xxx
@@ -183,4 +184,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dashboard;

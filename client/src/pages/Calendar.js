@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function Calendar() {
   const classes = useStyles();
   let history = useHistory();
 
@@ -96,11 +96,11 @@ function App() {
       pathname: "/account"
     })
   }
-  const onCalendar = () => {
-    history.push({
-      pathname: "/calendar"
-    })
-  }
+//   const onCalendar = () => {
+//     history.push({
+//       pathname: "/calendar"
+//     })
+//   }
   const onDashboard = () => {
     history.push({
       pathname: "/dashboard"
@@ -113,7 +113,7 @@ function App() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Main Page
+            Calendar
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,25 +146,25 @@ function App() {
             <ListItemIcon>
               <AccountCircleIcon/>
             </ListItemIcon>
-            <ListItemText primary="Account" onClick={onAccount}/>
+            <ListItemText primary="Account" onClick={onAccount} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" onClick={onDashboard}/>
+            <ListItemText primary="Dashboard" onClick={onDashboard} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <PermContactCalendarIcon />
             </ListItemIcon>
-            <ListItemText primary="Contact" onClick={onContact}/>
+            <ListItemText primary="Contact" onClick={onContact} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <CalendarTodayIcon />
             </ListItemIcon>
-            <ListItemText primary="Calendar" onClick={onCalendar}/>
+            <ListItemText primary="Calendar" />
           </ListItem>
         </List>
       </Drawer>
@@ -172,7 +172,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-          xxxxxxx
+            Calendar page
         </Typography>
         <Typography paragraph>
           xxx
@@ -183,4 +183,4 @@ function App() {
   );
 }
 
-export default App;
+export default Calendar;
