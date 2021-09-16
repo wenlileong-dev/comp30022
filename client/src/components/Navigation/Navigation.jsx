@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,6 +18,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 
+import "./Navigation.css";
 import NavigationContent from "./NavigationContent";
 import { set } from "mongoose";
 
@@ -84,40 +85,17 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
-function Navigation() {
+function Navigation(props) {
   const classes = useStyles();
-  let history = useHistory();
-
-  const onContact = () => {
-    setPath("Contact");
-    setPage("contact");
-    history.push({
-      pathname: "/contact",
-    });
-  };
-  const onAccount = () => {
-    setPath("Account");
-    setPage("account");
-    history.push({
-      pathname: "/account",
-    });
-  };
-  const onCalendar = () => {
-    setPath("Calendar");
-    setPage("calendar");
-    history.push({
-      pathname: "/calendar",
-    });
-  };
-  const onDashboard = () => {
-    setPath("Dashboard");
+  //   let history = useHistory();
+  //   let [page, setPage] = useState(props.pageTitle);
+  //   let page = window.location.pathname.substring(1);
+  let [page, setPage] = useState(window.location.pathname.substring(1));
+  if (!page) {
     setPage("dashboard");
-    history.push({
-      pathname: "/dashboard",
-    });
-  };
-  let [path, setPath] = useState("Dashboard");
-  let [page, setPage] = useState("dashboard");
+  }
+  let pageTitle = page.charAt(0).toUpperCase() + page.slice(1);
+
   return (
     <React.Fragment>
       <div className={classes.root}>
@@ -125,7 +103,7 @@ function Navigation() {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" noWrap>
-              {path}
+              {pageTitle}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -154,30 +132,38 @@ function Navigation() {
           </div>
           <Divider />
           <List>
-            <ListItem button>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Account" onClick={onAccount} />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" onClick={onDashboard} />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <PermContactCalendarIcon />
-              </ListItemIcon>
-              <ListItemText primary="Contact" onClick={onContact} />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <CalendarTodayIcon />
-              </ListItemIcon>
-              <ListItemText primary="Calendar" onClick={onCalendar} />
-            </ListItem>
+            <Link to="/account" onClick={() => setPage("account")}>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Account" />
+              </ListItem>
+            </Link>
+            <Link to="/dashboard" onClick={() => setPage("dashboard")}>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+            </Link>
+            <Link to="/contact" onClick={() => setPage("contact")}>
+              <ListItem button>
+                <ListItemIcon>
+                  <PermContactCalendarIcon />
+                </ListItemIcon>
+                <ListItemText primary="Contact" />
+              </ListItem>
+            </Link>
+            <Link to="/calendar" onClick={() => setPage("calendar")}>
+              <ListItem button>
+                <ListItemIcon>
+                  <CalendarTodayIcon />
+                </ListItemIcon>
+                <ListItemText primary="Calendar" />
+              </ListItem>
+            </Link>
           </List>
         </Drawer>
 

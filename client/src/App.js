@@ -30,7 +30,7 @@ function App() {
           <Route path="/dashboard" exact>
             <Dashboard />
           </Route>
-          <Redirect to="/account"></Redirect>
+          <Redirect to="/dashboard"></Redirect>
         </Switch>
       </Router>
     </React.Fragment>
