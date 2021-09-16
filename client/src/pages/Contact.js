@@ -82,15 +82,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function Contact() {
   const classes = useStyles();
   let history = useHistory();
-
-  const onContact = () => {
-    history.push({
-      pathname: "/contact"
-    })
-  }
+//   const onContact = () => {
+//     history.push({
+//       pathname: "/contact"
+//     })
+//   }
   const onAccount = () => {
     history.push({
       pathname: "/account"
@@ -113,7 +112,7 @@ function App() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Main Page
+            Contact
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,25 +145,25 @@ function App() {
             <ListItemIcon>
               <AccountCircleIcon/>
             </ListItemIcon>
-            <ListItemText primary="Account" onClick={onAccount}/>
+            <ListItemText primary="Account" onClick={onAccount} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" onClick={onDashboard}/>
+            <ListItemText primary="Dashboard" onClick={onDashboard} />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <PermContactCalendarIcon />
             </ListItemIcon>
-            <ListItemText primary="Contact" onClick={onContact}/>
+            <ListItemText primary="Contact" />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <CalendarTodayIcon />
             </ListItemIcon>
-            <ListItemText primary="Calendar" onClick={onCalendar}/>
+            <ListItemText primary="Calendar" onClick={onCalendar} />
           </ListItem>
         </List>
       </Drawer>
@@ -172,7 +171,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-          xxxxxxx
+          Contact page
         </Typography>
         <Typography paragraph>
           xxx
@@ -183,4 +182,4 @@ function App() {
   );
 }
 
-export default App;
+export default Contact;
