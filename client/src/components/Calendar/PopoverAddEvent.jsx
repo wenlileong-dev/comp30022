@@ -84,7 +84,6 @@ function PopoverAddEvent(props) {
             <TextField
               required
               label="Title"
-              className="form-input"
               onChange={handleTitle}
               value={title}
             />
@@ -93,7 +92,6 @@ function PopoverAddEvent(props) {
             <TextField
               label="Description"
               multiline
-              className="form-input"
               onChange={handleDescription}
               value={description}
             />
@@ -103,7 +101,6 @@ function PopoverAddEvent(props) {
               label="Date"
               type="date"
               required
-              className="form-input"
               value={date}
               onChange={handleDate}
               InputLabelProps={{
@@ -116,7 +113,6 @@ function PopoverAddEvent(props) {
               required
               label="Time"
               type="time"
-              className="form-input"
               value={time}
               onChange={handleTime}
               InputLabelProps={{
@@ -126,7 +122,6 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
-              className="form-input"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -135,7 +130,7 @@ function PopoverAddEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="form-input">
+            <FormControl className="event-type-select">
               <InputLabel>Event Type</InputLabel>
               <Select native value={eventType} onChange={handleEventType}>
                 <option aria-label="None" value="" />
@@ -147,7 +142,6 @@ function PopoverAddEvent(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               label="Location"
-              className="form-input"
               onChange={handleLocation}
               value={location}
             />

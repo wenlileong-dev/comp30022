@@ -28,11 +28,7 @@
 .calendar-event {
   line-height: 0%;
 }
-@media only screen and (max-width: 600px) {
-  .calendar-event {
-    font-size: small;
-  }
-}
+
 /*Popup */
 
 .popup-box {
@@ -48,7 +44,7 @@
 .box {
   position: relative;
   width: 70%;
-  margin: 0 5% 0 20%;
+  margin: 0 5% 0 25%;
   height: auto;
   max-height: 50vh;
   margin-top: calc(100vh - 85vh - 20px);
@@ -63,7 +59,7 @@
   content: "x";
   cursor: pointer;
   position: fixed;
-  right: calc(10% - 8px);
+  right: calc(7% - 30px);
   top: calc(100vh - 85vh - 33px);
   background: #ededed;
   width: 25px;
@@ -89,9 +85,24 @@
   text-align: right;
 }
 
-.form-input {
-  width: 50%;
+.event-type-select {
+  width: 60%;
 }
 .form-notes {
   width: 80%;
+}
+
+@media only screen and (max-width: 600px) {
+  .calendar-event {
+    font-size: small;
+  }
+  .calendar-month {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 1rem;
+  }
+  .box {
+    margin: 15% 2% 0 50%;
+    width: 45%;
+  }
 }

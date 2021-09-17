@@ -102,7 +102,6 @@ function PopoverEditEvent(props) {
             <TextField
               required
               label="Title"
-              className="form-input"
               onChange={handleTitle}
               value={title}
             />
@@ -111,7 +110,6 @@ function PopoverEditEvent(props) {
             <TextField
               label="Description"
               multiline
-              className="form-input"
               onChange={handleDescription}
               value={description}
             />
@@ -121,7 +119,6 @@ function PopoverEditEvent(props) {
               label="Date"
               type="date"
               required
-              className="form-input"
               value={date}
               onChange={handleDate}
               InputLabelProps={{
@@ -134,7 +131,6 @@ function PopoverEditEvent(props) {
               label="Time"
               type="time"
               required
-              className="form-input"
               value={time}
               onChange={handleTime}
               InputLabelProps={{
@@ -144,7 +140,6 @@ function PopoverEditEvent(props) {
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
-              className="form-input"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -153,7 +148,7 @@ function PopoverEditEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="form-input">
+            <FormControl className="event-type-select">
               <InputLabel>Event Type</InputLabel>
               <Select
                 native
@@ -172,7 +167,6 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               label="Location"
-              className="form-input"
               onChange={handleLocation}
               value={location}
             />
@@ -182,7 +176,7 @@ function PopoverEditEvent(props) {
               label="Meeting Notes"
               multiline
               rows={4}
-              className="form-input"
+              className="form-notes"
               onChange={handleMeetingNotes}
               value={meetingNotes}
             />
