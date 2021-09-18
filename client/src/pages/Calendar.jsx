@@ -3,6 +3,8 @@ import axios from "axios";
 import CalendarHeader from "./../components/Calendar/CalendarHeader";
 import CalendarTitle from "./../components/Calendar/CalendarTitle";
 import CalendarDays from "./../components/Calendar/CalendarDays";
+import WeeklyCalendar from "../components/Calendar/WeeklyCalendar";
+import mobileView from "../screenSize";
 
 function Calendar() {
   let today = new Date();
@@ -38,6 +40,7 @@ function Calendar() {
       setMonth(11);
     }
   };
+
   return (
     <>
       <CalendarTitle
@@ -46,10 +49,12 @@ function Calendar() {
         nextMonth={nextMonth}
         prevMonth={prevMonth}
       />
-      <CalendarHeader />
-      {events.length > 0 && (
+      {!mobileView && <CalendarHeader />}
+
+      {!mobileView && events.length > 0 && (
         <CalendarDays month={month} year={year} events={events} />
       )}
+      {mobileView && <WeeklyCalendar events={events} month={month + 1} />}
     </>
   );
 }

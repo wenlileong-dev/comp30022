@@ -8,10 +8,12 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
 function PopoverEditEvent(props) {
-  let day = new Date(props.eventDetail.date);
+  console.log(props.eventDetail);
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
-  let [date, setDate] = useState(day.toISOString().slice(0, 10));
+  let [date, setDate] = useState(
+    new Date(props.eventDetail.date).toISOString().slice(0, 10)
+  );
   let [time, setTime] = useState(props.eventDetail.time);
   let [people, setPeople] = useState(props.eventDetail.people.toString());
   let [eventType, setEventType] = useState(props.eventDetail.eventType);

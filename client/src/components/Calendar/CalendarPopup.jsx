@@ -40,6 +40,9 @@ function CalendarPopup(props) {
           {isOpen === "event-detail" && (
             <PopoverEditEvent eventDetail={eventDetail} />
           )}
+          {isOpen === "mobile-event-detail" && (
+            <PopoverEditEvent eventDetail={props.eventDetail} />
+          )}
         </div>
       </div>
     </React.Fragment>

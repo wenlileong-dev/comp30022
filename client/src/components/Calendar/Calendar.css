@@ -97,7 +97,7 @@
     font-size: small;
   }
   .calendar-month {
-    font-size: 1rem;
+    font-size: 12px;
     font-weight: bold;
     margin: 0 1rem;
   }
@@ -105,4 +105,8 @@
     margin: 15% 2% 0 50%;
     width: 45%;
   }
+}
+
+.mobile-event-title {
+  font-weight: bold;
 }
