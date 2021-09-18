@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Account from "../Account";
 import Calendar from "../Calendar";
 import Contact from "../Contact";
@@ -6,10 +7,21 @@ import Dashboard from "../Dashboard";
 function Content(props) {
   return (
     <React.Fragment>
-      {props.page === "account" && <Account />}
-      {props.page === "calendar" && <Calendar />}
-      {props.page === "contact" && <Contact />}
-      {props.page === "dashboard" && <Dashboard />}
+      <Switch>
+        <Route path="/account" exact>
+          <Account />
+        </Route>
+        <Route path="/dashboard" exact>
+          <Dashboard />
+        </Route>
+        <Route path="/contact" exact>
+          <Contact />
+        </Route>
+        <Route path="/calendar" exact>
+          <Calendar />
+        </Route>
+        <Redirect to="/dashboard"></Redirect>
+      </Switch>
     </React.Fragment>
   );
 }
