@@ -4,6 +4,10 @@ import axios from "axios";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import TimePicker from "@mui/lab/TimePicker";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
@@ -24,12 +28,6 @@ function PopoverAddEvent(props) {
   }
   function handleDescription(e) {
     setDescription(e.target.value);
-  }
-  function handleDate(e) {
-    setDate(e.target.value);
-  }
-  function handleTime(e) {
-    setTime(e.target.value);
   }
   function handlePeople(e) {
     setPeople(e.target.value);
@@ -106,30 +104,28 @@ function PopoverAddEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              variant="standard"
-              label="Date"
-              type="date"
-              required
-              value={date}
-              onChange={handleDate}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Date"
+                value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              variant="standard"
-              required
-              label="Time"
-              type="time"
-              value={time}
-              onChange={handleTime}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TimePicker
+                label="Time"
+                value={time}
+                onChange={(newValue) => {
+                  setTime(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField

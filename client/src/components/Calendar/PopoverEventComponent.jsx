@@ -6,11 +6,16 @@ function PopoverEventComponent(props) {
     props.setEvent(props.event);
     props.openEditEvent();
   }
+  let time = new Date(props.event.time);
   return (
     <div className="event-detail">
       <Grid item xs>
         <p>
-          {props.event.time} {props.event.title}
+          {time.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}{" "}
+          {props.event.title}
         </p>
         <p>{props.event.description}</p>
         <p>{props.event.people.toString()}</p>

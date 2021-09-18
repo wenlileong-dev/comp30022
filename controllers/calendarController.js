@@ -17,7 +17,7 @@ exports.addEvent = async (req, res) => {
     location,
   });
   const saveEvent = await newEvent.save();
-  res.json({ status: 200, data: saveEvent });
+  res.json({ status: 200, data: newEvent });
 };
 
 //helper function - get number of days of a month

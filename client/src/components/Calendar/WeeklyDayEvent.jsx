@@ -11,11 +11,17 @@ function WeeklyDayEvent(props) {
   const handleClose = () => {
     setIsOpen(false);
   };
+  let time = new Date(props.event.time);
   return (
     <React.Fragment>
       <div onClick={showEventDetail}>
         <p className="mobile-event-title">{props.event.title}</p>
-        <p>{props.event.time}</p>
+        <p>
+          {time.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </p>
         {props.event.eventType === "Online" ? (
           <p>
             {props.event.eventType} via {props.event.location}
