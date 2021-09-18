@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 import CalendarPopup from "./CalendarPopup";
+import mobileView from "../../screenSize";
 
 function CalendarTitle(props) {
   const monthNames = [
@@ -39,17 +40,43 @@ function CalendarTitle(props) {
 
   return (
     <React.Fragment>
-      {" "}
       <div className="calendar-title">
         <Grid container spacing={3}>
-          <Grid item xs={10}>
-            <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
-            <span className="calendar-month">
-              {monthNames[props.month]} {props.year}
-            </span>
-            <ArrowRightIcon onClick={props.nextMonth}></ArrowRightIcon>
+          <Grid item xs={12} sm={9}>
+            <Grid container spacing={2}>
+              {!mobileView && (
+                <>
+                  <Grid item sm={1} className="calendar-month">
+                    <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
+                  </Grid>
+                  <Grid item sm={7}>
+                    <span className="calendar-month">
+                      {monthNames[props.month]} {props.year}
+                    </span>
+                  </Grid>
+                  <Grid item sm={1} className="calendar-month">
+                    <ArrowRightIcon onClick={props.nextMonth}></ArrowRightIcon>
+                  </Grid>
+                </>
+              )}
+              {mobileView && (
+                <>
+                  <Grid item xs={12}>
+                    <span className="calendar-month">
+                      {monthNames[props.month]} {props.year}
+                    </span>
+                  </Grid>
+                  <Grid item xs={6} className="calendar-month">
+                    <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
+                  </Grid>
+                  <Grid item xs={6} className="calendar-month">
+                    <ArrowRightIcon onClick={props.nextMonth}></ArrowRightIcon>
+                  </Grid>
+                </>
+              )}
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={3}>
             <Button
               variant="outlined"
               color="primary"

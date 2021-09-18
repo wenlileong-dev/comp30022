@@ -8,10 +8,12 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
 function PopoverEditEvent(props) {
-  let day = new Date(props.eventDetail.date);
+  console.log(props.eventDetail);
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
-  let [date, setDate] = useState(day.toISOString().slice(0, 10));
+  let [date, setDate] = useState(
+    new Date(props.eventDetail.date).toISOString().slice(0, 10)
+  );
   let [time, setTime] = useState(props.eventDetail.time);
   let [people, setPeople] = useState(props.eventDetail.people.toString());
   let [eventType, setEventType] = useState(props.eventDetail.eventType);
@@ -102,7 +104,6 @@ function PopoverEditEvent(props) {
             <TextField
               required
               label="Title"
-              className="form-input"
               onChange={handleTitle}
               value={title}
             />
@@ -111,7 +112,6 @@ function PopoverEditEvent(props) {
             <TextField
               label="Description"
               multiline
-              className="form-input"
               onChange={handleDescription}
               value={description}
             />
@@ -121,7 +121,6 @@ function PopoverEditEvent(props) {
               label="Date"
               type="date"
               required
-              className="form-input"
               value={date}
               onChange={handleDate}
               InputLabelProps={{
@@ -134,7 +133,6 @@ function PopoverEditEvent(props) {
               label="Time"
               type="time"
               required
-              className="form-input"
               value={time}
               onChange={handleTime}
               InputLabelProps={{
@@ -144,7 +142,6 @@ function PopoverEditEvent(props) {
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
-              className="form-input"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -153,7 +150,7 @@ function PopoverEditEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="form-input">
+            <FormControl className="event-type-select">
               <InputLabel>Event Type</InputLabel>
               <Select
                 native
@@ -172,7 +169,6 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               label="Location"
-              className="form-input"
               onChange={handleLocation}
               value={location}
             />
@@ -182,7 +178,7 @@ function PopoverEditEvent(props) {
               label="Meeting Notes"
               multiline
               rows={4}
-              className="form-input"
+              className="form-notes"
               onChange={handleMeetingNotes}
               value={meetingNotes}
             />
