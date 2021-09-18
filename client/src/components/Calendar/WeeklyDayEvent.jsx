@@ -16,6 +16,15 @@ function WeeklyDayEvent(props) {
       <div onClick={showEventDetail}>
         <p className="mobile-event-title">{props.event.title}</p>
         <p>{props.event.time}</p>
+        {props.event.eventType === "Online" ? (
+          <p>
+            {props.event.eventType} via {props.event.location}
+          </p>
+        ) : (
+          <p>
+            {props.event.eventType} at {props.event.location}
+          </p>
+        )}
       </div>
       {isOpen && (
         <CalendarPopup

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 
 function PopoverAddEvent(props) {
   let today = new Date();
@@ -14,8 +16,8 @@ function PopoverAddEvent(props) {
   let [date, setDate] = useState(today.toISOString().slice(0, 10));
   let [time, setTime] = useState("");
   let [people, setPeople] = useState("");
-  let [eventType, setEventType] = useState("");
-  let [location, setLocation] = useState("");
+  let [eventType, setEventType] = useState("Online");
+  let [location, setLocation] = useState("Zoom");
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -34,6 +36,11 @@ function PopoverAddEvent(props) {
   }
   function handleEventType(e) {
     setEventType(e.target.value);
+    if (e.target.value === "Online") {
+      setLocation("Zoom");
+    } else {
+      setLocation("");
+    }
   }
   function handleLocation(e) {
     setLocation(e.target.value);
@@ -82,6 +89,7 @@ function PopoverAddEvent(props) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               required
               label="Title"
               onChange={handleTitle}
@@ -90,6 +98,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               label="Description"
               multiline
               onChange={handleDescription}
@@ -98,6 +107,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               label="Date"
               type="date"
               required
@@ -110,6 +120,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               required
               label="Time"
               type="time"
@@ -122,6 +133,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
+              variant="standard"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -130,24 +142,43 @@ function PopoverAddEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="event-type-select">
+            <FormControl className="event-type-select" variant="standard">
               <InputLabel>Event Type</InputLabel>
-              <Select native value={eventType} onChange={handleEventType}>
-                <option aria-label="None" value="" />
-                <option value="online">Online</option>
-                <option value="offline">Offline</option>
+              <Select value={eventType} onChange={handleEventType}>
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Location"
-              onChange={handleLocation}
-              value={location}
-            />
-          </Grid>
+          {eventType !== "Online" ? (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="standard"
+                label="Location"
+                onChange={handleLocation}
+                value={location}
+                required
+              />
+            </Grid>
+          ) : (
+            <Grid item xs={12} sm={6}>
+              <FormControl className="event-type-select" variant="standard">
+                <InputLabel>Location</InputLabel>
+                <Select value={location} onChange={handleLocation}>
+                  <MenuItem value="Zoom">Zoom</MenuItem>
+                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
+
           <Grid item xs={12} sm={12}>
-            <Button variant="outlined" color="primary" type="submit">
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              startIcon={<AddIcon />}
+            >
               Add Event
             </Button>
           </Grid>

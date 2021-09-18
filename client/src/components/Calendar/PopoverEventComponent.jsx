@@ -14,6 +14,15 @@ function PopoverEventComponent(props) {
         </p>
         <p>{props.event.description}</p>
         <p>{props.event.people.toString()}</p>
+        {props.event.eventType === "Online" ? (
+          <p>
+            {props.event.eventType} via {props.event.location}
+          </p>
+        ) : (
+          <p>
+            {props.event.eventType} at {props.event.location}
+          </p>
+        )}
         <Button
           color="default"
           variant="outlined"
