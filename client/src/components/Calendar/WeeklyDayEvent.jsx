@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 import CalendarPopup from "./CalendarPopup";
 
@@ -14,24 +16,29 @@ function WeeklyDayEvent(props) {
   let time = new Date(props.event.time);
   return (
     <React.Fragment>
-      <div onClick={showEventDetail}>
-        <p className="mobile-event-title">{props.event.title}</p>
-        <p>
-          {time.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-        {props.event.eventType === "Online" ? (
-          <p>
-            {props.event.eventType} via {props.event.location}
-          </p>
-        ) : (
-          <p>
-            {props.event.eventType} at {props.event.location}
-          </p>
-        )}
-      </div>
+      <Card>
+        <CardContent>
+          <div onClick={showEventDetail}>
+            <p className="mobile-event-title">{props.event.title}</p>
+            <p>
+              {time.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+            </p>
+            {props.event.eventType === "Online" ? (
+              <p>
+                {props.event.eventType} via {props.event.location}
+              </p>
+            ) : (
+              <p>
+                {props.event.eventType} at {props.event.location}
+              </p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {isOpen && (
         <CalendarPopup
           eventDetail={props.event}
