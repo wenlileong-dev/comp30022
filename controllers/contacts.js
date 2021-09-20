@@ -14,7 +14,7 @@ exports.displayContacts = async (req, res, next) => {
 }
 
 // Get page of contact-adding
-exports.displayAddContact = (req, res, next) => {
+exports.displayAddContact = async (req, res, next) => {
 	try {
 		res.send("get /contacts/add-contact");
 	} catch (err) {
@@ -23,7 +23,7 @@ exports.displayAddContact = (req, res, next) => {
 }
 
 // Add a new contact
-exports.addContact = (req, res, next) => {
+exports.addContact = async (req, res, next) => {
 	try {
 		const newContact = new Contacts (req.body.contact);
 		newContact.save();
@@ -71,7 +71,7 @@ exports.updateInformation = async (req, res, next) => {
 }
 
 // Delete a contact
-exports.deleteContact = (req, res, next) => {
+exports.deleteContact = async (req, res, next) => {
 	try {
 		Contacts.deleteOne({'_id': req.params.id}, () =>{});
 		res.status(204).end();
