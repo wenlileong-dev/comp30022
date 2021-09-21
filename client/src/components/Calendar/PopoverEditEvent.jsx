@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import TimePicker from "@mui/lab/TimePicker";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import UpdateIcon from "@mui/icons-material/Update";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function PopoverEditEvent(props) {
-  console.log(props.eventDetail);
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
   let [date, setDate] = useState(
@@ -27,17 +33,16 @@ function PopoverEditEvent(props) {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-  function handleDate(e) {
-    setDate(e.target.value);
-  }
-  function handleTime(e) {
-    setTime(e.target.value);
-  }
   function handlePeople(e) {
     setPeople(e.target.value);
   }
   function handleEventType(e) {
     setEventType(e.target.value);
+    if (e.target.value === "Online") {
+      setLocation("Zoom");
+    } else {
+      setLocation("");
+    }
   }
   function handleLocation(e) {
     setLocation(e.target.value);
@@ -102,6 +107,7 @@ function PopoverEditEvent(props) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               required
               label="Title"
               onChange={handleTitle}
@@ -110,6 +116,7 @@ function PopoverEditEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               label="Description"
               multiline
               onChange={handleDescription}
@@ -117,31 +124,32 @@ function PopoverEditEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              label="Date"
-              type="date"
-              required
-              value={date}
-              onChange={handleDate}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Date"
+                value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              label="Time"
-              type="time"
-              required
-              value={time}
-              onChange={handleTime}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TimePicker
+                label="Time"
+                value={time}
+                onChange={(newValue) => {
+                  setTime(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
+              variant="standard"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -150,31 +158,38 @@ function PopoverEditEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="event-type-select">
+            <FormControl className="event-type-select" variant="standard">
               <InputLabel>Event Type</InputLabel>
-              <Select
-                native
-                value={eventType}
-                onChange={handleEventType}
-                inputProps={{
-                  name: "age",
-                  id: "age-native-simple",
-                }}
-              >
-                <option value="online">Online</option>
-                <option value="offline">Offline</option>
+              <Select value={eventType} onChange={handleEventType}>
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Location"
-              onChange={handleLocation}
-              value={location}
-            />
-          </Grid>
+          {eventType !== "Online" ? (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="standard"
+                label="Location"
+                onChange={handleLocation}
+                value={location}
+                required
+              />
+            </Grid>
+          ) : (
+            <Grid item xs={12} sm={6}>
+              <FormControl className="event-type-select" variant="standard">
+                <InputLabel>Location</InputLabel>
+                <Select value={location} onChange={handleLocation}>
+                  <MenuItem value="Zoom">Zoom</MenuItem>
+                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <TextField
+              variant="standard"
               label="Meeting Notes"
               multiline
               rows={4}
@@ -183,17 +198,23 @@ function PopoverEditEvent(props) {
               value={meetingNotes}
             />
           </Grid>
-          <Grid item xs={6}>
-            <Button variant="outlined" color="primary" type="submit">
+          <Grid item xs={12} sm={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              startIcon={<UpdateIcon />}
+            >
               Update Event
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Button
-              variant="outlined"
+              variant="contained"
               color="secondary"
               type="button"
               onClick={handleDelEvent}
+              startIcon={<DeleteIcon />}
             >
               Delete Event
             </Button>

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { indigo } from "@mui/material/colors";
 
 import CalendarPopup from "./CalendarPopup";
 
@@ -22,7 +25,17 @@ function CalendarDay(props) {
   return (
     <React.Fragment>
       <div className="calendar-day" onClick={handleOpen}>
-        <p>{props.day}</p>
+        {new Date().getDate() === props.day &&
+        new Date().getMonth() === props.month ? (
+          <Stack direction="row" spacing={2}>
+            <Avatar sx={{ bgcolor: indigo[500], width: 22, height: 22 }}>
+              {props.day}
+            </Avatar>
+          </Stack>
+        ) : (
+          <p>{props.day}</p>
+        )}
+
         <div>
           {props.event &&
             props.event.map((event, index) => {

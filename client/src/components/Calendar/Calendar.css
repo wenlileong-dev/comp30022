@@ -20,7 +20,7 @@
 
 .calendar-day {
   min-height: 5rem;
-  border: 1px solid #f3e9d8;
+  border: 1px solid #3f51b5;
   padding-left: 0.5rem;
   /* height: 6rem; */
 }
@@ -48,7 +48,7 @@
   height: auto;
   max-height: 50vh;
   margin-top: calc(100vh - 85vh - 20px);
-  background: #fff;
+  background-color: white;
   border-radius: 4px;
   padding: 20px;
   border: 1px solid #999;
@@ -71,11 +71,11 @@
   font-size: 20px;
 }
 
-.event-detail {
+/* .event-detail {
   background-color: bisque;
   padding: 0.5rem 1rem;
   margin: 0.5rem;
-}
+} */
 
 #space-btw-event-button {
   margin-right: 5px;

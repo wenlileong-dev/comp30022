@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import AddIcon from "@mui/icons-material/Add";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 import CalendarPopup from "./CalendarPopup";
 import mobileView from "../../screenSize";
@@ -78,12 +79,13 @@ function CalendarTitle(props) {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               onClick={toggleAddEvent}
               id="add-event-button"
+              startIcon={<AddIcon />}
             >
-              + New Event
+              New Event
             </Button>
           </Grid>
         </Grid>

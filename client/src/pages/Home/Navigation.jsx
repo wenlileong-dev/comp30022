@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
+
 function Navigation(props) {
   const classes = useStyles();
   let [page, setPage] = useState(window.location.pathname.substring(1));
@@ -165,7 +166,7 @@ function Navigation(props) {
 
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Content page={page} />
+          <Content />
         </main>
       </div>
     </React.Fragment>

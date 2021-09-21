@@ -5,9 +5,9 @@ const eventSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String },
     date: { type: Date },
-    time: { type: String },
+    time: { type: Date },
     people: { type: [String] },
-    eventType: { type: String, enum: ["online", "offline"] },
+    eventType: { type: String, enum: ["Online", "Offline"] },
     location: { type: String },
     meetingNotes: { type: String, default: "" },
   },
@@ -18,9 +18,9 @@ const eventSchema = new mongoose.Schema(
 );
 
 eventSchema.virtual("timeInNumbers").get(function () {
-  let arr = this.time.split(":");
-  let hour = parseInt(arr[0]);
-  let minute = parseInt(arr[1]);
+  let myTime = new Date(this.time);
+  let hour = myTime.getHours();
+  let minute = myTime.getMinutes();
   return hour * 60 + minute;
 });
 

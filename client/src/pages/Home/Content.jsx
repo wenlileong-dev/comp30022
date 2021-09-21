@@ -4,7 +4,7 @@ import Account from "../Account";
 import Calendar from "../Calendar";
 import Contact from "../Contact";
 import Dashboard from "../Dashboard";
-function Content(props) {
+function Content() {
   return (
     <React.Fragment>
       <Switch>
