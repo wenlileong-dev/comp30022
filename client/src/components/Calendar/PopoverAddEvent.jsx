@@ -12,6 +12,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import Alert from "@mui/material/Alert";
 
 function PopoverAddEvent(props) {
   let today = new Date();
@@ -19,6 +20,7 @@ function PopoverAddEvent(props) {
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(today.toISOString().slice(0, 10));
   let [time, setTime] = useState("");
+  let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState("");
   let [eventType, setEventType] = useState("Online");
   let [location, setLocation] = useState("Zoom");
@@ -66,6 +68,9 @@ function PopoverAddEvent(props) {
     }
     if (time) {
       input.time = time;
+    } else {
+      setAlertTime(true);
+      return;
     }
     if (people) {
       input.people = people;
@@ -122,10 +127,14 @@ function PopoverAddEvent(props) {
                 value={time}
                 onChange={(newValue) => {
                   setTime(newValue);
+                  if (alertTime) {
+                    setAlertTime(false);
+                  }
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
+            {alertTime && <Alert severity="error">Time is required</Alert>}
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
