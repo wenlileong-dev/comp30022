@@ -16,8 +16,7 @@ var CustomerSchema = new Schema({
     },
     familyName: {
         type: String
-    },
-    // MongoDB GeoPoint format
+    }
 });
 
 module.exports = mongoose.model("Customer", CustomerSchema);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import AddIcon from "@mui/icons-material/Add";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
@@ -83,7 +83,7 @@ function CalendarTitle(props) {
               color="primary"
               onClick={toggleAddEvent}
               id="add-event-button"
-              startIcon={<AddIcon />}
+              startIcon={<AddBoxIcon />}
             >
               New Event
             </Button>
