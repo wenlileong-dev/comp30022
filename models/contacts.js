@@ -17,7 +17,8 @@ const contactSchema = new mongoose.Schema({
 	},
 
 	email: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	phone: {
@@ -34,8 +35,7 @@ const contactSchema = new mongoose.Schema({
 	},
 
 	remark: {
-		type: Boolean,
-		default: false
+		type: String
 	}
 })
 

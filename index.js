@@ -8,6 +8,7 @@ require("./models/db");
 
 //require router
 const templateRouter = require("./routes/templateRouter");
+const calendarRouter = require("./routes/calendarRouter");
 
 let port = process.env.PORT || 5000;
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //routing
 app.use("/api", templateRouter);
+app.use("/api/calendar", calendarRouter);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));

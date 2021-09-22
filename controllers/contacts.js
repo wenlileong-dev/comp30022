@@ -57,13 +57,15 @@ exports.getInformation = async (req, res, next) => {
 exports.updateInformation = async (req, res, next) => {
 	try {
 		const newInfo = req.body.contact;
+		
 		// console.log(newInfo);
-		Contacts.updateOne({'_id': req.params.id}, 
+		await Contacts.updateOne({'_id': req.params.id}, 
 			{$set: newInfo}, () => {});
+
 		const info = await Contacts.findById(req.params.id);
 
 		res.status(201).json({
-			info
+			 info
 		})
 	} catch (err) {
 		next(err); 
