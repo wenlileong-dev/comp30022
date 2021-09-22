@@ -2,7 +2,7 @@ import React from "react";
 import "./Calendar.css";
 function CalendarHeader() {
   return (
-    <div className="calendar-header">
+    <div className="calendar-header" data-testid="mytestid">
       <div>Sun</div>
       <div>Mon</div>
       <div>Tue</div>
