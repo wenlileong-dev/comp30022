@@ -183,6 +183,7 @@ function PopoverEditEvent(props) {
                 <Select value={location} onChange={handleLocation}>
                   <MenuItem value="Zoom">Zoom</MenuItem>
                   <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                  <MenuItem value="Google Meet">Google Meet</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

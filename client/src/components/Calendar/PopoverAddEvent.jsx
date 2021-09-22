@@ -11,7 +11,7 @@ import TimePicker from "@mui/lab/TimePicker";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import Alert from "@mui/material/Alert";
 
 function PopoverAddEvent(props) {
@@ -172,6 +172,7 @@ function PopoverAddEvent(props) {
                 <Select value={location} onChange={handleLocation}>
                   <MenuItem value="Zoom">Zoom</MenuItem>
                   <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                  <MenuItem value="Google Meet">Google Meet</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -182,7 +183,7 @@ function PopoverAddEvent(props) {
               color="primary"
               type="submit"
               variant="contained"
-              startIcon={<AddIcon />}
+              startIcon={<AddBoxIcon />}
             >
               Add Event
             </Button>

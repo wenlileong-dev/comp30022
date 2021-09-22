@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var CustomerSchema = new Schema({
-    // attributes of customer
+var UserSchema = new Schema({
+    // attributes of user
     email: {
         type: String,
         required: true
@@ -11,13 +11,15 @@ var CustomerSchema = new Schema({
         type: String,
         required: true
     },
-    givenName: {
+    firstName: {
         type: String
     },
-    familyName: {
+    lastName: {
         type: String
     },
-    // MongoDB GeoPoint format
+    phoneNumber: {
+        type: String
+    }
 });
 
-module.exports = mongoose.model("Customer", CustomerSchema);
+module.exports = mongoose.model("User", UserSchema);
