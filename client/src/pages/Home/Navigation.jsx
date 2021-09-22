@@ -9,21 +9,21 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 // import AppBar from "@material-ui/core/AppBar";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Toolbar from "@material-ui/core/Toolbar";
+import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
+// import SearchIcon from "@material-ui/icons/Search";
+// import InputBase from "@material-ui/core/InputBase";
 import MuiAppBar from "@mui/material/AppBar";
 
 import "./Navigation.css";
@@ -165,21 +165,21 @@ function Navigation(props) {
   }
   let pageTitle = page.charAt(0).toUpperCase() + page.slice(1);
 
-  const [open, setOpen] = React.useState(false);
+  const [openNavBar, setOpenNavBar] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpenNavBar(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpenNavBar(false);
   };
 
   return (
     <React.Fragment>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={openNavBar}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -188,7 +188,7 @@ function Navigation(props) {
               edge="start"
               sx={{
                 marginRight: "36px",
-                ...(open && { display: "none" }),
+                ...(openNavBar && { display: "none" }),
               }}
             >
               <MenuIcon />
@@ -198,7 +198,7 @@ function Navigation(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={openNavBar}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "ltr" ? (
