@@ -1,7 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+
 import Account from "../Account";
-import Calendar from "../Calendar.jsx";
+import Calendar from "../Calendar";
 import Contact from "../Contact";
 import Dashboard from "../Dashboard";
 function Content() {

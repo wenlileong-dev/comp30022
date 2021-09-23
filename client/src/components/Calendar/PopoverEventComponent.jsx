@@ -1,6 +1,6 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 function PopoverEventComponent(props) {
@@ -31,16 +31,10 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </p>
           )}
-          <Button
-            color="default"
-            variant="outlined"
-            size="small"
-            id="space-btw-event-button"
-          >
+          <Button variant="outlined" size="small" id="space-btw-event-button">
             Open Meeting
           </Button>
           <Button
-            color="default"
             variant="contained"
             size="small"
             onClick={handleOpenEditEvent}
