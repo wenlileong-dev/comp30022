@@ -7,6 +7,8 @@ const cors = require("cors");
 require("./models/db");
 
 //require router
+
+const userRouter = require("./routes/userRouter");
 const calendarRouter = require("./routes/calendarRouter");
 
 let port = process.env.PORT || 5000;
@@ -16,6 +18,8 @@ app.use(express.json({ urlencoded: true }));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //routing
+
+app.use("/user", userRouter);
 app.use("/api/calendar", calendarRouter);
 
 app.get("*", function (request, response) {
