@@ -9,5 +9,7 @@ router.post('/register',userController.userPostRegister);
 // post request for login
 router.post('/login', userController.userPostLogin);
 
+// post request for update profile
+router.post('/account/:id', userController.userPostUpdate);
 
 module.exports = router;

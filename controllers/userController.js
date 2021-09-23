@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 var User = require('../models/user');
 // register user acc
 const userPostRegister = async (req, res) =>{
@@ -83,35 +83,36 @@ const userPostLogin = async (req,res)=>{
     }
 }
 
-const customerPostUpdate = async (req, res) =>{
+const userPostUpdate = async (req, res) =>{
     try{
         let reg=/^(?=\S*[a-z])(?=\S*\d)\S{8,}$/
         if(reg.test(req.body.password)){
             bcrypt.genSalt(10,(err,salt)=>{
                 bcrypt.hash(req.body.password,salt,(err,hash)=>{
                     if (err) throw err;
-                    Customer.findOne({email:req.body.email}, function (err,duplicateCustomer){
-                        if(duplicateCustomer){if(duplicateCustomer._id != req.params.id) {
-                            console.log(duplicateCustomer._id)
+                    User.findOne({email:req.body.email}, function (err,duplicateUser){
+                        if(duplicateUser){if(duplicateUser._id != req.params.id) {
+                            console.log(duplicateUser._id)
                             console.log(req.params.id)
-                            res.status(409).json({success: false, message:"another customer has already registered that email"})
+                            res.status(409).json({success: false, message:"another User has already registered that email"})
                         }}
                         else{
-                            Customer.findOneAndUpdate(
+                            User.findOneAndUpdate(
                                 {_id: req.params.id},
                                 // update information
                                 {
                                     givenName:req.body.givenName,
                                     familyName:req.body.familyName,
+                                    phoneNumber:req.body.phoneNumber,
                                     password:hash
                                 },
                                 {new: true},
                                 // whether the update is successful or not
-                                function(err,updateCustomer){
+                                function(err,updateUser){
                                     if(err){
-                                        res.status(404).json({success: false, message:"customer email does not exist"})
+                                        res.status(404).json({success: false, message:"User account does not exist"})
                                     }else{
-                                        res.status(200).json({success: true,updateCustomer: updateCustomer})
+                                        res.status(200).json({success: true, updateUser: updateUser})
                                     }
                                 }
                             )
