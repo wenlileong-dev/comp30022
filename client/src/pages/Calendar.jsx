@@ -16,7 +16,12 @@ function Calendar() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(`/api/calendar/${month}/${year}`);
-      setEvents(result.data.data);
+      if (result.data.status !== 200) {
+        alert(result.data.errorMsg);
+        window.location.href = "/login";
+      } else {
+        setEvents(result.data.data);
+      }
     };
     fetchData();
   }, [month, year]);
