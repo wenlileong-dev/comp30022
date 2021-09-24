@@ -183,7 +183,6 @@ function PopoverEditEvent(props) {
                 <Select value={location} onChange={handleLocation}>
                   <MenuItem value="Zoom">Zoom</MenuItem>
                   <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
-                  <MenuItem value="Google Meet">Google Meet</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -202,7 +201,7 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <Button
               variant="contained"
-              color="success"
+              color="primary"
               type="submit"
               startIcon={<UpdateIcon />}
             >
@@ -212,7 +211,7 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <Button
               variant="contained"
-              color="error"
+              color="secondary"
               type="button"
               onClick={handleDelEvent}
               startIcon={<DeleteIcon />}

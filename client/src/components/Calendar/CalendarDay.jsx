@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { indigo } from "@mui/material/colors";
@@ -41,9 +40,9 @@ function CalendarDay(props) {
           {props.event &&
             props.event.map((event, index) => {
               return (
-                <Typography variant="body2" gutterBottom key={index}>
+                <p className="calendar-event" key={index}>
                   {event.title}
-                </Typography>
+                </p>
               );
             })}
         </div>
