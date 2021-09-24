@@ -21,7 +21,7 @@ function Content() {
         <Route path="/calendar" exact>
           <Calendar />
         </Route>
-        <Route path="/Login">
+        <Route path="/login">
           <Login />
         </Route>
         <Redirect to="/dashboard"></Redirect>

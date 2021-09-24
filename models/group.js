@@ -5,8 +5,8 @@ const groupSchema = new mongoose.Schema({
   contactNumber: { type: Number },
   contacts: {
     type: Array,
-    default: []
-  }
+    default: [],
+  },
 });
 
 //const Group = mongoose.model("Group", groupSchema);

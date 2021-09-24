@@ -7,6 +7,6 @@ router.get("/", groupController.displayGroup);
 // post new group
 router.post("/create", groupController.newGroup);
 // update the order
-router.post('/update/:id',groupController.updateInformation);
+router.post("/update/:id", groupController.updateInformation);
 
 module.exports = router;
