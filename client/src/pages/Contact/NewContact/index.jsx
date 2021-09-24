@@ -77,7 +77,6 @@ export default class NewContact extends Component {
                 <TextField
                     required
                     label="First Name Required"
-                    defaultValue="First Name"
                     variant="filled"
                     onChange={this.saveFirstName}
                 />
@@ -85,7 +84,6 @@ export default class NewContact extends Component {
                 <TextField
                     required
                     label="Last Name Required"
-                    defaultValue="Last Name"
                     variant="filled"
                     onChange={this.saveLastName}
                 />
@@ -102,39 +100,35 @@ export default class NewContact extends Component {
                 <TextField
                     required
                     label="Phone Number Required"
-                    defaultValue="Phone Number"
                     variant="filled"
                     onChange={this.savePhone}
                 />
                 
                 {/* <br/> */}
                 <TextField
-                    label="Required"
-                    defaultValue="Email Address"
+                    required
+                    label="Email Address Required"
                     variant="filled"
                     onChange={this.saveEmail}
                 /> 
 
                 <br/>
                 <TextField
-                    label="Optional"
-                    defaultValue="Department"
+                    label="Department (Optional)"
                     variant="filled"
                     onChange={this.saveDepartment}
                 /> 
 
                 <br/>
                 <TextField
-                    label="Optional"
-                    defaultValue="Address"
+                    label="Address (Optional)"
                     variant="filled"
                     onChange={this.saveAddress}
                 />
 
                 <br/>
                 <TextField
-                    label="Optional"
-                    defaultValue="Remark"
+                    label="Remark (Optional)"
                     variant="filled"
                     onChange={this.saveRemark}
                 />

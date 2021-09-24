@@ -16,7 +16,7 @@ class Confirm extends Component {
     confirm = () => {
       axios({
             method:'POST',
-            url:'http://localhost:5000/api/contacts/add-contact',
+            url:'http://localhost:3000/api/contacts/add-contact',
             data: {
                 contact: {
                     ...this.props
