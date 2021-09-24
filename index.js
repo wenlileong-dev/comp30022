@@ -2,21 +2,26 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser");
 //connect with database
 require("./models/db");
 
 //require router
-const templateRouter = require("./routes/templateRouter");
+
+const userRouter = require("./routes/userRouter");
+const calendarRouter = require("./routes/calendarRouter");
 
 let port = process.env.PORT || 5000;
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: process.env.FRONT_END_URL }));
+app.use(cookieParser());
 app.use(express.json({ urlencoded: true }));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //routing
-app.use("/api", templateRouter);
+
+app.use("/user", userRouter);
+app.use("/api/calendar", calendarRouter);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
