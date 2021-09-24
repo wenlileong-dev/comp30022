@@ -8,7 +8,7 @@ require("./models/db");
 
 //require router
 const calendarRouter = require("./routes/calendarRouter");
-// const user = require("./routes/user");
+const user = require("./routes/user");
 
 let port = process.env.PORT || 5000;
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //routing
 app.use("/api/calendar", calendarRouter);
-// app.use("/user", user);
+app.use("/user", user);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
