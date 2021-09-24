@@ -202,7 +202,7 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               type="submit"
               startIcon={<UpdateIcon />}
             >
@@ -212,7 +212,7 @@ function PopoverEditEvent(props) {
           <Grid item xs={12} sm={6}>
             <Button
               variant="contained"
-              color="secondary"
+              color="error"
               type="button"
               onClick={handleDelEvent}
               startIcon={<DeleteIcon />}

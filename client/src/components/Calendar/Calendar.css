@@ -93,9 +93,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .calendar-event {
-    font-size: small;
-  }
   .calendar-month {
     font-size: 12px;
     font-weight: bold;
