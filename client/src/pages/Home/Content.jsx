@@ -1,12 +1,14 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+
 import Account from "../Account";
 import Calendar from "../Calendar";
 import Contact from "../Contact/index";
 import NewContact from "../Contact/NewContact"
 import ContactInfo from "../Contact/ContactInfo"
 import Dashboard from "../Dashboard";
-function Content(props) {
+import Login from "../Auth";
+function Content() {
   return (
     <React.Fragment>
       <Switch>
@@ -25,6 +27,9 @@ function Content(props) {
 
         <Route path="/calendar" exact>
           <Calendar />
+        </Route>
+        <Route path="/Login">
+          <Login />
         </Route>
         <Redirect to="/dashboard"></Redirect>
       </Switch>

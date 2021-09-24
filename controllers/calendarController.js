@@ -1,25 +1,5 @@
 const Event = require("./../models/event");
 
-//create a new event
-exports.addEvent = async (req, res) => {
-  let { title, description, date, time, people, eventType, location } =
-    req.body;
-  if (people) {
-    people = people.split(",");
-  }
-  const newEvent = new Event({
-    title,
-    description,
-    date,
-    time,
-    people,
-    eventType,
-    location,
-  });
-  const saveEvent = await newEvent.save();
-  res.json({ status: 200, data: saveEvent });
-};
-
 //helper function - get number of days of a month
 const getDaysInMonth = (date) => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -36,34 +16,31 @@ function compare(a, b) {
   return 0;
 }
 
-//read the events for a particular month
-exports.getEvents = async (req, res) => {
-  let month = parseInt(req.params.month);
-  let year = parseInt(req.params.year);
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  let monthEvents = await Event.find({
-    date: { $gte: firstDay, $lte: lastDay },
-  });
-  let daysInMonth = getDaysInMonth(new Date(year, month));
-  let result = [];
-  for (let i = 1; i <= daysInMonth; i++) {
-    let dayEvent = [];
-    for (let j = 0; j < monthEvents.length; j++) {
-      if (monthEvents[j].date.getDate() === i) {
-        await dayEvent.push(monthEvents[j]);
-      }
-    }
-    if (dayEvent.length > 1) {
-      dayEvent.sort(compare);
-    }
-    await result.push(dayEvent);
+//create a new event
+exports.addEvent = async (req, res) => {
+  let userID = req.user._id;
+  let { title, description, date, time, people, eventType, location } =
+    req.body;
+  if (people) {
+    people = people.split(",");
   }
-
-  res.json({ status: 200, data: result });
+  const newEvent = new Event({
+    title,
+    description,
+    date,
+    time,
+    people,
+    eventType,
+    location,
+    userID,
+  });
+  const saveEvent = await newEvent.save();
+  res.json({ status: 200, data: newEvent });
 };
 
+//update event details
 exports.updateEvent = async (req, res) => {
+  let userID = req.user._id;
   let {
     title,
     description,
@@ -89,14 +66,48 @@ exports.updateEvent = async (req, res) => {
       eventType,
       location,
       meetingNotes,
+      userID,
     },
     { overwrite: true, new: true }
   );
   res.json({ status: 200, data: updateEvent });
 };
 
+//delete event
 exports.deleteEvent = async (req, res) => {
   let eventID = req.params.id;
   await Event.findByIdAndDelete(eventID);
   res.json({ status: 200, msg: "event deleted" });
+};
+
+//read the events for a particular month
+exports.getEvents = async (req, res) => {
+  let userID = req.user._id;
+  let month = parseInt(req.params.month);
+  let year = parseInt(req.params.year);
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  //get the events that occur in the given month
+  let monthEvents = await Event.find({
+    date: { $gte: firstDay, $lte: lastDay },
+    userID: userID,
+  });
+  let daysInMonth = getDaysInMonth(new Date(year, month));
+
+  let result = [...Array(daysInMonth)].map((e) => []);
+
+  //add the event to the day respectively
+  for (let i = 0; i < monthEvents.length; i++) {
+    let eventDay = monthEvents[i].date.getDate();
+    result[eventDay - 1].push(monthEvents[i]);
+  }
+
+  //sort the event by time for each day
+  for (let j = 0; j < result.length; j++) {
+    if (result[j].length > 1) {
+      result[j].sort(compare);
+    }
+  }
+  res.json({ status: 200, data: result });
 };

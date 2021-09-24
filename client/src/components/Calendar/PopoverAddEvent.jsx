@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import TimePicker from "@mui/lab/TimePicker";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import Alert from "@mui/material/Alert";
 
 function PopoverAddEvent(props) {
   let today = new Date();
@@ -13,9 +20,10 @@ function PopoverAddEvent(props) {
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(today.toISOString().slice(0, 10));
   let [time, setTime] = useState("");
+  let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState("");
-  let [eventType, setEventType] = useState("");
-  let [location, setLocation] = useState("");
+  let [eventType, setEventType] = useState("Online");
+  let [location, setLocation] = useState("Zoom");
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -23,17 +31,16 @@ function PopoverAddEvent(props) {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-  function handleDate(e) {
-    setDate(e.target.value);
-  }
-  function handleTime(e) {
-    setTime(e.target.value);
-  }
   function handlePeople(e) {
     setPeople(e.target.value);
   }
   function handleEventType(e) {
     setEventType(e.target.value);
+    if (e.target.value === "Online") {
+      setLocation("Zoom");
+    } else {
+      setLocation("");
+    }
   }
   function handleLocation(e) {
     setLocation(e.target.value);
@@ -61,6 +68,9 @@ function PopoverAddEvent(props) {
     }
     if (time) {
       input.time = time;
+    } else {
+      setAlertTime(true);
+      return;
     }
     if (people) {
       input.people = people;
@@ -82,6 +92,7 @@ function PopoverAddEvent(props) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               required
               label="Title"
               onChange={handleTitle}
@@ -90,6 +101,7 @@ function PopoverAddEvent(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="standard"
               label="Description"
               multiline
               onChange={handleDescription}
@@ -97,31 +109,36 @@ function PopoverAddEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              label="Date"
-              type="date"
-              required
-              value={date}
-              onChange={handleDate}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Date"
+                value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              label="Time"
-              type="time"
-              value={time}
-              onChange={handleTime}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TimePicker
+                label="Time"
+                value={time}
+                onChange={(newValue) => {
+                  setTime(newValue);
+                  if (alertTime) {
+                    setAlertTime(false);
+                  }
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+            {alertTime && <Alert severity="error">Time is required</Alert>}
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
+              variant="standard"
               label="People"
               multiline
               placeholder="separate by comma"
@@ -130,24 +147,44 @@ function PopoverAddEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="event-type-select">
+            <FormControl className="event-type-select" variant="standard">
               <InputLabel>Event Type</InputLabel>
-              <Select native value={eventType} onChange={handleEventType}>
-                <option aria-label="None" value="" />
-                <option value="online">Online</option>
-                <option value="offline">Offline</option>
+              <Select value={eventType} onChange={handleEventType}>
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Location"
-              onChange={handleLocation}
-              value={location}
-            />
-          </Grid>
+          {eventType !== "Online" ? (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="standard"
+                label="Location"
+                onChange={handleLocation}
+                value={location}
+                required
+              />
+            </Grid>
+          ) : (
+            <Grid item xs={12} sm={6}>
+              <FormControl className="event-type-select" variant="standard">
+                <InputLabel>Location</InputLabel>
+                <Select value={location} onChange={handleLocation}>
+                  <MenuItem value="Zoom">Zoom</MenuItem>
+                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                  <MenuItem value="Google Meet">Google Meet</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
+
           <Grid item xs={12} sm={12}>
-            <Button variant="outlined" color="primary" type="submit">
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              startIcon={<AddBoxIcon />}
+            >
               Add Event
             </Button>
           </Grid>

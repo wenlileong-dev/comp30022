@@ -20,7 +20,7 @@
 
 .calendar-day {
   min-height: 5rem;
-  border: 1px solid #f3e9d8;
+  border: 1px solid #3f51b5;
   padding-left: 0.5rem;
   /* height: 6rem; */
 }
@@ -48,7 +48,7 @@
   height: auto;
   max-height: 50vh;
   margin-top: calc(100vh - 85vh - 20px);
-  background: #fff;
+  background-color: white;
   border-radius: 4px;
   padding: 20px;
   border: 1px solid #999;
@@ -71,11 +71,11 @@
   font-size: 20px;
 }
 
-.event-detail {
+/* .event-detail {
   background-color: bisque;
   padding: 0.5rem 1rem;
   margin: 0.5rem;
-}
+} */
 
 #space-btw-event-button {
   margin-right: 5px;
@@ -93,17 +93,18 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .calendar-event {
-    font-size: small;
-  }
   .calendar-month {
     font-size: 12px;
     font-weight: bold;
     margin: 0 1rem;
   }
   .box {
-    margin: 15% 2% 0 50%;
-    width: 45%;
+    margin: 20% 15% 0 25%;
+    width: 60%;
+  }
+  .close-icon {
+    right: calc(20% - 30px);
+    /* top: calc(20%); */
   }
 }
 
