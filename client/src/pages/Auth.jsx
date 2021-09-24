@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
-import { useHistory } from "react-router-dom";
-import { message } from "antd";
-import axios from "./../commons/axios";
+// import { useHistory } from "react-router-dom";
+// import { message } from "antd";
+import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,7 +22,9 @@ function Auth() {
 
   const onLogin = async () => {
     let loginData = { email, password };
-    let loginUser = await axios.post("/user/login", loginData);
+    let loginUser = await axios.post("/user/login", loginData, {
+      withCredentials: true,
+    });
     console.log(loginUser.data);
     if (!loginUser.data.success) {
       setIsLoginAlert(true);

@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser");
 //connect with database
 require("./models/db");
 
@@ -12,7 +12,8 @@ const user = require("./routes/user");
 
 let port = process.env.PORT || 5000;
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: process.env.FRONT_END_URL }));
+app.use(cookieParser());
 app.use(express.json({ urlencoded: true }));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 

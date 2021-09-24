@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 var User = require("../models/user");
 // register user acc
-const userPostRegister = async (req, res) => {
+exports.userPostRegister = async (req, res) => {
   try {
     User.findOne({ email: req.body.email }).then((user) => {
       // if email already used, error
@@ -26,6 +26,8 @@ const userPostRegister = async (req, res) => {
               newUser.password = hash;
               newUser.save().then((user) => {
                 // return register information in json format
+                const token = user.generateAuthToken();
+                res.cookie("token", token);
                 res.status(200).json({
                   success: true,
                   user: {
@@ -51,7 +53,7 @@ const userPostRegister = async (req, res) => {
   }
 };
 
-const userPostLogin = async (req, res) => {
+exports.userPostLogin = async (req, res) => {
   try {
     User.findOne({
       email: req.body.email,
@@ -63,6 +65,8 @@ const userPostLogin = async (req, res) => {
         bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
           // if the password matches the email, login successfully and show user information
           if (isMatch) {
+            const token = user.generateAuthToken();
+            res.cookie("token", token);
             res.status(200).json({
               success: true,
               user: {
@@ -82,11 +86,16 @@ const userPostLogin = async (req, res) => {
       }
     });
   } catch {
-    res.status(200).json({ error: "Data find failed" });
+    res.status(200).json({ success: false, error: "Data find failed" });
   }
 };
 
-const userPostUpdate = async (req, res) => {
+exports.userLogout = async (req, res, next) => {
+  res.clearCookie("token");
+  res.status(200).json({ status: 200 });
+};
+
+exports.userPostUpdate = async (req, res) => {
   try {
     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
     if (reg.test(req.body.password)) {
@@ -145,10 +154,4 @@ const userPostUpdate = async (req, res) => {
     res.status(400);
     return res.send("Database update failed");
   }
-};
-
-module.exports = {
-  userPostLogin,
-  userPostRegister,
-  userPostUpdate,
 };

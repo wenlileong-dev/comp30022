@@ -38,6 +38,7 @@ function compare(a, b) {
 
 //read the events for a particular month
 exports.getEvents = async (req, res) => {
+  let userId = req.user;
   let month = parseInt(req.params.month);
   let year = parseInt(req.params.year);
   const firstDay = new Date(year, month, 1);
