@@ -10,6 +10,7 @@ const eventSchema = new mongoose.Schema(
     eventType: { type: String, enum: ["Online", "Offline"] },
     location: { type: String },
     meetingNotes: { type: String, default: "" },
+    userID: { type: mongoose.Schema.ObjectId, ref: "User" },
   },
   {
     toJSON: { virtuals: true },
