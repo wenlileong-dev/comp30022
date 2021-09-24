@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-var User = require('../models/user');
+var User = require("../models/user");
 // register user acc
 exports.userPostRegister = async (req, res) => {
   try {
