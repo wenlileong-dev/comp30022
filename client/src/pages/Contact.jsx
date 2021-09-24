@@ -1,15 +1,3 @@
-// import React from "react";
-
-// function Contact() {
-//   return (
-//     <React.Fragment>
-//       <p>Contact Page</p>
-//     </React.Fragment>
-//   );
-// }
-
-// export default Contact;
-//import React from "react";
 import ReactDOM from 'react-dom';
 import { Tree } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
@@ -35,6 +23,10 @@ import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import Divider from '@mui/material/Divider';
 
 import Popover from '@mui/material/Popover';
+import axios from "axios";
+import NoteTimeline from "./../components/Group/NoteTimeline";
+import DisplayGroup from "./../components/Group/DisplayGroup";
+import { useState, useEffect } from 'react';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -94,8 +86,26 @@ function Contact() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  // fetch group infomaiton
+  const [groups, getGroups] = useState('');
+
+  useEffect (() => {
+    getAllGroups();
+  }, []);
+
+  const getAllGroups = () => {
+    axios.get(`/group`)
+      .then((response) => {
+        const allGroups = response.data.allGroups;
+        getGroups(allGroups);
+      })
+      .catch(error => console.error(`Error: ${error}`));
+  }
+
   return (
     <div>
+      {/* <NoteTimeline groups = {groups}/> */}
+      <DisplayGroup groups = {groups}/>
       <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         Open Popover
       </Button>
