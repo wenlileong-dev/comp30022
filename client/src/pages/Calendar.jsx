@@ -5,21 +5,27 @@ import CalendarTitle from "./../components/Calendar/CalendarTitle";
 import CalendarDays from "./../components/Calendar/CalendarDays";
 import WeeklyCalendar from "../components/Calendar/WeeklyCalendar";
 import mobileView from "../screenSize";
+import AuthFail from "./../components/AuthFail";
 
 function Calendar() {
   let today = new Date();
   let [month, setMonth] = useState(today.getMonth());
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
+  const [isAuth, setIsAuth] = useState(false);
+  const [authFailMsg, setAuthFailMsg] = useState("");
 
   //fetch the events of the month
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(`/api/calendar/${month}/${year}`);
+      [];
       if (result.data.status !== 200) {
-        alert(result.data.errorMsg);
+        setIsAuth(false);
+        setAuthFailMsg(result.data.errorMsg);
         window.location.href = "/login";
       } else {
+        setIsAuth(true);
         setEvents(result.data.data);
       }
     };
@@ -47,20 +53,25 @@ function Calendar() {
   };
 
   return (
-    <>
-      <CalendarTitle
-        month={month}
-        year={year}
-        nextMonth={nextMonth}
-        prevMonth={prevMonth}
-      />
-      {!mobileView && <CalendarHeader />}
+    <React.Fragment>
+      {isAuth && (
+        <>
+          <CalendarTitle
+            month={month}
+            year={year}
+            nextMonth={nextMonth}
+            prevMonth={prevMonth}
+          />
+          {!mobileView && <CalendarHeader />}
 
-      {!mobileView && events.length > 0 && (
-        <CalendarDays month={month} year={year} events={events} />
+          {!mobileView && events.length > 0 && (
+            <CalendarDays month={month} year={year} events={events} />
+          )}
+          {mobileView && <WeeklyCalendar events={events} month={month + 1} />}
+        </>
       )}
-      {mobileView && <WeeklyCalendar events={events} month={month + 1} />}
-    </>
+      {authFailMsg && <AuthFail msg={authFailMsg} />}
+    </React.Fragment>
   );
 }
 

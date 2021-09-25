@@ -28,5 +28,6 @@ db.once("open", async () => {
 
 // Contacts model
 module.exports = {
-  Contacts: mongoose.model('contacts', require('./contacts.js'))
-}
+  Contacts: mongoose.model("contacts", require("./contacts.js")),
+  Groups: mongoose.model("group", require("./group.js")),
+};

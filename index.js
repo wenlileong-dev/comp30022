@@ -11,6 +11,7 @@ require("./models/db");
 const userRouter = require("./routes/userRouter");
 const calendarRouter = require("./routes/calendarRouter");
 const contactRouter = require("./routes/contactRouter");
+const group = require("./routes/groupRouter");
 
 let port = process.env.PORT || 5000;
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use("/user", userRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/contacts", contactRouter);
+app.use("/group", group);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
