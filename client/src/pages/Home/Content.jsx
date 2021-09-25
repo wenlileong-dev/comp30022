@@ -3,7 +3,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import AccountEdit from "../AccountEdit";
 import Account from "../Account";
 import Calendar from "../Calendar";
-import Contact from "../Contact";
+import Contact from "../Contact/Contact";
+import NewContact from "../Contact/NewContact";
+import ContactInfo from "../Contact/ContactInfo";
 import Dashboard from "../Dashboard";
 import Login from "../Auth";
 function Content() {
@@ -19,9 +21,13 @@ function Content() {
         <Route path="/dashboard" exact>
           <Dashboard />
         </Route>
+
         <Route path="/contact" exact>
           <Contact />
         </Route>
+        <Route path="/contact/add-contact" exact component={NewContact} />
+        <Route path="/contact/info" exact component={ContactInfo} />
+
         <Route path="/calendar" exact>
           <Calendar />
         </Route>

@@ -24,8 +24,9 @@ import Divider from "@mui/material/Divider";
 
 import Popover from "@mui/material/Popover";
 import axios from "axios";
-import NoteTimeline from "./../components/Group/NoteTimeline";
-import DisplayGroup from "./../components/Group/DisplayGroup";
+import NoteTimeline from "../../components/Group/NoteTimeline";
+import DisplayGroup from "../../components/Group/DisplayGroup";
+import AddContactLink from "./index";
 import { useState, useEffect } from "react";
 
 const Accordion = styled((props) => (
@@ -103,6 +104,7 @@ function Contact() {
 
   return (
     <div>
+      <AddContactLink />
       {/* <NoteTimeline groups = {groups}/> */}
       <DisplayGroup groups={groups} />
       <Button aria-describedby={id} variant="contained" onClick={handleClick}>
