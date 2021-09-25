@@ -211,12 +211,12 @@ function Navigation(props) {
 
           <Divider />
           <List>
-            <Link to="/account" onClick={() => setPage("account")}>
+            <Link to="/user" onClick={() => setPage("user")}>
               <ListItem button>
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Account" />
+                <ListItemText primary="User" />
               </ListItem>
             </Link>
             <Link to="/dashboard" onClick={() => setPage("dashboard")}>

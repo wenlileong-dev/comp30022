@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
+import AccountEdit from "../AccountEdit";
 import Account from "../Account";
 import Calendar from "../Calendar";
 import Contact from "../Contact";
@@ -10,8 +10,11 @@ function Content() {
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/account" exact>
+        <Route path="/user" exact>
           <Account />
+        </Route>
+        <Route path="/user/editInfo" exact>
+          <AccountEdit />
         </Route>
         <Route path="/dashboard" exact>
           <Dashboard />
@@ -22,7 +25,7 @@ function Content() {
         <Route path="/calendar" exact>
           <Calendar />
         </Route>
-        <Route path="/Login">
+        <Route path="/login">
           <Login />
         </Route>
         <Redirect to="/dashboard"></Redirect>
