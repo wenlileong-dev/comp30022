@@ -6,7 +6,7 @@ import WeeklyDay from "./../Calendar/WeeklyDay";
 function WeeklyCalendar(props) {
   return (
     <React.Fragment>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ my: 2 }}>
         {props.events &&
           props.events.map((day, index) => {
             if (day.length > 0) {

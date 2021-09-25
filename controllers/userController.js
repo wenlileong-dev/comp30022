@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-var User = require('../models/user');
+var User = require("../models/user");
 // register user acc
 exports.userPostRegister = async (req, res) => {
   try {
@@ -16,10 +16,11 @@ exports.userPostRegister = async (req, res) => {
           const newUser = new User({
             email: req.body.email,
             password: req.body.password,
-            firstName: req.body.firstname,
-            lastName: req.body.lastname,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
           });
+          
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
@@ -35,7 +36,7 @@ exports.userPostRegister = async (req, res) => {
                     password: user.password,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    phoneNumber: user.phonenumber,
+                    phoneNumber: user.phoneNumber,
                   },
                 });
               });
@@ -48,7 +49,7 @@ exports.userPostRegister = async (req, res) => {
         }
       }
     });
-  } catch {
+  }catch{
     res.status(200).json({ success: false, error: "Database update failed" });
   }
 };
@@ -95,63 +96,111 @@ exports.userLogout = async (req, res, next) => {
   res.status(200).json({ status: 200 });
 };
 
-exports.userPostUpdate = async (req, res) => {
-  try {
-    let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
-    if (reg.test(req.body.password)) {
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-          if (err) throw err;
-          Customer.findOne(
-            { email: req.body.email },
-            function (err, duplicateCustomer) {
-              if (duplicateCustomer) {
-                if (duplicateCustomer._id != req.params.id) {
-                  console.log(duplicateCustomer._id);
-                  console.log(req.params.id);
-                  res.status(409).json({
-                    success: false,
-                    message:
-                      "another customer has already registered that email",
-                  });
-                }
-              } else {
-                Customer.findOneAndUpdate(
-                  { _id: req.params.id },
-                  // update information
-                  {
-                    givenName: req.body.givenName,
-                    familyName: req.body.familyName,
-                    password: hash,
-                  },
-                  { new: true },
-                  // whether the update is successful or not
-                  function (err, updateCustomer) {
-                    if (err) {
-                      res.status(404).json({
-                        success: false,
-                        message: "customer email does not exist",
-                      });
-                    } else {
-                      res.status(200).json({
-                        success: true,
-                        updateCustomer: updateCustomer,
-                      });
-                    }
-                  }
-                );
-              }
-            }
-          );
-        });
-      });
-    } else {
-      res
-        .status(200)
-        .json({ success: false, error: "New password not valid!" });
-    }
-  } catch {
-    res.status(400);
-    return res.send("Database update failed");
+exports.userGetDetail = async (req, res) =>{
+  let userID = req.user._id;
+  try{
+      // whether we can find the snack by using snack id
+      User.findById(userID, function(err, details){
+          if(details){
+              res.status(200).json({ success: true, user: details})
+          } else{
+              res.status(400).json({ success: false, err: err})
+          }
+      })
   }
-};
+  catch{
+      res.status(400)
+      return res.send("Database get failed")
+  }
+}
+
+exports.userPostUpdate = async (req, res) =>{
+  try{
+      let reg=/^(?=\S*[a-z])(?=\S*\d)\S{8,}$/
+      if(reg.test(req.body.password)){
+          bcrypt.genSalt(10,(err,salt)=>{
+              bcrypt.hash(req.body.password,salt,(err,hash)=>{
+                  if (err) throw err;
+                  User.findOne({email:req.body.email}, function (err,duplicateUser){
+                      if(duplicateUser){if(duplicateUser._id != req.params.id) {
+                          console.log(duplicateUser._id)
+                          console.log(req.params.id)
+                          res.status(409).json({success: false, message:"another customer has already registered that email"})
+                      }}
+                      else{
+                        User.findOneAndUpdate(
+                              {_id: req.params.id},
+                              // update information
+                              {
+                                firstName: req.body.firstName,
+                                lastName: req.body.lastName,
+                                phoneNumber: req.body.phoneNumber,
+                                password: hash,
+                              },
+                              {new: true},
+                              // whether the update is successful or not
+                              function(err,updateUser){
+                                  if(err){
+                                      res.status(404).json({success: false, message:"User email does not exist"})
+                                  }else{
+                                      res.status(200).json({success: true,updateUser: updateUser})
+                                  }
+                              }
+                          )
+                      }
+                  })
+              })
+          })
+      }else{
+          res.status(200).json({ success: false, error: 'New password not valid!'});
+      }
+  }catch{
+      res.status(400)
+      return res.send("Database update failed")
+  }
+}
+
+// exports.userPostUpdate = async (req, res) => {
+//   try {
+//     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
+//     if (reg.test(req.body.password)) {
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(req.body.password, salt, (err, hash) => {
+//           if (err) throw err;
+//           User.findByIdAndUpdate(
+//             req.params._id,
+//             // update information
+//             {
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             phoneNumber: req.body.phoneNumber,
+//             password: hash,
+//             },
+//             { new: true },
+//             // whether the update is successful or not
+//             function (err, updateUser) {    
+//               if (err) {
+//                 res.status(404).json({
+//                   success: false,
+//                   message: "User account does not exist",
+//                 });
+//               } else {
+//                 res.status(200).json({
+//                   success: true,
+//                   updateUser: updateUser,
+//                 });
+//               }
+//             }
+//           )
+//         });
+//       });
+//     } else {
+//       res
+//         .status(200)
+//         .json({ success: false, error: "New password not valid!" });
+//     }
+//   } catch {
+//     res.status(400);
+//     return res.send("Database update failed");
+//   }
+// };

@@ -4,7 +4,7 @@ import Alert from "@mui/material/Alert";
 // import { useHistory } from "react-router-dom";
 // import { message } from "antd";
 import axios from "axios";
-
+// import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Auth() {
@@ -13,13 +13,13 @@ function Auth() {
   const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
   const [isRegisterAlert, setIsRegisterAlert] = useState(false);
   const [isLoginAlert, setIsLoginAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-
+  // let history = useHistory()
   const onLogin = async () => {
     let loginData = { email, password };
     let loginUser = await axios.post("/user/login", loginData, {
@@ -31,11 +31,16 @@ function Auth() {
       setAlertMessage(loginUser.data.error);
     } else {
       window.location.href = "/dashboard";
+      // console.log(loginUser.data);
+      // history.push({
+      //   pathname: '/dashboard',
+      //   state: { user: loginUser.data }
+      // })
     }
   };
 
   const onRegister = async () => {
-    let registerData = { firstname, lastname, email, password, phonenumber };
+    let registerData = { firstName, lastName, email, password, phoneNumber };
     let registerUser = await axios.post("/user/register", registerData);
     if (!registerUser.data.success) {
       setIsRegisterAlert(true);

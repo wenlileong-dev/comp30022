@@ -26,6 +26,8 @@ db.once("open", async () => {
   console.log("Mongo connection started on " + db.host + ":" + db.port);
 });
 
+// Contacts model
 module.exports = {
-  Groups: mongoose.model('group', require('./group.js'))
-}
+  Contacts: mongoose.model("contacts", require("./contacts.js")),
+  Groups: mongoose.model("group", require("./group.js")),
+};
