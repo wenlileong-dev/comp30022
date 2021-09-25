@@ -52,7 +52,8 @@ exports.updateInformation = async (req, res, next) => {
 }
 
 exports.deleteGroup = async (req, res) => {
-    let groupID = req.params.id;
-    await Event.findByIdAndDelete(groupID);
+    let groupID = req.body.id;
+    const oldGroup = Groups.findById(groupID);
+    await Groups.findByIdAndDelete(groupID);
     res.json({ status:200, msg: "group deleted"});
 }

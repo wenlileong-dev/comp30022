@@ -20,6 +20,7 @@ import Popover from "@mui/material/Popover";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
+import GroupFooter from "./GroupFooter";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -85,8 +86,9 @@ export default function DisplayGroup(props) {
         console.log(groups);
         return (
           <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
+            key = "{index}"
+            expanded={expanded === "panel" + index}
+            onChange={handleChange("panel" + index)}
           >
             <AccordionSummary
               aria-controls="panel1d-content"
@@ -102,33 +104,28 @@ export default function DisplayGroup(props) {
                   bgcolor: "background.paper",
                 }}
               >
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <ImageIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <WorkIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Work" secondary="Jan 7, 2014" />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <BeachAccessIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Vacation" secondary="July 20, 2014" />
-                </ListItem>
+                {
+                  group.contacts.map(function(contact,index) {
+                    return (
+                      <div>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <ImageIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary={contact.firstName + " " + contact.lastName} />
+                        </ListItem>
+                        <Divider variant="inset" component="li" />
+                      </div>
+                    )
+                    
+                    
+                  }
+                  )
+                }
               </List>
+              <GroupFooter groupID = {group._id}/>
             </AccordionDetails>
           </Accordion>
         );

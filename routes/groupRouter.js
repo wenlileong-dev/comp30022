@@ -8,5 +8,7 @@ router.get("/", groupController.displayGroup);
 router.post("/create", groupController.newGroup);
 // update the order
 router.post('/update/:id',groupController.updateInformation);
+//
+router.post('/delete',groupController.deleteGroup);
 
 module.exports = router;

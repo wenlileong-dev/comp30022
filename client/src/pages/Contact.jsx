@@ -28,6 +28,8 @@ import NoteTimeline from "./../components/Group/NoteTimeline";
 import DisplayGroup from "./../components/Group/DisplayGroup";
 import { useState, useEffect } from "react";
 
+import GroupTitle from "./../components/Group/GroupTitle";
+
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -103,172 +105,12 @@ function Contact() {
 
   return (
     <div>
+      <GroupTitle/>
       {/* <NoteTimeline groups = {groups}/> */}
       <DisplayGroup groups={groups} />
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        Open Popover
-      </Button>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-      </Popover>
-
-      <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Default Group</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: 360,
-              bgcolor: "background.paper",
-            }}
-          >
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <WorkIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Work" secondary="Jan 7, 2014" />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <BeachAccessIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Vacation" secondary="July 20, 2014" />
-            </ListItem>
-          </List>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Collapsible Group Item #2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
-      >
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Collapsible Group Item #3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
     </div>
   );
 }
 
-// class Contact extends React.Component {
-//   onSelect = (selectedKeys, info) => {
-//     console.log('selected', selectedKeys, info);
-//   };
-
-//   render() {
-//     //return <Button variant="text">Text</Button>;
-//     return (
-//       <Tree
-//         showLine
-//         switcherIcon={<DownOutlined />}
-//         defaultExpandedKeys={['0-0-0']}
-//         onSelect={this.onSelect}
-//         treeData={[
-//           {
-//             title: 'parent 1',
-//             key: '0-0',
-//             children: [
-//               {
-//                 title: 'parent 1-0',
-//                 key: '0-0-0',
-//                 children: [
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-0-0',
-//                   },
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-0-1',
-//                   },
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-0-2',
-//                   },
-//                 ],
-//               },
-//               {
-//                 title: 'parent 1-1',
-//                 key: '0-0-1',
-//                 children: [
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-1-0',
-//                   },
-//                 ],
-//               },
-//               {
-//                 title: 'parent 1-2',
-//                 key: '0-0-2',
-//                 children: [
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-2-0',
-//                   },
-//                   {
-//                     title: 'leaf',
-//                     key: '0-0-2-1',
-//                   },
-//                 ],
-//               },
-//             ],
-//           },
-//         ]}
-//       />
-//     );
-//   }
-// }
-
-// ReactDOM.render(<Contact />, document.getElementById('root'));
 
 export default Contact;
