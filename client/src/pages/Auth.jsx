@@ -13,9 +13,9 @@ function Auth() {
   const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
   const [isRegisterAlert, setIsRegisterAlert] = useState(false);
   const [isLoginAlert, setIsLoginAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -40,7 +40,7 @@ function Auth() {
   };
 
   const onRegister = async () => {
-    let registerData = { firstname, lastname, email, password, phonenumber };
+    let registerData = { firstName, lastName, email, password, phoneNumber };
     let registerUser = await axios.post("/user/register", registerData);
     if (!registerUser.data.success) {
       setIsRegisterAlert(true);

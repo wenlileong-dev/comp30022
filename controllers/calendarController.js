@@ -18,6 +18,7 @@ function compare(a, b) {
 
 //create a new event
 exports.addEvent = async (req, res) => {
+  let userID = req.user._id;
   let { title, description, date, time, people, eventType, location } =
     req.body;
   if (people) {
@@ -31,6 +32,7 @@ exports.addEvent = async (req, res) => {
     people,
     eventType,
     location,
+    userID,
   });
   const saveEvent = await newEvent.save();
   res.json({ status: 200, data: newEvent });
@@ -38,6 +40,7 @@ exports.addEvent = async (req, res) => {
 
 //update event details
 exports.updateEvent = async (req, res) => {
+  let userID = req.user._id;
   let {
     title,
     description,
@@ -63,6 +66,7 @@ exports.updateEvent = async (req, res) => {
       eventType,
       location,
       meetingNotes,
+      userID,
     },
     { overwrite: true, new: true }
   );
@@ -78,6 +82,7 @@ exports.deleteEvent = async (req, res) => {
 
 //read the events for a particular month
 exports.getEvents = async (req, res) => {
+  let userID = req.user._id;
   let month = parseInt(req.params.month);
   let year = parseInt(req.params.year);
   const firstDay = new Date(year, month, 1);
@@ -86,6 +91,7 @@ exports.getEvents = async (req, res) => {
   //get the events that occur in the given month
   let monthEvents = await Event.find({
     date: { $gte: firstDay, $lte: lastDay },
+    userID: userID,
   });
   let daysInMonth = getDaysInMonth(new Date(year, month));
 
