@@ -21,6 +21,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import GroupFooter from "./GroupFooter";
+import GroupComponent from "./GroupComponent";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -59,96 +61,118 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function DisplayGroup(props) {
-  const [expanded, setExpanded] = React.useState("panel1");
+  // const [expanded, setExpanded] = React.useState("panel1");
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
+  // const handleChange = (panel) => (event, newExpanded) => {
+  //   setExpanded(newExpanded ? panel : false);
+  // };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  // const open = Boolean(anchorEl);
+  // const id = open ? "simple-popover" : undefined;
+
+  const renderDeleteButton = (id) => {
+    if (id != "614feba57ed1181a1837746d"){
+      return <GroupFooter groupID = {id}/>
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>{props.group.groupName}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {props.contacts &&
+            props.contacts.map((contact) => {
+              return <GroupComponent contact={contact} key={contact._id}/>;
+            })}
+          {renderDeleteButton(props.group._id)}
+        </AccordionDetails>
+      </Accordion>
+    </React.Fragment>
+  );
 
   // fetch contact name
 
+  // const displayNotes = (props) => {
+  //   const renderDeleteButton = (id) => {
+  //     if (id != "614feba57ed1181a1837746d"){
+  //       return <GroupFooter groupID = {id}/>
+  //     }
+  //   }
 
-  const displayNotes = (props) => {
-    console.log("display group");
-    console.log(props);
-    console.log(props.groups);
-    console.log(props.contacts);
-    const groups = props.groups;
-    const contacts = props.contacts;
-    console.log(groups);
-    console.log(contacts);
+  //   if (props.groups?.length > 0) {
 
-    if (groups?.length > 0) {
-
-      return groups.map((group, index) => {
-        console.log(groups);
-        console.log(index);
-        console.log(contacts);
-        console.log(contacts[index]);
-        return (
-          <Accordion
-            key = "{index}"
-            expanded={expanded === "panel" + index}
-            onChange={handleChange("panel" + index)}
-          >
-            <AccordionSummary
-              aria-controls="panel1d-content"
-              id="panel1d-header"
-            >
-              <Typography>{group.groupName}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
+  //     return (
+  //       props.groups && 
+  //       props.groups.map((group, index) => {
+  //       return (
+  //         <Accordion
+  //           key = "{index}"
+  //           expanded={expanded === "panel" + index}
+  //           onChange={handleChange("panel" + index)}
+  //         >
+  //           <AccordionSummary
+  //             aria-controls="panel1d-content"
+  //             id="panel1d-header"
+  //           >
+  //             <Typography>{group.groupName}</Typography>
+  //           </AccordionSummary>
+  //           <AccordionDetails>
+  //             <List
+  //               sx={{
+  //                 width: "100%",
+  //                 maxWidth: 360,
+  //                 bgcolor: "background.paper",
+  //               }}
+  //             >
                 
-                {
-
-                  props.contacts[index].map((contact,i) => {
-                    return (
-                      <div>
-                        <ListItem>
-                          <ListItemAvatar>
-                            <Avatar>
-                              <ImageIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText primary={contact} key={i} />
-                        </ListItem>
-                        <Divider variant="inset" component="li"/>
-                      </div>
-                    )
+  //               {
+  //                 props.contacts[index] &&
+  //                 props.contacts[index].map((contact,i) => {
+  //                   return (
+  //                     <div>
+  //                       <ListItem>
+  //                         <ListItemAvatar>
+  //                           <Avatar>
+  //                             <ImageIcon />
+  //                           </Avatar>
+  //                         </ListItemAvatar>
+  //                         <ListItemText primary={contact} key={i} />
+  //                       </ListItem>
+  //                       <Divider variant="inset" component="li"/>
+  //                     </div>
+  //                   )
                     
                     
-                  }
-                  )
-                }
-              </List>
-              <GroupFooter groupID = {group._id}/>
-            </AccordionDetails>
-          </Accordion>
-        );
-      });
-    } else {
-      return <h3>Not group yet</h3>;
-    }
-  };
-  return <>{displayNotes(props)}</>;
+  //                 }
+  //                 )
+  //               }
+  //             </List>
+  //             {renderDeleteButton(group._id)}
+  //             {/* <GroupFooter groupID = {group._id}/> */}
+  //           </AccordionDetails>
+  //         </Accordion>
+  //       );
+  //     }))
+  //   } else {
+  //     return <h3>No group yet</h3>;
+  //   }
+  // };
+  //return <>{displayNotes(props)}</>;
 }

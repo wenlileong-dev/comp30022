@@ -88,84 +88,71 @@ function Contact() {
   const id = open ? "simple-popover" : undefined;
 
   // fetch group infomaiton
-  const [groups, getGroups] = useState("");
-
-  useEffect(() => {
-    getAllGroups();
-  }, []);
-
-  const getAllGroups = () => {
-    axios
-      .get(`/group`)
-      .then((response) => {
-        const allGroups = response.data.allGroups;
-        getGroups(allGroups);
-      })
-      .catch((error) => console.error(`Error: ${error}`));
-  };
-
-  //group list and contact list
-  // const [groupName, getGroupName] = useState([]);
-  const [contacts, getContacts] = useState([]);
+  // const [groups, getGroups] = useState("");
 
   // useEffect(() => {
-  //   getAllGroupName();
+  //   getAllGroups();
   // }, []);
 
-  // const getAllGroupName = () => {
+  // const getAllGroups = () => {
   //   axios
   //     .get(`/group`)
   //     .then((response) => {
   //       const allGroups = response.data.allGroups;
-  //       const groupname = [];
-  //       allGroups.map((eachGroup,index) => {
-  //         groupname.push(eachGroup.groupName);
-  //       })
-  //       getGroupName(groupname);
+  //       getGroups(allGroups);
   //     })
   //     .catch((error) => console.error(`Error: ${error}`));
   // };
-  // console.log(groupName);
-  // console.log("groupN");
 
+  //group list and contact list
+  const [groups, setGroups] = React.useState([]);
+  const [contacts, setContacts] = React.useState([]);
+
+  const getGroupContacts = async () => {
+    const result = await axios("/group/all");
+    setGroups(result.data.allGroups);
+    setContacts(result.data.allContacts);
+  };
+
+  //const [contacts, getContacts] = useState([]);
 
   useEffect(() => {
-    getAllContactName();
+    getGroupContacts();
   }, []);
 
-  const getAllContactName = () => {
-    axios
-      .get(`/group`)
-      .then((response) => {   
-        const allGroups = response.data.allGroups;
-        const contactName = [];
-        console.log(contactName);
-        allGroups.map((eachGroup, index) => {
-          contactName.push([]);
-          console.log(contactName);
-          eachGroup.contacts.map((eachContact,i) => {
-            // console.log("each contact");
-            // console.log(eachContact);
-            return axios
-                     .get(`/api/contacts/info/${eachContact}`)
-                     .then((response) => {
-                      console.log(eachContact);
-                      //console.log(index);
-                      console.log(contactName);
-                      console.log(contactName[index]);
-                      contactName[index].push(response.data.info.firstName + " " + response.data.info.lastName);
-                     })
-          })
-        })
-        console.log(contactName);
-        getContacts(contactName);
-      })
-      .catch((error) => console.error(`Error: ${error}`));
-  };
+  // const getAllContactName = () => {
+  //   axios
+  //     .get(`/group`)
+  //     .then((response) => {   
+  //       const allGroups = response.data.allGroups;
+  //       const contactName = [];
+
+  //       allGroups.map((eachGroup, index) => {
+  //         contactName.push([]);
+
+  //         eachGroup.contacts.map((eachContact,i) => {
+  //           // console.log("each contact");
+  //           // console.log(eachContact);
+  //           return axios
+  //                    .get(`/api/contacts/info/${eachContact}`)
+  //                    .then((response) => {
+  //                     // console.log(eachContact);
+  //                     //console.log(index);
+  //                     // console.log(contactName);
+  //                     // console.log(contactName[index]);
+  //                     contactName[index].push(response.data.info.firstName + " " + response.data.info.lastName);
+  //                    })
+  //         })
+  //       })
+  //       //console.log(contactName);
+  //       getContacts(contactName);
+  //     })
+  //     .catch((error) => console.error(`Error: ${error}`));
+  // };
   
   // console.log("contactN");
-  console.log(contacts);
-  console.log(groups);
+  // console.log(contacts);
+  // console.log(groups);
   
 
 
@@ -175,14 +162,20 @@ function Contact() {
       <GroupTitle/>
       <AddContactLink />
       {/* <DisplayGroup groups={groups}/> */}
+      {groups &&
+        contacts &&
+        groups.map((group, index) => {
+          return (
+            <DisplayGroup
+              group={group}
+              contacts={contacts[index]}
+              key={`group${index}`}
+            />
+          );
+        })}
 
       
-      <DisplayGroup groups={groups} contacts={contacts}/>
-      {/* {groupName.map((group,index) => {
-        return (
-          <DisplayGroup groupnames={groupName[index]}/>
-        )
-      })} */}
+      {/* <DisplayGroup groups={groups} contacts={contacts}/> */}
 
     </div>
   );

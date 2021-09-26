@@ -1,4 +1,4 @@
-const {Groups} = require("./../models/db.js");
+const {Groups, Contacts} = require("./../models/db.js");
 
 // get all group
 exports.displayGroup = async (req, res, next) => {
@@ -51,9 +51,48 @@ exports.updateInformation = async (req, res, next) => {
 	}
 }
 
+// exports.deleteGroup = async (req, res) => {
+//     let groupID = req.body.id;
+//     const oldGroup = Groups.findById(groupID);
+//     await Groups.findByIdAndDelete(groupID);
+//     res.json({ status:200, msg: "group deleted"});
+// }
+
 exports.deleteGroup = async (req, res) => {
-    let groupID = req.body.id;
-    const oldGroup = Groups.findById(groupID);
-    await Groups.findByIdAndDelete(groupID);
-    res.json({ status:200, msg: "group deleted"});
+  let groupID = req.body.id;
+  let defaultGroup = await Groups.findById("614feba57ed1181a1837746d");
+  let oldGroup =  await Groups.findById(groupID);
+  const moveContact = defaultGroup.contacts.concat(oldGroup.contacts);
+  defaultGroup.contacts = moveContact;
+  res.json({ status:200, msg: moveContact});
+
+  try {
+    Groups.updateOne({'_id': '614feba57ed1181a1837746d'}, 
+    {$set: defaultGroup}, () => {})
+  }catch (e){
+    res.json({ errorMsg: "database error"});
+  }
+  
+  await Groups.findByIdAndDelete(groupID);
+  res.json({ status:200, msg: "group deleted"});
 }
+
+
+exports.getAllGroup = async(req, res) => {
+  try{
+    let allGroups = await Groups.find();
+    let allContacts = [];
+    for (let i=0;i < allGroups.length; i++) {
+      let groupContactId = allGroups[i].contacts;
+      let groupContacts = [];
+      for (let j = 0; j < groupContactId.length; j++) {
+        let contact = await Contacts.findById(groupContactId[j]);
+        groupContacts.push(contact);
+      }
+      allContacts.push(groupContacts);
+    }
+    res.json({ allGroups, allContacts});
+  } catch (error) {
+    res.json({ errorMsg: "database error"});
+  }
+};
