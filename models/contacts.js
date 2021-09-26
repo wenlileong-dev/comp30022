@@ -36,6 +36,11 @@ const contactSchema = new mongoose.Schema({
 
 	remark: {
 		type: String
+	},
+
+	contactTime: {
+		type: Date,
+		default:Date.now
 	}
 })
 
