@@ -16,7 +16,9 @@ exports.displayContacts = async (req, res, next) => {
 // Get page of contact-adding
 exports.displayAddContact = async (req, res, next) => {
 	try {
-		res.send("get /contacts/add-contact");
+		res.json({
+			status:200
+		});
 	} catch (err) {
 		next(err);
 	}
