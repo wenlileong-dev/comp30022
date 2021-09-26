@@ -3,13 +3,15 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-function PopoverEventComponent(props) {
+function PopoverEvent(props) {
   console.log(props)
-  function handleOpenEditEvent() {
+  let time = new Date(props.event.time);
+  // console.log(props.setEvent(props.event))
+  // console.log(props.openEditEvent())
+  function handleOpenEvent() {
     props.setEvent(props.event);
     props.openEditEvent();
   }
-  let time = new Date(props.event.time);
   return (
     <Grid item xs={12} sm={6}>
       <Card style={{ backgroundColor: "#EAEEF3" }}>
@@ -32,13 +34,10 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </p>
           )}
-          <Button variant="outlined" size="small" id="space-btw-event-button">
-            Open Meeting
-          </Button>
           <Button
             variant="contained"
             size="small"
-            onClick={handleOpenEditEvent}
+            onClick={handleOpenEvent}
           >
             Event Details
           </Button>
@@ -47,4 +46,4 @@ function PopoverEventComponent(props) {
     </Grid>
   );
 }
-export default PopoverEventComponent;
+export default PopoverEvent;
