@@ -104,12 +104,86 @@ function Contact() {
       .catch((error) => console.error(`Error: ${error}`));
   };
 
+  //group list and contact list
+  // const [groupName, getGroupName] = useState([]);
+  const [contacts, getContacts] = useState([]);
+
+  // useEffect(() => {
+  //   getAllGroupName();
+  // }, []);
+
+  // const getAllGroupName = () => {
+  //   axios
+  //     .get(`/group`)
+  //     .then((response) => {
+  //       const allGroups = response.data.allGroups;
+  //       const groupname = [];
+  //       allGroups.map((eachGroup,index) => {
+  //         groupname.push(eachGroup.groupName);
+  //       })
+  //       getGroupName(groupname);
+  //     })
+  //     .catch((error) => console.error(`Error: ${error}`));
+  // };
+  // console.log(groupName);
+  // console.log("groupN");
+
+
+  useEffect(() => {
+    getAllContactName();
+  }, []);
+
+  const getAllContactName = () => {
+    axios
+      .get(`/group`)
+      .then((response) => {   
+        const allGroups = response.data.allGroups;
+        const contactName = [];
+        console.log(contactName);
+        allGroups.map((eachGroup, index) => {
+          contactName.push([]);
+          console.log(contactName);
+          eachGroup.contacts.map((eachContact,i) => {
+            // console.log("each contact");
+            // console.log(eachContact);
+            return axios
+                     .get(`/api/contacts/info/${eachContact}`)
+                     .then((response) => {
+                      console.log(eachContact);
+                      //console.log(index);
+                      console.log(contactName);
+                      console.log(contactName[index]);
+                      contactName[index].push(response.data.info.firstName + " " + response.data.info.lastName);
+                     })
+          })
+        })
+        console.log(contactName);
+        getContacts(contactName);
+      })
+      .catch((error) => console.error(`Error: ${error}`));
+  };
+  
+  // console.log("contactN");
+  console.log(contacts);
+  console.log(groups);
+  
+
+
+
   return (
     <div>
       <GroupTitle/>
       <AddContactLink />
-      {/* <NoteTimeline groups = {groups}/> */}
-      <DisplayGroup groups={groups} />
+      {/* <DisplayGroup groups={groups}/> */}
+
+      
+      <DisplayGroup groups={groups} contacts={contacts}/>
+      {/* {groupName.map((group,index) => {
+        return (
+          <DisplayGroup groupnames={groupName[index]}/>
+        )
+      })} */}
+
     </div>
   );
 }

@@ -15,7 +15,7 @@ function GroupFooter(props) {
 
 
   function deleteGroup() {
-      console.log(props);
+      //console.log(props);
       const input = {"id": props.groupID};
     axios.post(`/group/delete`, input).then((res) => {
         console.log(res.data);

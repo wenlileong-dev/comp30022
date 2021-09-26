@@ -78,12 +78,26 @@ export default function DisplayGroup(props) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  // fetch contact name
+
+
   const displayNotes = (props) => {
-    const { groups } = props;
+    console.log("display group");
+    console.log(props);
+    console.log(props.groups);
+    console.log(props.contacts);
+    const groups = props.groups;
+    const contacts = props.contacts;
+    console.log(groups);
+    console.log(contacts);
 
     if (groups?.length > 0) {
+
       return groups.map((group, index) => {
         console.log(groups);
+        console.log(index);
+        console.log(contacts);
+        console.log(contacts[index]);
         return (
           <Accordion
             key = "{index}"
@@ -104,8 +118,10 @@ export default function DisplayGroup(props) {
                   bgcolor: "background.paper",
                 }}
               >
+                
                 {
-                  group.contacts.map(function(contact,index) {
+
+                  props.contacts[index].map((contact,i) => {
                     return (
                       <div>
                         <ListItem>
@@ -114,9 +130,9 @@ export default function DisplayGroup(props) {
                               <ImageIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary={contact.firstName + " " + contact.lastName} />
+                          <ListItemText primary={contact} key={i} />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
+                        <Divider variant="inset" component="li"/>
                       </div>
                     )
                     
