@@ -12,6 +12,7 @@ import axios from 'axios';
 
 
 import Confirm from '../../../components/Confirm';
+import GroupSelector from '../../../components/Group/GroupSelector';
 import './index.css';
 
 export default class NewContact extends Component {
@@ -25,7 +26,8 @@ export default class NewContact extends Component {
         phone:'',
         department:'',
         address:'',
-        remark:''
+        remark:'',
+        group:{}
     }
 
     // const [isAuth, setIsAuth] = useState(false);
@@ -61,6 +63,10 @@ export default class NewContact extends Component {
 
     saveRemark = (e) => {
         this.setState({remark: e.target.value});
+    }
+
+    handleGroup = (groupObj) => {
+        this.setState({group: groupObj})
     }
     
     componentDidMount() {
@@ -165,6 +171,8 @@ export default class NewContact extends Component {
                         variant="filled"
                         onChange={this.saveRemark}
                     />
+                    
+                    <GroupSelector handleGroup={this.handleGroup}/>
                     <br/>
                     <br/>
                     <Confirm {...this.state}/>

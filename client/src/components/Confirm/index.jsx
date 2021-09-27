@@ -10,16 +10,19 @@ class Confirm extends Component {
     state = {
         error: false,
         success: false,
-        contact:{}
+        contact:{},
     }
 
     confirm = () => {
-      axios({
+        axios({
             method:'POST',
             url:'http://localhost:3000/api/contacts/add-contact',
             data: {
                 contact: {
                     ...this.props
+                },
+                group: {
+                    ...this.props.group
                 }
             }
         }).then(response => {
@@ -34,7 +37,12 @@ class Confirm extends Component {
             this.setState({error: true, success: false})
         })
     }
+
     render() {
+        // const group = this.props.group;
+        // group.contacts.push('123');
+        console.log('confirm',this.props.group)
+
         const {error, success} = this.state;
         return (
             <Fragment>
@@ -43,7 +51,7 @@ class Confirm extends Component {
                     type='submit' 
                     onClick={this.confirm}
                     style={{display:'block', margin:'auto'}}
-                    disabled={success}
+                    // disabled={success}
                 >Confirm</Button>
 
                 <br/>

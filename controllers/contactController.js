@@ -1,4 +1,6 @@
-const {Contacts} = require('../models/db.js')
+const {Contacts, Groups} = require('../models/db.js')
+
+const group = require("./groupController");
 
 // Get a list of all contacts
 exports.displayContacts = async (req, res, next) => {
@@ -30,6 +32,12 @@ exports.addContact = async (req, res, next) => {
 		const newContact = new Contacts (req.body.contact);
 		newContact.save();
 		// console.log(req.body);
+		const groupSelected = new Groups (req.body.group);
+		groupSelected.contacts.push(newContact._id+'');
+		console.log(groupSelected);
+		Groups.updateOne({'_id': groupSelected._id}, 
+			{$set: {contacts: groupSelected.contacts}}, () => {});
+
 		res.status(201).json({
 			newContact
 		});	
