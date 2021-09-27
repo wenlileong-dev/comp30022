@@ -13,4 +13,6 @@ router.post('/delete',groupController.deleteGroup);
 
 router.get('/all',groupController.getAllGroup);
 
+router.post('/top',groupController.topGroup);
+
 module.exports = router;

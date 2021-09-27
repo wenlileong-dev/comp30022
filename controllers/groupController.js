@@ -19,7 +19,8 @@ exports.newGroup = async (req, res) => {
     const group = new Groups({
       groupName: req.body.groupName,
       contactNumber: req.body.contactNumber,
-      contacts: req.body.contacts
+      contacts: req.body.contacts,
+      isTop: req.body.isTop
     })
     group.save((err, createdGroup) => {   
         if(err){
@@ -96,3 +97,19 @@ exports.getAllGroup = async(req, res) => {
     res.json({ errorMsg: "database error"});
   }
 };
+
+exports.topGroup = async(req, res) => {
+  let groupID = req.body.id;
+  let group = await Groups.findById(groupID);
+  group.isTop = !group.isTop;
+  res.json({ group });
+
+  try{
+    
+    Groups.updateOne({'_id': req.body.id},
+    {$set: group}, () => {})
+  }catch (e){
+    res.json({ errorMsg: "database error"});
+  }
+  
+}

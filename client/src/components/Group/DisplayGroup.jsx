@@ -21,8 +21,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import GroupFooter from "./GroupFooter";
+import TopGroup from "./TopGroup";
 import GroupComponent from "./GroupComponent";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { AccordionActions } from "@mui/material";
+
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -82,8 +85,24 @@ export default function DisplayGroup(props) {
 
   const renderDeleteButton = (id) => {
     if (id != "614feba57ed1181a1837746d"){
-      return <GroupFooter groupID = {id}/>
+      return (
+        <>
+          <GroupFooter groupID = {id}/>
+          <TopGroup groupID = {id}/>
+        </>
+        
+        
+      )
     }
+  }
+
+  function topGroup() {
+    //console.log(props);
+    const input = {"id": props.groupID};
+  axios.post(`/group/top`, input).then((res) => {
+      console.log(res.data);
+      window.location.href = `/contact`;
+    });
   }
 
   return (
@@ -95,14 +114,31 @@ export default function DisplayGroup(props) {
           id="panel1a-header"
         >
           <Typography>{props.group.groupName}</Typography>
+
+          {/* <Button
+           size="small" 
+           onClick={topGroup}
+           id="top-group"
+           >
+             highlight
+          </Button> */}
+          <TopGroup groupID = {props.group._id}/>
+
         </AccordionSummary>
         <AccordionDetails>
           {props.contacts &&
             props.contacts.map((contact) => {
-              return <GroupComponent contact={contact} key={contact._id}/>;
+              console.log(contact._id);
+              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id}/>;
             })}
           {renderDeleteButton(props.group._id)}
         </AccordionDetails>
+
+        {/* <Divider/>
+        <AccordionActions>
+          {renderDeleteButton(props.group._id)}
+        </AccordionActions> */}
+
       </Accordion>
     </React.Fragment>
   );

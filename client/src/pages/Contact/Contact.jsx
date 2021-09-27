@@ -165,13 +165,36 @@ function Contact() {
       {groups &&
         contacts &&
         groups.map((group, index) => {
-          return (
-            <DisplayGroup
-              group={group}
-              contacts={contacts[index]}
-              key={`group${index}`}
-            />
-          );
+          if (group.isTop) {
+            return (
+              <DisplayGroup
+                group={group}
+                contacts={contacts[index]}
+                key={`group${index}`}
+              />
+            );
+          }
+          // return (
+          //   <DisplayGroup
+          //     group={group}
+          //     contacts={contacts[index]}
+          //     key={`group${index}`}
+          //   />
+          // );
+        })}
+        
+        {groups &&
+        contacts &&
+        groups.map((group, index) => {
+          if (!group.isTop) {
+            return (
+              <DisplayGroup
+                group={group}
+                contacts={contacts[index]}
+                key={`group${index}`}
+              />
+            );
+          }
         })}
 
       

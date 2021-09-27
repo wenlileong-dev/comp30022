@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-function GroupFooter(props) {
+function TopGroup(props) {
 
 
 
@@ -14,13 +14,13 @@ function GroupFooter(props) {
   // }
 
 
-  function deleteGroup() {
-      //console.log(props);
-      const input = {"id": props.groupID};
-    axios.post(`/group/delete`, input).then((res) => {
-        console.log(res.data);
-        window.location.href = `/contact`;
-      });
+  function topGroup() {
+    //console.log(props);
+    const input = {"id": props.groupID};
+  axios.post(`/group/top`, input).then((res) => {
+      console.log(res.data);
+      window.location.href = `/contact`;
+    });
   }
 
   return (
@@ -36,11 +36,11 @@ function GroupFooter(props) {
               size="small"
               variant="contained"
               color="primary"
-              onClick={deleteGroup}
+              onClick={topGroup}
               id="add-group-button"
               startIcon={<AddBoxIcon />}
             >
-              Delete
+              highlight
             </Button>
           </Grid>
         </Grid>
@@ -48,4 +48,4 @@ function GroupFooter(props) {
     </React.Fragment>
   );
 }
-export default GroupFooter;
+export default TopGroup;
