@@ -88,7 +88,7 @@ export default function DisplayGroup(props) {
       return (
         <>
           <GroupFooter groupID = {id}/>
-          <TopGroup groupID = {id}/>
+          {/* <TopGroup groupID = {id}/> */}
         </>
         
         
