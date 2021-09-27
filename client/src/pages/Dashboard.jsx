@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DashboardTitle from "./../components/Dashboard/DashboardTitle";
 import DashboardDays from "./../components/Dashboard/DashboardDays";
 import AuthFail from "./../components/AuthFail";
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+
 function Dashboard() {
   let today = new Date();
-  let [month, setMonth] = useState(today.getMonth());
+  let [month, setMonth] = useState(today.getMonth()+1);
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
+  console.log(events)
+  console.log(month)
+
+  const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+  }));
 
   //fetch the events of the month
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`/api/calendar/${month}/${year}`);
+      const result = await axios(`/api/calendar/${month-1}/${year}`);
       if (result.data.status !== 200) {
         setIsAuth(false);
         setAuthFailMsg(result.data.errorMsg);
@@ -28,36 +41,27 @@ function Dashboard() {
     fetchData();
   }, [month, year]);
 
-  //next month
-  const nextMonth = () => {
-    if (month !== 11) {
-      setMonth(month + 1);
-    } else {
-      setYear(year + 1);
-      setMonth(0);
-    }
-  };
-
-  
   return (
     <React.Fragment>
-      
       {isAuth && (
         <>
-        <p>Recent Events</p>
-          {/* <DashboardTitle
-            month={month}
-            year={year}
-            nextMonth={nextMonth}
-          />
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2} columns={16}>
+            <Grid item xs={8}>
+              <Item>
+               <p>Recent Events</p>
+                {events.length > 0 && (<DashboardDays month={month} year={year} events={events} />)}
+              </Item>
+            </Grid>
+            <Grid item xs={8}>
+              <Item>
+                <p>Recent Contacts</p>
+              </Item>
+            </Grid>
+          </Grid>
 
-          {!mobileView && events.length > 0 && (
-            <CalendarDays month={month} year={year} events={events} />
-          )}
-          {mobileView && <WeeklyCalendar events={events} month={month + 1} />} */}
-        </>
-      )}
-      {events.length > 0 && (<DashboardDays month={month} year={year} events={events} />)}
+        </Box>
+      </>)}
       {authFailMsg && <AuthFail msg={authFailMsg} />}
     </React.Fragment>
   );

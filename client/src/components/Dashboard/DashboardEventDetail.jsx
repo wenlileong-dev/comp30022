@@ -11,21 +11,17 @@ function DashboardEventDetail(props) {
       <Box>
         <Grid container spacing={3} alignItems="center" justifyContent="center">
           {/* {props.events.length === 0 && (
-            <Typography variant="subtitle2" gutterBottom component="div">
+            <Typography variant="subtitle2" component="div">
               No event for current day
             </Typography>
           )} */}
-          {props.events &&
-            props.events.map((event, index) => {
-              return (
+         
                 <DashboardEventComponent
-                  event={event}
+                  event={props.events}
                   setEvent={props.setEventDetail}
                   openEditEvent={props.toggleEditEvent}
-                  key={index}
                 />
-              );
-            })}
+           
         </Grid>
       </Box>
     </React.Fragment>

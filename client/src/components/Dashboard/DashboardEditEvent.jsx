@@ -15,6 +15,7 @@ import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function DashboardEditEvent(props) {
+  console.log(props)
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
   let [date, setDate] = useState(

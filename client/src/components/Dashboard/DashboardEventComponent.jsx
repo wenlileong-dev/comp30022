@@ -10,6 +10,7 @@ function PopoverEvent(props) {
   // console.log(props.openEditEvent())
   function handleOpenEvent() {
     props.setEvent(props.event);
+    console.log(props.event)
     props.openEditEvent();
   }
   return (
