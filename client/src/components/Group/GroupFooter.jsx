@@ -3,6 +3,9 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
 
 function GroupFooter(props) {
 
@@ -25,7 +28,12 @@ function GroupFooter(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-title">
+      {/* <Stack direction="row" spacing={1}>
+        <IconButton aria-label="cancel-highlight" onClick={deleteGroup}>
+          <DeleteIcon />
+        </IconButton>
+      </Stack> */}
+      {/* <div className="calendar-title">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={2}>
@@ -44,7 +52,24 @@ function GroupFooter(props) {
             </Button>
           </Grid>
         </Grid>
+      </div> */}
+
+      <div className="calendar-title">
+        <Grid container spacing={80}>
+          <Grid item xs={12} sm={6}>
+            <Grid container spacing={2}>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Stack direction="row" spacing={1}>
+              <IconButton aria-label="cancel-highlight" onClick={deleteGroup}>
+                <DeleteIcon />
+              </IconButton>
+            </Stack>
+          </Grid>
+        </Grid>
       </div>
+      
     </React.Fragment>
   );
 }

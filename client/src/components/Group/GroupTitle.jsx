@@ -24,7 +24,7 @@ function GroupTitle(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-title">
+      <div className="group-title">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={2}>
