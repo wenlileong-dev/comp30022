@@ -8,6 +8,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 
 function TopGroup(props) {
@@ -29,19 +34,56 @@ function TopGroup(props) {
     });
   }
 
+  const GroupTop = (props) => {
+    if (props.groupTop){
+      return (
+        <>
+          {/* <Switch {...label} defaultChecked  onClick={topGroup}/> */}
+
+          <Stack direction="row" spacing={1}>
+            <IconButton aria-label="cancel-highlight" color="warning" onClick={topGroup}>
+              <AutoAwesomeIcon />
+            </IconButton>
+          </Stack>
+        </>
+        
+        
+      )
+    }else{
+      return (
+        <Stack direction="row" spacing={1}>
+            <IconButton aria-label="highlight" onClick={topGroup}>
+              <AutoAwesomeIcon />
+            </IconButton>
+        </Stack>
+      )
+        
+      
+    }
+  }
+
+
   return (
-    <FormControl component="fieldset">
-    {/* <FormLabel component="legend">Label placement</FormLabel> */}
-    <FormGroup aria-label="position" row>
-      <FormControlLabel
-        value="end"
-        control={<Switch color="primary" />}
-        onClick={topGroup}
-        label="highlight"
-        labelPlacement="end"
-      />
-    </FormGroup>
-  </FormControl>
+    <>
+      {GroupTop(props)}
+    </>
+    
+
+
+    // <Switch {...label} defaultChecked  onClick={topGroup}/>
+
+    // <FormControl component="fieldset">
+    // {/* <FormLabel component="legend">Label placement</FormLabel> */}
+    //   <FormGroup aria-label="position" row>
+    //     <FormControlLabel
+    //       value="end"
+    //       control={<Switch color="primary" />}
+    //       onChange={topGroup}
+    //       label="highlight"
+    //       labelPlacement="end"
+    //     />
+    //   </FormGroup>
+    // </FormControl>
 
     // <React.Fragment>
     //   <div className="calendar-title">

@@ -96,15 +96,6 @@ export default function DisplayGroup(props) {
     }
   }
 
-  function topGroup() {
-    //console.log(props);
-    const input = {"id": props.groupID};
-  axios.post(`/group/top`, input).then((res) => {
-      console.log(res.data);
-      window.location.href = `/contact`;
-    });
-  }
-
   return (
     <React.Fragment>
       <Accordion>
@@ -122,7 +113,8 @@ export default function DisplayGroup(props) {
            >
              highlight
           </Button> */}
-          <TopGroup groupID = {props.group._id}/>
+
+          <TopGroup groupID = {props.group._id} groupTop = {props.group.isTop}/>
 
         </AccordionSummary>
         <AccordionDetails>
