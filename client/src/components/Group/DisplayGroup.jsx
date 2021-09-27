@@ -119,9 +119,9 @@ export default function DisplayGroup(props) {
         </AccordionSummary>
         <AccordionDetails>
           {props.contacts &&
-            props.contacts.map((contact) => {
+            props.contacts.map((contact, index) => {
               console.log(contact._id);
-              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id}/>;
+              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index}/>;
             })}
           {renderDeleteButton(props.group._id)}
         </AccordionDetails>

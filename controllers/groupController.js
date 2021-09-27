@@ -92,7 +92,7 @@ exports.getAllGroup = async(req, res) => {
       }
       allContacts.push(groupContacts);
     }
-    res.json({ allGroups, allContacts});
+    res.json({ status:200,allGroups, allContacts});
   } catch (error) {
     res.json({ errorMsg: "database error"});
   }

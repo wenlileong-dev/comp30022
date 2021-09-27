@@ -30,6 +30,7 @@ import AddContactLink from "./index";
 import { useState, useEffect } from "react";
 
 import GroupTitle from "../../components/Group/GroupTitle";
+import AuthFail from "../../components/AuthFail";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -68,6 +69,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 function Contact() {
+  
+
   const [expanded, setExpanded] = React.useState("panel1");
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -105,11 +108,21 @@ function Contact() {
   // };
 
   //group list and contact list
+  const [isAuth, setIsAuth] = useState(false);
+  const [authFailMsg, setAuthFailMsg] = useState("");
+
   const [groups, setGroups] = React.useState([]);
   const [contacts, setContacts] = React.useState([]);
 
   const getGroupContacts = async () => {
     const result = await axios("/group/all");
+    if (result.data.status !== 200){
+      setIsAuth(false);
+      setAuthFailMsg(result.data.errorMsg);
+      window.location.href = "/login";
+    } else {
+      setIsAuth(true);
+    }
     setGroups(result.data.allGroups);
     setContacts(result.data.allContacts);
   };
@@ -159,9 +172,43 @@ function Contact() {
 
   return (
     <div>
-      <GroupTitle/>
+      {isAuth && (
+        <>
+          <GroupTitle/>
+          <AddContactLink />
+          {groups &&
+            contacts &&
+            groups.map((group, index) => {
+              if (group.isTop) {
+                return (
+                  <DisplayGroup
+                    group={group}
+                    contacts={contacts[index]}
+                    key={`group${index}`}
+                  />
+                );
+              }
+            })}
+            
+          {groups &&
+          contacts &&
+          groups.map((group, index) => {
+            if (!group.isTop) {
+              return (
+                <DisplayGroup
+                  group={group}
+                  contacts={contacts[index]}
+                  key={`group${index}`}
+                />
+              );
+            }
+          })}
+      
+        </>
+      )}
+
+      {/* <GroupTitle/>
       <AddContactLink />
-      {/* <DisplayGroup groups={groups}/> */}
       {groups &&
         contacts &&
         groups.map((group, index) => {
@@ -174,28 +221,23 @@ function Contact() {
               />
             );
           }
-          // return (
-          //   <DisplayGroup
-          //     group={group}
-          //     contacts={contacts[index]}
-          //     key={`group${index}`}
-          //   />
-          // );
         })}
         
-        {groups &&
-        contacts &&
-        groups.map((group, index) => {
-          if (!group.isTop) {
-            return (
-              <DisplayGroup
-                group={group}
-                contacts={contacts[index]}
-                key={`group${index}`}
-              />
-            );
-          }
-        })}
+      {groups &&
+      contacts &&
+      groups.map((group, index) => {
+        if (!group.isTop) {
+          return (
+            <DisplayGroup
+              group={group}
+              contacts={contacts[index]}
+              key={`group${index}`}
+            />
+          );
+        }
+      })} */}
+
+      {authFailMsg && <AuthFail msg={authFailMsg} />}
 
       
       {/* <DisplayGroup groups={groups} contacts={contacts}/> */}
