@@ -10,11 +10,14 @@ function GroupComponent(props) {
 
     const history = useHistory();
     console.log(props);
-    const routeChange = (props) =>{ 
-        let path = `/api/contacts/info/${props.contactId}`; 
+    const routeChange = () =>{ 
+        // let path = `/contact/info/${props.contactId}`; 
         
-        props.history.push(path);
-        console.log(history);
+        // history.push(path);
+        // console.log(history);
+        let url = "localhost:3000/contact/info/" + props.contactId;
+        console.log(props.contactId);
+        window.open(url);
     }
 
     // let firstPathName = window.location.pathname.split("/");
