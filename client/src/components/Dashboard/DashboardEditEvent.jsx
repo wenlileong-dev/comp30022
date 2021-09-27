@@ -111,16 +111,16 @@ function DashboardEditEvent(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+          {description&&<TextField
             disabled
               variant="standard"
               label="Description"
               multiline
               value={description}
-            />
+            />}
           </Grid>
           <Grid item xs={12} sm={6}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
                 value={date}
@@ -129,10 +129,17 @@ function DashboardEditEvent(props) {
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+            <TextField
+            disabled
+              variant="standard"
+              label="Date"
+              multiline
+              value={date}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
               <TimePicker
                 label="Time"
                 value={time}
@@ -141,25 +148,42 @@ function DashboardEditEvent(props) {
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+            <TextField
+            disabled
+              variant="standard"
+              label="Time"
+              multiline
+              value={new Date(time).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField
+          {people&&<TextField
             disabled
               variant="standard"
               label="People"
               multiline
               placeholder="separate by comma"
               value={people}
-            />
+            />}
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className="event-type-select" variant="standard">
-              <InputLabel>Event Type</InputLabel>
+              {/* <InputLabel>Event Type</InputLabel>
               <Select value={eventType} onChange={handleEventType}>
                 <MenuItem value="Online">Online</MenuItem>
                 <MenuItem value="Offline">Offline</MenuItem>
-              </Select>
+              </Select> */}
+              <TextField
+            disabled
+              variant="standard"
+              label="Event Type"
+              multiline
+              value={eventType}
+            />
             </FormControl>
           </Grid>
           {eventType !== "Online" ? (
@@ -174,17 +198,24 @@ function DashboardEditEvent(props) {
           ) : (
             <Grid item xs={12} sm={6}>
               <FormControl className="event-type-select" variant="standard">
-                <InputLabel>Location</InputLabel>
-                <Select value={location} onChange={handleLocation}>
+                {/* <InputLabel>Location</InputLabel> */}
+                {/* <Select value={location} onChange={handleLocation}>
                   <MenuItem value="Zoom">Zoom</MenuItem>
                   <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
                   <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select>
+                </Select> */}
+                <TextField
+            disabled
+              variant="standard"
+              label="Location"
+              multiline
+              value={location}
+            />
               </FormControl>
             </Grid>
           )}
           <Grid item xs={12}>
-            <TextField
+            {meetingNotes&&<TextField
             disabled
               variant="standard"
               label="Meeting Notes"
@@ -192,7 +223,7 @@ function DashboardEditEvent(props) {
               rows={4}
               className="form-notes"
               value={meetingNotes}
-            />
+            />}
           </Grid>
         </Grid>
       </form>
