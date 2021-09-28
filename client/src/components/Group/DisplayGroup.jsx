@@ -25,6 +25,7 @@ import TopGroup from "./TopGroup";
 import GroupComponent from "./GroupComponent";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AccordionActions } from "@mui/material";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
 
 
 const Accordion = styled((props) => (
@@ -99,9 +100,11 @@ export default function DisplayGroup(props) {
 
         </AccordionSummary>
         <AccordionDetails>
+          
           {props.contacts &&
             props.contacts.map((contact, index) => {
-              console.log(contact._id);
+              // console.log(contact._id);
+              console.log("open");
               return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index}/>;
             })}
           {renderDeleteButton(props.group._id)}
