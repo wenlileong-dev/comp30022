@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DashboardDays from "./../components/Dashboard/DashboardDays";
+import DashboardContacts from "../components/Dashboard/DashboardContacts";
 import AuthFail from "./../components/AuthFail";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,9 +13,10 @@ function Dashboard() {
   let [month, setMonth] = useState(today.getMonth()+1);
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
-  console.log(events)
+  console.log(contacts)
   console.log(month)
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -41,6 +43,23 @@ function Dashboard() {
     fetchData();
   }, [month, year]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultContacts = await axios(`/api/contacts/allContact/`);
+      console.log(resultContacts)
+      if (resultContacts.data.status !== 200) {
+        setIsAuth(false);
+        setAuthFailMsg(resultContacts.data.errorMsg);
+        window.location.href = "/login";
+      } else {
+        setIsAuth(true);
+        // now we get events during the month
+        setContacts(resultContacts.data.data);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <React.Fragment>
       {isAuth && (
@@ -56,6 +75,7 @@ function Dashboard() {
             <Grid item xs={8}>
               <Item>
                 <p>Recent Contacts</p>
+                {contacts.length>0 && (<DashboardContacts  contacts={contacts} />)}
               </Item>
             </Grid>
           </Grid>
