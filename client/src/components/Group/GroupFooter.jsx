@@ -21,7 +21,7 @@ function GroupFooter(props) {
       //console.log(props);
       const input = {"id": props.groupID};
     axios.post(`/group/delete`, input).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         window.location.href = `/contact`;
       });
   }
@@ -54,7 +54,13 @@ function GroupFooter(props) {
         </Grid>
       </div> */}
 
-      <div className="calendar-title">
+      <Stack direction="row" spacing={1}>
+          <IconButton aria-label="delete" onClick={deleteGroup}>
+            <DeleteIcon />
+          </IconButton>
+      </Stack>
+
+      {/* <div className="delete-group">
         <Grid container spacing={80}>
           <Grid item xs={12} sm={6}>
             <Grid container spacing={2}>
@@ -62,13 +68,13 @@ function GroupFooter(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stack direction="row" spacing={1}>
-              <IconButton aria-label="cancel-highlight" onClick={deleteGroup}>
+              <IconButton aria-label="delete" onClick={deleteGroup}>
                 <DeleteIcon />
               </IconButton>
             </Stack>
           </Grid>
         </Grid>
-      </div>
+      </div> */}
       
     </React.Fragment>
   );

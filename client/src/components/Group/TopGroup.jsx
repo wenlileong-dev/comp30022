@@ -10,7 +10,7 @@ function TopGroup(props) {
     //console.log(props);
     const input = {"id": props.groupID};
   axios.post(`/group/top`, input).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       window.location.href = `/contact`;
     });
   }

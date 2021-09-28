@@ -26,7 +26,7 @@ class Confirm extends Component {
             this.setState({error:false, success: true})
             
             this.setState({contact: response.data.newContact})
-            console.log(response);
+            // console.log(response);
             this.props.history.push(`/contact/info`, {contact:this.state.contact});
         }
         , error => {

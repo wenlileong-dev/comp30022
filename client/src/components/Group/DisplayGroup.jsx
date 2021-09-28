@@ -25,7 +25,6 @@ import TopGroup from "./TopGroup";
 import GroupComponent from "./GroupComponent";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AccordionActions } from "@mui/material";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
 
 
 const Accordion = styled((props) => (
@@ -67,14 +66,42 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function DisplayGroup(props) {
 
   const renderDeleteButton = (id) => {
-    if (id != "614feba57ed1181a1837746d"){
+    if (id != "614feba57ed1181a1837746d") {
+      return (
+        <div style={{ position: 'relative' ,right:'10px',top:'50px'}}>
+          <GroupFooter groupID={id} />
+        </div>
+        // <>
+        //   <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
+        //     <GroupFooter groupID={id} />
+        //   </div>
+        //   <GroupFooter groupID={id} />
+        // </>
+      )
+    }
+  }
+
+  const renderTwoButton = (id) => {
+    if (id != "614feba57ed1181a1837746d") {
       return (
         <>
-          <GroupFooter groupID = {id}/>
+          <div style={{ position: 'absolute' ,right:'50px',top:'4px'}}>
+            <TopGroup groupID={props.group._id} groupTop={props.group.isTop} />
+          </div>
+
+          <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
+            <GroupFooter groupID={id} />
+          </div>
         </>
         
-        
       )
+    }else {
+      return (
+        <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
+            <TopGroup groupID={props.group._id} groupTop={props.group.isTop} />
+        </div>
+      )
+      
     }
   }
 
@@ -95,19 +122,22 @@ export default function DisplayGroup(props) {
            >
              highlight
           </Button> */}
+          {renderTwoButton(props.group._id)}
 
-          <TopGroup groupID = {props.group._id} groupTop = {props.group.isTop}/>
+          {/* <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
+            <TopGroup groupID={props.group._id} groupTop={props.group.isTop} />
+          </div> */}
 
         </AccordionSummary>
         <AccordionDetails>
-          
+
           {props.contacts &&
             props.contacts.map((contact, index) => {
               // console.log(contact._id);
-              console.log("open");
-              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index}/>;
+              // console.log("open");
+              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index} />;
             })}
-          {renderDeleteButton(props.group._id)}
+          {/* {renderDeleteButton(props.group._id)} */}
         </AccordionDetails>
 
         {/* <Divider/>
