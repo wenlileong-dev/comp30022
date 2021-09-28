@@ -14,8 +14,7 @@ import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function DashboardEditEvent(props) {
-  console.log(props)
+function PopoverEditGroup(props) {
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
   let [date, setDate] = useState(
@@ -96,31 +95,36 @@ function DashboardEditEvent(props) {
     });
   }
 
+  function handleDelEvent() {
+    axios.delete(`/api/calendar/${props.eventDetail._id}`).then((res) => {
+      window.location.href = `/calendar`;
+    });
+  }
   return (
     <React.Fragment>
       <h2>Details</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
-            disabled
               variant="standard"
               required
               label="Title"
+              onChange={handleTitle}
               value={title}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-          {description&&<TextField
-            disabled
+            <TextField
               variant="standard"
               label="Description"
               multiline
+              onChange={handleDescription}
               value={description}
-            />}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
                 value={date}
@@ -129,17 +133,10 @@ function DashboardEditEvent(props) {
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider> */}
-            <TextField
-            disabled
-              variant="standard"
-              label="Date"
-              multiline
-              value={date}
-            />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
-            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <TimePicker
                 label="Time"
                 value={time}
@@ -148,82 +145,80 @@ function DashboardEditEvent(props) {
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider> */}
-            <TextField
-            disabled
-              variant="standard"
-              label="Time"
-              multiline
-              value={new Date(time).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={12}>
-          {people&&<TextField
-            disabled
+            <TextField
               variant="standard"
               label="People"
               multiline
               placeholder="separate by comma"
+              onChange={handlePeople}
               value={people}
-            />}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className="event-type-select" variant="standard">
-              {/* <InputLabel>Event Type</InputLabel>
+              <InputLabel>Event Type</InputLabel>
               <Select value={eventType} onChange={handleEventType}>
                 <MenuItem value="Online">Online</MenuItem>
                 <MenuItem value="Offline">Offline</MenuItem>
-              </Select> */}
-              <TextField
-            disabled
-              variant="standard"
-              label="Event Type"
-              multiline
-              value={eventType}
-            />
+              </Select>
             </FormControl>
           </Grid>
           {eventType !== "Online" ? (
             <Grid item xs={12} sm={6}>
               <TextField
-              disabled
                 variant="standard"
                 label="Location"
+                onChange={handleLocation}
                 value={location}
+                required
               />
             </Grid>
           ) : (
             <Grid item xs={12} sm={6}>
               <FormControl className="event-type-select" variant="standard">
-                {/* <InputLabel>Location</InputLabel> */}
-                {/* <Select value={location} onChange={handleLocation}>
+                <InputLabel>Location</InputLabel>
+                <Select value={location} onChange={handleLocation}>
                   <MenuItem value="Zoom">Zoom</MenuItem>
                   <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
                   <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select> */}
-                <TextField
-            disabled
-              variant="standard"
-              label="Location"
-              multiline
-              value={location}
-            />
+                </Select>
               </FormControl>
             </Grid>
           )}
           <Grid item xs={12}>
-            {meetingNotes&&<TextField
-            disabled
+            <TextField
               variant="standard"
               label="Meeting Notes"
               multiline
               rows={4}
               className="form-notes"
+              onChange={handleMeetingNotes}
               value={meetingNotes}
-            />}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Button
+              variant="contained"
+              color="success"
+              type="submit"
+              startIcon={<UpdateIcon />}
+            >
+              Update Event
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Button
+              variant="contained"
+              color="error"
+              type="button"
+              onClick={handleDelEvent}
+              startIcon={<DeleteIcon />}
+            >
+              Delete Event
+            </Button>
           </Grid>
         </Grid>
       </form>
@@ -231,4 +226,4 @@ function DashboardEditEvent(props) {
   );
 }
 
-export default DashboardEditEvent;
+export default PopoverEditGroup;

@@ -28,26 +28,22 @@ function DashboardDay(props) {
     setIsPopupOpen(false);
     setIsShowOne(false);
   }
-  console.log(props)
+  console.log(props.firstName)
   return (
     <React.Fragment>
       <div>
-        {new Date().getDate() === props.day &&
-        new Date().getMonth()  === props.month ? (
+        
           <Typography gutterBottom variant="h4" component="div">
-            {new Date().getDate()}/{props.month}/{props.year}
+            {props.contacts.firstName} {props.contacts.lastName}
           </Typography>
-        ) : (
-          <Typography gutterBottom variant="h4" component="div">{props.day}/{props.month}/{props.year}</Typography>
-        )}
-
-        <div>
-        {props.event.length === 0 && (
+        
+        {/* <div> */}
+        {/* {props.event.length === 0 && (
             <Typography variant="subtitle2" component="div">
               No event for this day
             </Typography>
-          )}
-          {props.event &&
+          )} */}
+          {/* {props.event &&
             props.event.map((event, index) => {
               return (
                 <div>
@@ -59,43 +55,10 @@ function DashboardDay(props) {
                   month={props.month}
                   day={props.day}
                 />
-                {/* {<List>
-                  <ListItem disablePadding>
-                    <ListItemButton key={index} onClick={handleOpen}>
-                      <ListItemIcon>
-                        <InboxIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={event.title} />
-                    </ListItemButton>
-                  </ListItem>
-                </List>} */}
-                {/* // <Typography variant="body2" gutterBottom key={index} onClick={handleOpen}>
-                //   {event.title}
-                // </Typography> */}
-                {/* {isPopupOpen &&(
-                <DashboardPopup
-                  renderType="day-events"
-                  events={event}
-                  handleClose={handleClose}
-                  year={props.year}
-                  month={props.month}
-                  day={props.day}
-                />
-                )} */}
                 </div>
               );
-            })}
-        </div>
-        {/* {isPopupOpen && (
-          <DashboardPopup
-            renderType="day-events"
-            events={props.event}
-            handleClose={handleClose}
-            year={props.year}
-            month={props.month}
-            day={props.day}
-          />
-        )} */}
+            })} */}
+        {/* </div> */}
       </div>
     </React.Fragment>
   );
