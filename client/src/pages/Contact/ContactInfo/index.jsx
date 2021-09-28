@@ -90,7 +90,6 @@ export default class ContactInfo extends Component {
     render() {
         
         const {contact} = this.state;
-        // console.log('ORI', this.props.location.state.contact);
         const {isEdit} = this.state;
         
         return (

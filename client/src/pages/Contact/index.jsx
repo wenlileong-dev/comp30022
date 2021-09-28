@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import NewContact from './NewContact/';
 import Button from "@mui/material/Button";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 
 export default class Contact extends Component {
     render() {
@@ -13,16 +13,12 @@ export default class Contact extends Component {
                     <Button
                         variant="contained"
                         color="primary"
-                        id="add-group-button"
-                        startIcon={<AddBoxIcon />}
+                        id="add-contact-button"
+                        startIcon={<ContactPhoneIcon />}
                         >
                         New Contact
                     </Button>
                 </Link>
-
-                {/* <Switch>
-                    <Route path='/contact/add-contact' component={NewContact}/>
-                </Switch> */}
             </Fragment>
         )
     }

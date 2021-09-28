@@ -3,11 +3,9 @@ import axios from "axios";
 import DisplayGroup from "../../components/Group/DisplayGroup";
 import AddContactLink from "./index";
 import { useState, useEffect } from "react";
-
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
 
 function Contact() {
 
@@ -46,9 +44,7 @@ function Contact() {
             <GroupTitle/>
             <AddContactLink />
           </ButtonGroup>
-
-          {/* <GroupTitle/> */}
-          {/* <AddContactLink /> */}
+          
           {groups &&
             contacts &&
             groups.map((group, index) => {
