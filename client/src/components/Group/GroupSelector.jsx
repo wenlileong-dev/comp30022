@@ -17,7 +17,6 @@ export default class GroupSelector extends Component {
     }
 
     componentDidMount() {
-        
         axios({
             method:'GET',
             url:`http://localhost:3000/group`
@@ -30,16 +29,16 @@ export default class GroupSelector extends Component {
 
 
     render() {
-        
+        console.log('render group')
         const {group, allGroups} = this.state;
         console.log(this.state.allGroups);
         return (
             <Fragment>
-                <FormControl sx={{ m: 4, minWidth: '50ch'}}>
-                    <InputLabel id="demo-simple-select-autowidth-label">Group</InputLabel>
+                <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>
+                    <InputLabel id="demo-simple-select-filled-label">Group</InputLabel>
                     <Select
-                        labelId="demo-simple-select-autowidth-label"
-                        id="demo-simple-select-autowidth"
+                        labelId="demo-simple-select-filled-label"
+                        id="demo-simple-select-filled"
                         value={group}
                         onChange={this.handleChange}
                         // autoWidth
@@ -48,7 +47,7 @@ export default class GroupSelector extends Component {
                         {
                             allGroups.map(groupObj => {
                                 return (
-                                    <MenuItem value={groupObj}>{groupObj.groupName}</MenuItem>
+                                    <MenuItem key={groupObj._id} value={groupObj}>{groupObj.groupName}</MenuItem>
                                 )
                             })
                         }

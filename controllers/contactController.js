@@ -1,4 +1,4 @@
-const {Contacts, Groups} = require('../models/db.js')
+ const {Contacts, Groups} = require('../models/db.js')
 
 const group = require("./groupController");
 
