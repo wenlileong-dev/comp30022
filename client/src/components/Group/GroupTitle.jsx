@@ -24,7 +24,7 @@ function GroupTitle(props) {
 
   return (
     <React.Fragment>
-      <div className="group-title">
+      {/* <div className="group-title">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={2}>
@@ -42,6 +42,17 @@ function GroupTitle(props) {
             </Button>
           </Grid>
         </Grid>
+      </div> */}
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={toggleAddEvent}
+          id="add-group-button"
+          startIcon={<AddBoxIcon />}
+        >
+          New Group
+        </Button>
       </div>
       {isPopupOpen && (
         <GroupPopup

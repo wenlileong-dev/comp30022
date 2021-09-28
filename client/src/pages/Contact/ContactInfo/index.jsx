@@ -92,7 +92,6 @@ export default class ContactInfo extends Component {
         const {contact} = this.state;
         // console.log('ORI', this.props.location.state.contact);
         const {isEdit} = this.state;
-        console.log(contact);
         
         return (
             <Fragment>

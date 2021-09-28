@@ -6,9 +6,12 @@ import { useState, useEffect } from "react";
 
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
 
 function Contact() {
 
+  
   //group list and contact list
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
@@ -39,8 +42,13 @@ function Contact() {
     <div>
       {isAuth && (
         <>
-          <GroupTitle/>
-          <AddContactLink />
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <GroupTitle/>
+            <AddContactLink />
+          </ButtonGroup>
+
+          {/* <GroupTitle/> */}
+          {/* <AddContactLink /> */}
           {groups &&
             contacts &&
             groups.map((group, index) => {

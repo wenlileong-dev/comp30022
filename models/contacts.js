@@ -36,6 +36,12 @@ const contactSchema = new mongoose.Schema({
 
 	remark: {
 		type: String
+	},
+	userID: { type: mongoose.Schema.ObjectId, ref: "User" },
+	groupID: { type: mongoose.Schema.ObjectId, ref: "group" },
+	contactTime: {
+		type: Date,
+		default:Date.now
 	}
 })
 
