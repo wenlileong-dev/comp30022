@@ -91,6 +91,9 @@ function Auth() {
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <Form.Text className="text-muted">
+              password must have at least 8 characters, containing at least one alphabet character and one numerical digit
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicPhonenumber">
               <Form.Label>Phone number</Form.Label>
