@@ -38,11 +38,12 @@ exports.addContact = async (req, res, next) => {
 		const newContact = new Contacts (anotherContact);
 		newContact.save();
 		// console.log(req.body);
-		const groupSelected = new Groups (req.body.group);
+
+		//set a group
+		const groupSelected = await Groups.findById(newContact.groupID);
 		groupSelected.contacts.push(newContact._id+'');
-		console.log(groupSelected);
 		Groups.updateOne({'_id': groupSelected._id}, 
-			{$set: {contacts: groupSelected.contacts}}, () => {});
+		 	{$set: {contacts: groupSelected.contacts}}, () => {});
 
 		res.status(201).json({
 			newContact

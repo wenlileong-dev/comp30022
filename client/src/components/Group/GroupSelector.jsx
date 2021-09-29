@@ -7,12 +7,12 @@ import Select from '@mui/material/Select';
 
 export default class GroupSelector extends Component {
     state = {
-        group:{},
+        groupID:'',
         allGroups:[]
     }
 
     handleChange = (e) => {
-        this.setState({group: e.target.value});
+        this.setState({groupID: e.target.value});
         this.props.handleGroup(e.target.value);
     }
 
@@ -22,6 +22,8 @@ export default class GroupSelector extends Component {
             url:`http://localhost:3000/group`
         }).then(response => {
             this.setState({allGroups: response.data.allGroups});
+            this.setState({groupID: response.data.allGroups[0]._id});
+            this.props.handleGroup(response.data.allGroups[0]._id);
         }
         , error => {
         })
@@ -30,8 +32,8 @@ export default class GroupSelector extends Component {
 
     render() {
         console.log('render group')
-        const {group, allGroups} = this.state;
-        console.log(this.state.allGroups);
+        const {groupID, allGroups} = this.state;
+        // console.log(this.state.allGroups);
         return (
             <Fragment>
                 <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>
@@ -39,15 +41,15 @@ export default class GroupSelector extends Component {
                     <Select
                         labelId="demo-simple-select-filled-label"
                         id="demo-simple-select-filled"
-                        value={group}
+                        value={groupID}
                         onChange={this.handleChange}
                         // autoWidth
                         label="Group"
-                    >
+                    >   
                         {
                             allGroups.map(groupObj => {
                                 return (
-                                    <MenuItem key={groupObj._id} value={groupObj}>{groupObj.groupName}</MenuItem>
+                                    <MenuItem key={groupObj._id} value={groupObj._id}>{groupObj.groupName}</MenuItem>
                                 )
                             })
                         }

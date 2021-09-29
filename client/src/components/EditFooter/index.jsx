@@ -51,20 +51,22 @@ class EditFooter extends Component {
     }
 
     delete = () => {
-        const {contactInfo} = this.props;
-        axios({
-            method:'DELETE',
-            url:`http://localhost:3000/api/contacts/info/${contactInfo._id}`
-        }).then(response => {       
-            this.setState({isEdit: false});
-            this.props.handleEdit(false);
-            // console.log('update',response.data.info);
-            this.props.history.replace('/contact');
+        if(window.confirm('Do you want to delete')) {
+            const {contactInfo} = this.props;
+            axios({
+                method:'DELETE',
+                url:`http://localhost:3000/api/contacts/info/${contactInfo._id}`
+            }).then(response => {       
+                this.setState({isEdit: false});
+                this.props.handleEdit(false);
+                // console.log('update',response.data.info);
+                this.props.history.replace('/contact');
+            }
+            , error => {
+                alert(error);
+                // this.setState({error: true, success: false})
+            })
         }
-        , error => {
-            alert(error);
-            // this.setState({error: true, success: false})
-        })
     }
 
     render() {

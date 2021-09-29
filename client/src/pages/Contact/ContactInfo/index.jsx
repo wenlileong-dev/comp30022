@@ -194,6 +194,7 @@ export default class ContactInfo extends Component {
                         variant="filled"
                     />
                     
+                   
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}

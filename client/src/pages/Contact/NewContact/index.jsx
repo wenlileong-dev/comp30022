@@ -11,7 +11,7 @@ import AuthFail from "../../../components/AuthFail";
 import axios from 'axios';
 
 
-import Confirm from '../../../components/Confirm';
+import AddFooter from '../../../components/AddFooter';
 import GroupSelector from '../../../components/Group/GroupSelector';
 import './index.css';
 
@@ -27,12 +27,10 @@ export default class NewContact extends Component {
         department:'',
         address:'',
         remark:'',
-        group:{}
+        groupID:''
     }
 
-    // const [isAuth, setIsAuth] = useState(false);
-    // const [authFailMsg, setAuthFailMsg] = useState("");
-
+    // Save contact information
     saveFirstName = (e) => {
         this.setState({firstName: e.target.value});
     }
@@ -65,8 +63,8 @@ export default class NewContact extends Component {
         this.setState({remark: e.target.value});
     }
 
-    handleGroup = (groupObj) => {
-        this.setState({group: groupObj})
+    handleGroup = (groupID) => {
+        this.setState({groupID});
     }
     
     componentDidMount() {
@@ -87,11 +85,12 @@ export default class NewContact extends Component {
         , error => {
             this.setState({isAuth: false});
         })
-        console.log(this.state.isAuth);
+
     }
 
     render() {
         console.log('render',this.state.isAuth);
+        console.log('groupID = ', this.state.groupID);
         const {isAuth, authFailMsg} = this.state;
         return (
             <Fragment>
@@ -175,7 +174,7 @@ export default class NewContact extends Component {
                     <GroupSelector handleGroup={this.handleGroup}/>
                     <br/>
                     <br/>
-                    <Confirm {...this.state}/>
+                    <AddFooter {...this.state}/>
                     </Box>
 
                     </>
