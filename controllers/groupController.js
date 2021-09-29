@@ -18,11 +18,12 @@ exports.newGroup = async (req, res) => {
   try {
     const group = new Groups({
       groupName: req.body.groupName,
-      contactNumber: req.body.contactNumber,
       contacts: req.body.contacts,
-      isTop: req.body.isTop
+      isTop: req.body.isTop,
+      userID: req.user._id,
+      isDefault: false
     })
-    group.save((err, createdGroup) => {   
+    await group.save((err, createdGroup) => {   
         if(err){
             res.status(400).json({ success: false, err: err});
         }else{
@@ -80,8 +81,9 @@ exports.deleteGroup = async (req, res) => {
 
 
 exports.getAllGroup = async(req, res) => {
+  let userID = req.user._id;
   try{
-    let allGroups = await Groups.find();
+    let allGroups = await Groups.find({userID: userID});
     let allContacts = [];
     for (let i=0;i < allGroups.length; i++) {
       let groupContactId = allGroups[i].contacts;
@@ -112,4 +114,29 @@ exports.topGroup = async(req, res) => {
     res.json({ errorMsg: "database error"});
   }
   
+}
+
+exports.newDefaultGroup = async (req, res) => {
+  try {
+    const group = new Groups({
+      groupName: "Default Group",
+      contacts: [],
+      isTop: true,
+      userID: req.params.id,
+      isDefault: true
+    })
+    await group.save((err, createdGroup) => {   
+        if(err){
+            res.status(400).json({ success: false, err: err});
+        }else{
+            console.log("default group");
+            console.log(createdGroup);
+            res.status(200).json({ success: true, order: createdGroup});
+        }
+    })
+  }
+  catch {
+    res.status(400)
+    return res.send("Database update failed")
+  }
 }

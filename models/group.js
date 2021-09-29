@@ -7,7 +7,9 @@ const groupSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
-  isTop: {type: Boolean}
+  isTop: {type: Boolean},
+  isDefault: {type: Boolean},
+  userID: { type: mongoose.Schema.ObjectId, ref: "User" }
 });
 
 //const Group = mongoose.model("Group", groupSchema);

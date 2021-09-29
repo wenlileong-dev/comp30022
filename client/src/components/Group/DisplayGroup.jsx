@@ -50,8 +50,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function DisplayGroup(props) {
 
   // highlight button and delete button
-  const renderTwoButton = (id) => {
-    if (id != "614feba57ed1181a1837746d") {
+  const renderTwoButton = (group) => {
+    if (! group.isDefault) {
       return (
         <>
           <div style={{ position: 'absolute' ,right:'50px',top:'4px'}}>
@@ -59,7 +59,7 @@ export default function DisplayGroup(props) {
           </div>
 
           <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
-            <GroupFooter groupID={id} />
+            <GroupFooter groupID={group._id} />
           </div>
         </>
         
@@ -83,7 +83,7 @@ export default function DisplayGroup(props) {
           id="panel1a-header"
         >
           <Typography>{props.group.groupName}</Typography>
-          {renderTwoButton(props.group._id)}
+          {renderTwoButton(props.group)}
         </AccordionSummary>
         <AccordionDetails>
 

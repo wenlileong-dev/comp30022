@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
 // import { useHistory } from "react-router-dom";
@@ -46,12 +46,23 @@ function Auth() {
       setIsRegisterAlert(true);
       setAlertMessage(registerUser.data.error);
     } else {
+      await axios.post(`/group/default/${registerUser.data.user.userID}`).then((res) => {
+      });
       window.location.href = "/dashboard";
     }
-    console.log(registerUser.data);
   };
 
+
+  // function DefaultGroup {
+  //   await axios.post(`/group/default/${RegisterID}}`).then((res) => {
+  //     console.log(RegisterID);
+  //   });
+  // }
+  
+
   return (
+
+
     <div style={{ width: "40%", margin: "auto", marginTop: "20%" }}>
       <Modal show={show} onHide={handleClose} style={{ marginTop: "2vh" }}>
         <Modal.Header closeButton>
