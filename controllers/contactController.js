@@ -72,40 +72,19 @@ exports.getInformation = async (req, res, next) => {
 //all contacts for the one account
 exports.getAllContacts = async (req, res) => {
 	let userID = req.user._id;
-	// let month = parseInt(req.params.month);
-	// let year = parseInt(req.params.year);
-	// const firstDay = new Date(year, month, 1);
-	// const lastDay = new Date(year, month + 1, 0);
   	let result=[];
-	//get the events that occur in the given month
 
 	let allContact = await Contacts.find({
 	  userID: userID
 	}).sort({contactTime: -1});
-	console.log(userID)
-	// let daysInMonth = getDaysInMonth(new Date(year, month));
 	if(allContact.length>5){
 		result=allContact.slice(0,5)
-		res.json({ status: 200, data: result });
+		res.json({ status: 200, data: result, success:true});
 	}else{
 		result=allContact
-		res.json({ status: 200, data: result });
+		res.json({ status: 200, data: result, success:true});
 	}
-	
-	//add the event to the day respectively
-	// for (let i = 0; i < monthEvents.length; i++) {
-	//   let eventDay = monthEvents[i].date.getDate();
-	//   result[eventDay - 1].push(monthEvents[i]);
-	// }
-  
-	//sort the event by time for each day
-	// for (let j = 0; j < result.length; j++) {
-	//   if (result[j].length > 1) {
-	// 	result[j].sort(compare);
-	//   }
-	// }
-	// res.json({ status: 200, data: result });
-  };
+};
 
 // Update information of a specific contact
 exports.updateInformation = async (req, res, next) => {
