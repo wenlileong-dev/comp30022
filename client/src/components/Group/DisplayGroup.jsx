@@ -20,6 +20,12 @@ import Popover from "@mui/material/Popover";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
+import GroupFooter from "./GroupFooter";
+import TopGroup from "./TopGroup";
+import GroupComponent from "./GroupComponent";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { AccordionActions } from "@mui/material";
+
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -58,84 +64,55 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function DisplayGroup(props) {
-  const [expanded, setExpanded] = React.useState("panel1");
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
-  const displayNotes = (props) => {
-    const { groups } = props;
-
-    if (groups?.length > 0) {
-      return groups.map((group, index) => {
-        console.log(groups);
-        return (
-          <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-          >
-            <AccordionSummary
-              aria-controls="panel1d-content"
-              id="panel1d-header"
-            >
-              <Typography>{group.groupName}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <ImageIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <WorkIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Work" secondary="Jan 7, 2014" />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <BeachAccessIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Vacation" secondary="July 20, 2014" />
-                </ListItem>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-        );
-      });
-    } else {
-      return <h3>Not group yet</h3>;
+  const renderDeleteButton = (id) => {
+    if (id != "614feba57ed1181a1837746d"){
+      return (
+        <>
+          <GroupFooter groupID = {id}/>
+        </>
+        
+        
+      )
     }
-  };
-  return <>{displayNotes(props)}</>;
+  }
+
+  return (
+    <React.Fragment>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>{props.group.groupName}</Typography>
+
+          {/* <Button
+           size="small" 
+           onClick={topGroup}
+           id="top-group"
+           >
+             highlight
+          </Button> */}
+
+          <TopGroup groupID = {props.group._id} groupTop = {props.group.isTop}/>
+
+        </AccordionSummary>
+        <AccordionDetails>
+          {props.contacts &&
+            props.contacts.map((contact, index) => {
+              console.log(contact._id);
+              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index}/>;
+            })}
+          {renderDeleteButton(props.group._id)}
+        </AccordionDetails>
+
+        {/* <Divider/>
+        <AccordionActions>
+          {renderDeleteButton(props.group._id)}
+        </AccordionActions> */}
+
+      </Accordion>
+    </React.Fragment>
+  );
 }
