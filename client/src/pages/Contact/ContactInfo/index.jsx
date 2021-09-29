@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import EditFooter from '../../../components/EditFooter';
+import GroupSelector from '../../../components/Group/GroupSelector';
 
 export default class ContactInfo extends Component {
     state = {
@@ -192,7 +193,7 @@ export default class ContactInfo extends Component {
                         }}
                         variant="filled"
                     />
-
+                    
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}

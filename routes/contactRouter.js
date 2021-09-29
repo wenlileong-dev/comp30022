@@ -1,7 +1,7 @@
 const express = require("express");
 const contactValidator = require('../validator/contacts');
 const contact = require("../controllers/contactController");
-const { authUser } = require("./../controllers/authUser");
+const { authUser } = require("../controllers/authUser");
 
 let router = express.Router();
 
@@ -9,7 +9,7 @@ let router = express.Router();
 router.get('/', contact.displayContacts);
 
 // page of adding
-router.get('/add-contact', contact.displayAddContact);
+router.get('/add-contact', authUser, contact.displayAddContact);
 
 // add a new contact
 router.post('/add-contact', authUser,contactValidator.addContact,

@@ -12,6 +12,10 @@ class EditFooter extends Component {
         error: false
     }
 
+    back = () => {
+        this.props.history.push('/contact');
+    }
+
     edit = () => {
         this.setState({isEdit: true});
         this.props.handleEdit(true);
@@ -37,7 +41,9 @@ class EditFooter extends Component {
             this.setState({isEdit: false, error: false});
             this.props.handleEdit(false);
             // console.log('update',response.data.info);
-            this.props.history.push('/contact/info', {contact: response.data.info});
+            // this.props.history.push('/contact/info', {contact: response.data.info});
+            this.props.history.push('/contact');
+            
         }
         , error => {
             this.setState({error: true})
@@ -100,6 +106,15 @@ class EditFooter extends Component {
                     style={{display: isEdit ? '':'none'}}
                 >Cancle</Button>
 
+                <br/>
+                <br/>
+                <Button
+                    id='contactBack'
+                    ref={c => this.editButton = c}
+                    variant="contained" 
+                    onClick={this.back}
+                >Back to Group</Button>
+                
                 <br/>
                 <br/>
                 <Alert severity="warning" style={{display: error ? '': 'none'}}>

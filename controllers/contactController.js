@@ -1,4 +1,6 @@
-const {Contacts} = require('../models/db.js')
+ const {Contacts, Groups} = require('../models/db.js')
+
+const group = require("./groupController");
 
 // Get a list of all contacts
 exports.displayContacts = async (req, res, next) => {
@@ -16,7 +18,9 @@ exports.displayContacts = async (req, res, next) => {
 // Get page of contact-adding
 exports.displayAddContact = async (req, res, next) => {
 	try {
-		res.send("get /contacts/add-contact");
+		res.json({
+			status:200
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -34,7 +38,13 @@ exports.addContact = async (req, res, next) => {
 		const newContact = new Contacts (anotherContact);
 		newContact.save();
 		// console.log(req.body);
-		res.status(200).json({
+		const groupSelected = new Groups (req.body.group);
+		groupSelected.contacts.push(newContact._id+'');
+		console.log(groupSelected);
+		Groups.updateOne({'_id': groupSelected._id}, 
+			{$set: {contacts: groupSelected.contacts}}, () => {});
+
+		res.status(201).json({
 			newContact
 		});	
 	} catch (err) {
