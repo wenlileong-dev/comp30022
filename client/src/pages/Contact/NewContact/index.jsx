@@ -171,7 +171,7 @@ export default class NewContact extends Component {
                         onChange={this.saveRemark}
                     />
                     
-                    <GroupSelector handleGroup={this.handleGroup}/>
+                    <GroupSelector handleGroup={this.handleGroup} isEdit={true}/>
                     <br/>
                     <br/>
                     <AddFooter {...this.state}/>

@@ -42,7 +42,7 @@ class EditFooter extends Component {
             this.props.handleEdit(false);
             // console.log('update',response.data.info);
             // this.props.history.push('/contact/info', {contact: response.data.info});
-            this.props.history.push('/contact');
+            this.props.history.replace('/contact');
             
         }
         , error => {

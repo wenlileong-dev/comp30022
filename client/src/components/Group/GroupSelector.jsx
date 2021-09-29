@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 export default class GroupSelector extends Component {
     state = {
         groupID:'',
-        allGroups:[]
+        allGroups:[],
     }
 
     handleChange = (e) => {
@@ -22,8 +22,14 @@ export default class GroupSelector extends Component {
             url:`http://localhost:3000/group`
         }).then(response => {
             this.setState({allGroups: response.data.allGroups});
-            this.setState({groupID: response.data.allGroups[0]._id});
+            if (this.props.contact === undefined) {
+                this.setState({groupID: response.data.allGroups[0]._id});
+            }
+            else {
+                this.setState({groupID: this.props.contact.groupID});
+            }
             this.props.handleGroup(response.data.allGroups[0]._id);
+            console.log('contact',this.props.contact);
         }
         , error => {
         })
@@ -33,15 +39,17 @@ export default class GroupSelector extends Component {
     render() {
         console.log('render group')
         const {groupID, allGroups} = this.state;
+        const {contact, isEdit} = this.props;
         // console.log(this.state.allGroups);
         return (
             <Fragment>
                 <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>
                     <InputLabel id="demo-simple-select-filled-label">Group</InputLabel>
                     <Select
+                        readOnly={!isEdit}
                         labelId="demo-simple-select-filled-label"
                         id="demo-simple-select-filled"
-                        value={groupID}
+                        value={isEdit ? groupID: contact.groupID}
                         onChange={this.handleChange}
                         // autoWidth
                         label="Group"

@@ -90,6 +90,26 @@ exports.getAllContacts = async (req, res) => {
 exports.updateInformation = async (req, res, next) => {
 	try {
 		const newInfo = req.body.contact;
+
+		const prevInfo = await Contacts.findById(req.params.id);
+
+		// Update contact group
+		if (prevInfo.groupID != newInfo.groupID){
+			// console.log(prevInfo.groupID, newInfo.groupID);
+			const prevGroup = await Groups.findById(prevInfo.groupID);
+			const index = prevGroup.contacts.indexOf(req.params.id);
+			console.log(index);
+			if (index > -1){
+				prevGroup.contacts.splice(index,1)
+				Groups.updateOne({'_id': prevGroup._id}, 
+		 			{$set: {contacts: prevGroup.contacts}}, () => {});
+			}
+
+			const currGroup = await Groups.findById(newInfo.groupID);
+			currGroup.contacts.push(req.params.id);
+			Groups.updateOne({'_id': currGroup._id}, 
+		  		{$set: {contacts: currGroup.contacts}}, () => {});
+		}
 		
 		// console.log(newInfo);
 		await Contacts.updateOne({'_id': req.params.id}, 
@@ -108,7 +128,20 @@ exports.updateInformation = async (req, res, next) => {
 // Delete a contact
 exports.deleteContact = async (req, res, next) => {
 	try {
+		const contact = await Contacts.findById(req.params.id);
+
+		// Delete the contact from its group
+		const group = await Groups.findById(contact.groupID);
+		const index = group.contacts.indexOf(req.params.id);
+
+		if (index > -1){
+			group.contacts.splice(index,1)
+			Groups.updateOne({'_id': group._id}, 
+		 		{$set: {contacts: group.contacts}}, () => {});
+		}
+
 		Contacts.deleteOne({'_id': req.params.id}, () =>{});
+
 		res.status(204).end();
 	} catch {
 		next(err);
