@@ -98,7 +98,7 @@ exports.updateInformation = async (req, res, next) => {
 			// console.log(prevInfo.groupID, newInfo.groupID);
 			const prevGroup = await Groups.findById(prevInfo.groupID);
 			const index = prevGroup.contacts.indexOf(req.params.id);
-			console.log(index);
+			// console.log(index);
 			if (index > -1){
 				prevGroup.contacts.splice(index,1)
 				Groups.updateOne({'_id': prevGroup._id}, 
@@ -107,7 +107,7 @@ exports.updateInformation = async (req, res, next) => {
 
 			const currGroup = await Groups.findById(newInfo.groupID);
 			currGroup.contacts.push(req.params.id);
-			Groups.updateOne({'_id': currGroup._id}, 
+				Groups.updateOne({'_id': currGroup._id}, 
 		  		{$set: {contacts: currGroup.contacts}}, () => {});
 		}
 		
@@ -115,8 +115,10 @@ exports.updateInformation = async (req, res, next) => {
 		await Contacts.updateOne({'_id': req.params.id}, 
 			{$set: newInfo}, () => {});
 
-		const info = await Contacts.findById(req.params.id);
-
+		const info = await Contacts.findById(req.params.id, (err,data) => {
+			console.log(data);
+		});
+		
 		res.status(201).json({
 			 info
 		})
