@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
@@ -94,6 +94,7 @@ function CalendarTitle(props) {
         <CalendarPopup
           renderType="new-event"
           handleClose={handleClose}
+          isPopupOpen={isPopupOpen}
         ></CalendarPopup>
       )}
     </React.Fragment>

@@ -1,0 +1,25 @@
+#contactBack {
+    display: block;
+    margin: auto;
+}
+#contactEdit {
+    width: 100px;
+    left: 320px;
+}
+
+#contactDelete {
+    width: 100px;
+    left: 385px;
+    background-color: #e71313;
+}
+
+#contactUpdate {
+    width: 100px;
+    left: 320px;
+}
+
+#contactCancle {
+    width: 100px;
+    left: 385px;
+    background-color: #e71313;
+}

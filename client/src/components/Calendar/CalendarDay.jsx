@@ -56,6 +56,7 @@ function CalendarDay(props) {
             renderType="day-events"
             events={props.event}
             handleClose={handleClose}
+            isPopupOpen={isPopupOpen}
             year={props.year}
             month={props.month}
             day={props.day}

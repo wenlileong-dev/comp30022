@@ -13,13 +13,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
 
 function PopoverEditEvent(props) {
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
-  let [date, setDate] = useState(
-    new Date(props.eventDetail.date).toISOString().slice(0, 10)
-  );
+  let [date, setDate] = useState(new Date(props.eventDetail.date));
   let [time, setTime] = useState(props.eventDetail.time);
   let [people, setPeople] = useState(props.eventDetail.people.toString());
   let [eventType, setEventType] = useState(props.eventDetail.eventType);
@@ -102,7 +101,9 @@ function PopoverEditEvent(props) {
   }
   return (
     <React.Fragment>
-      <h2>Details</h2>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        Details
+      </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

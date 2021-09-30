@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 var User = require("../models/user");
 // register user acc
-const userPostRegister = async (req, res) => {
+exports.userPostRegister = async (req, res) => {
   try {
     User.findOne({ email: req.body.email }).then((user) => {
       // if email already used, error
@@ -20,12 +20,15 @@ const userPostRegister = async (req, res) => {
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
           });
+
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
               newUser.password = hash;
               newUser.save().then((user) => {
                 // return register information in json format
+                const token = user.generateAuthToken();
+                res.cookie("token", token);
                 res.status(200).json({
                   success: true,
                   user: {
@@ -47,11 +50,11 @@ const userPostRegister = async (req, res) => {
       }
     });
   } catch {
-    res.status(200).json({ error: "Database update failed" });
+    res.status(200).json({ success: false, error: "Database update failed" });
   }
 };
 
-const userPostLogin = async (req, res) => {
+exports.userPostLogin = async (req, res) => {
   try {
     User.findOne({
       email: req.body.email,
@@ -63,6 +66,8 @@ const userPostLogin = async (req, res) => {
         bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
           // if the password matches the email, login successfully and show user information
           if (isMatch) {
+            const token = user.generateAuthToken();
+            res.cookie("token", token);
             res.status(200).json({
               success: true,
               user: {
@@ -82,11 +87,33 @@ const userPostLogin = async (req, res) => {
       }
     });
   } catch {
-    res.status(200).json({ error: "Data find failed" });
+    res.status(200).json({ success: false, error: "Data find failed" });
   }
 };
 
-const userPostUpdate = async (req, res) => {
+exports.userLogout = async (req, res, next) => {
+  res.clearCookie("token");
+  res.status(200).json({ status: 200 });
+};
+
+exports.userGetDetail = async (req, res) => {
+  let userID = req.user._id;
+  try {
+    // whether we can find the snack by using snack id
+    User.findById(userID, function (err, details) {
+      if (details) {
+        res.status(200).json({ success: true, user: details });
+      } else {
+        res.status(400).json({ success: false, err: err });
+      }
+    });
+  } catch {
+    res.status(400);
+    return res.send("Database get failed");
+  }
+};
+
+exports.userPostUpdate = async (req, res) => {
   try {
     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
     if (reg.test(req.body.password)) {
@@ -104,7 +131,8 @@ const userPostUpdate = async (req, res) => {
                     .status(409)
                     .json({
                       success: false,
-                      message: "another User has already registered that email",
+                      message:
+                        "another customer has already registered that email",
                     });
                 }
               } else {
@@ -112,8 +140,8 @@ const userPostUpdate = async (req, res) => {
                   { _id: req.params.id },
                   // update information
                   {
-                    givenName: req.body.givenName,
-                    familyName: req.body.familyName,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
                     phoneNumber: req.body.phoneNumber,
                     password: hash,
                   },
@@ -125,7 +153,7 @@ const userPostUpdate = async (req, res) => {
                         .status(404)
                         .json({
                           success: false,
-                          message: "User account does not exist",
+                          message: "User email does not exist",
                         });
                     } else {
                       res
@@ -150,8 +178,47 @@ const userPostUpdate = async (req, res) => {
   }
 };
 
-module.exports = {
-  userPostLogin,
-  userPostRegister,
-  userPostUpdate,
-};
+// exports.userPostUpdate = async (req, res) => {
+//   try {
+//     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
+//     if (reg.test(req.body.password)) {
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(req.body.password, salt, (err, hash) => {
+//           if (err) throw err;
+//           User.findByIdAndUpdate(
+//             req.params._id,
+//             // update information
+//             {
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             phoneNumber: req.body.phoneNumber,
+//             password: hash,
+//             },
+//             { new: true },
+//             // whether the update is successful or not
+//             function (err, updateUser) {
+//               if (err) {
+//                 res.status(404).json({
+//                   success: false,
+//                   message: "User account does not exist",
+//                 });
+//               } else {
+//                 res.status(200).json({
+//                   success: true,
+//                   updateUser: updateUser,
+//                 });
+//               }
+//             }
+//           )
+//         });
+//       });
+//     } else {
+//       res
+//         .status(200)
+//         .json({ success: false, error: "New password not valid!" });
+//     }
+//   } catch {
+//     res.status(400);
+//     return res.send("Database update failed");
+//   }
+// };
