@@ -16,13 +16,13 @@
 
 ## Team Members
 
-| Name | Task  | State |
-| :---  | :---:  | ---: |
-| Wen Li Leong  993469| Front End, Back End | Working |
-| Jun Xu 1074120| Front End, Back End | Working |
-| Ruidi He 983877| Front End, Back End | Working |
-| Yixin Zhong 1074472| Front End, Back End | Working |
-| Hong Li 843803| Front End, Back End | Working |
+| Name | Student ID | Task | State |
+| :---  | :---: | :---: |---: |
+| Wen Li Leong | 993469| Front End, Back End | Working |
+| Jun Xu | 1074120| Front End, Back End | Working |
+| Ruidi He | 983877| Front End, Back End | Working |
+| Yixin Zhong | 1074472| Front End, Back End | Working |
+| Hong Li |843803| Front End, Back End | Working |
 
 
 ## General Information
