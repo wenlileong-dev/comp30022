@@ -3,12 +3,13 @@ import axios from "axios";
 import DisplayGroup from "../../components/Group/DisplayGroup";
 import AddContactLink from "./index";
 import { useState, useEffect } from "react";
-
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function Contact() {
 
+  
   //group list and contact list
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
@@ -39,8 +40,11 @@ function Contact() {
     <div>
       {isAuth && (
         <>
-          <GroupTitle/>
-          <AddContactLink />
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <GroupTitle/>
+            <AddContactLink />
+          </ButtonGroup>
+          
           {groups &&
             contacts &&
             groups.map((group, index) => {

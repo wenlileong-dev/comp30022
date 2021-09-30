@@ -83,9 +83,9 @@ export default class ContactInfo extends Component {
 
     handleCancle = () => {
         const contact = this.props.location.state.contact;
-        console.log(this.state.contact);
+        // console.log(this.state.contact);
         this.setState({contact});
-        console.log(this.state.contact);
+        // console.log(this.state.contact);
     }
     
     handleGroup = (groupID) => {
@@ -94,8 +94,8 @@ export default class ContactInfo extends Component {
     }
 
     render() {
+        
         const {contact} = this.state;
-        // console.log('ORI', this.props.location.state.contact);
         const {isEdit} = this.state;
         
         return (

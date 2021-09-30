@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-
-
 import PopoverAddGroup from "./PopoverAddGroup";
 import PopoverEditGroup from "./PopoverEditGroup";
 
 function GroupPopup(props) {
-  // let [isOpen, setIsOpen] = useState(false);
+
   let [isOpen, setIsOpen] = useState(props.renderType);
   let [eventDetail, setEventDetail] = useState({});
-  // function toggleOpen() {
-  //   setIsOpen(!isOpen);
-  // }
-
+  
   function oepnEventDetail() {
     setIsOpen("event-detail");
   }
@@ -31,12 +26,12 @@ function GroupPopup(props) {
               day={props.day}
             />
           )}
-          {isOpen === "event-detail" && (
+          {/* {isOpen === "event-detail" && (
             <PopoverEditGroup eventDetail={eventDetail} />
           )}
           {isOpen === "mobile-event-detail" && (
             <PopoverEditGroup eventDetail={props.eventDetail} />
-          )}
+          )} */}
         </div>
       </div>
     </React.Fragment>

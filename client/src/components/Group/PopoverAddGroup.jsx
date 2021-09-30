@@ -2,17 +2,8 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
-import TimePicker from "@mui/lab/TimePicker";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import Alert from "@mui/material/Alert";
 
 function PopoverAddGroup(props) {
   let [groupName, setGroup] = useState("");
@@ -32,7 +23,6 @@ function PopoverAddGroup(props) {
     }
 
     axios.post(`/group/create`, input).then((res) => {
-      console.log(res.data);
       window.location.href = `/contact`;
     });
   }
