@@ -15,10 +15,10 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import Alert from "@mui/material/Alert";
 
 function PopoverAddEvent(props) {
-  let today = new Date();
+  // let today = new Date();
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
-  let [date, setDate] = useState(today.toISOString().slice(0, 10));
+  let [date, setDate] = useState(new Date());
   let [time, setTime] = useState("");
   let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState("");
