@@ -37,6 +37,7 @@ exports.userPostRegister = async (req, res) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     phoneNumber: user.phoneNumber,
+                    userID: user._id
                   },
                 });
               });
