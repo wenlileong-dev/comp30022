@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
 
 function PopoverEditEvent(props) {
   let [title, setTitle] = useState(props.eventDetail.title);
@@ -100,7 +101,9 @@ function PopoverEditEvent(props) {
   }
   return (
     <React.Fragment>
-      <h2>Details</h2>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        Details
+      </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

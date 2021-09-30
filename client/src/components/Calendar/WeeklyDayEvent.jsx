@@ -44,6 +44,7 @@ function WeeklyDayEvent(props) {
           eventDetail={props.event}
           renderType={"mobile-event-detail"}
           handleClose={handleClose}
+          isPopupOpen={isOpen}
         />
       )}
     </React.Fragment>
