@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import EditFooter from '../../../components/EditFooter';
+import GroupSelector from '../../../components/Group/GroupSelector';
 
 export default class ContactInfo extends Component {
     state = {
@@ -85,6 +86,11 @@ export default class ContactInfo extends Component {
         // console.log(this.state.contact);
         this.setState({contact});
         // console.log(this.state.contact);
+    }
+    
+    handleGroup = (groupID) => {
+        const contact = Object.assign({}, this.state.contact, {groupID});
+        this.setState({contact: contact});
     }
 
     render() {
@@ -192,7 +198,8 @@ export default class ContactInfo extends Component {
                         }}
                         variant="filled"
                     />
-
+                    
+                    <GroupSelector contact={contact} handleGroup={this.handleGroup} isEdit={isEdit}/>
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}

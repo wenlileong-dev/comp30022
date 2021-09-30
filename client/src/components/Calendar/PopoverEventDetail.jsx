@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import PopoverEventComponent from "./PopoverEventComponent";
 
 function PopoverEventDetail(props) {
-  console.log(props)
   return (
     <React.Fragment>
       <Box>

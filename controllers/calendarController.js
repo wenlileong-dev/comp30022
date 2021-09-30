@@ -35,7 +35,7 @@ exports.addEvent = async (req, res) => {
     userID,
   });
   const saveEvent = await newEvent.save();
-  res.json({ status: 200, data: newEvent });
+  res.json({ status: 200, data: saveEvent });
 };
 
 //update event details
@@ -86,11 +86,11 @@ exports.getEvents = async (req, res) => {
   let month = parseInt(req.params.month);
   let year = parseInt(req.params.year);
   const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
+  const lastDay = new Date(year, month + 1, 1);
 
   //get the events that occur in the given month
   let monthEvents = await Event.find({
-    date: { $gte: firstDay, $lte: lastDay },
+    date: { $gte: firstDay, $lt: lastDay },
     userID: userID,
   });
   let daysInMonth = getDaysInMonth(new Date(year, month));

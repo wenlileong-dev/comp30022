@@ -12,6 +12,10 @@ class EditFooter extends Component {
         error: false
     }
 
+    back = () => {
+        this.props.history.push('/contact');
+    }
+
     edit = () => {
         this.setState({isEdit: true});
         this.props.handleEdit(true);
@@ -37,7 +41,9 @@ class EditFooter extends Component {
             this.setState({isEdit: false, error: false});
             this.props.handleEdit(false);
             // console.log('update',response.data.info);
-            this.props.history.push('/contact/info', {contact: response.data.info});
+            // this.props.history.push('/contact/info', {contact: response.data.info});
+            this.props.history.replace('/contact');
+            
         }
         , error => {
             this.setState({error: true})
@@ -45,20 +51,22 @@ class EditFooter extends Component {
     }
 
     delete = () => {
-        const {contactInfo} = this.props;
-        axios({
-            method:'DELETE',
-            url:`http://localhost:3000/api/contacts/info/${contactInfo._id}`
-        }).then(response => {       
-            this.setState({isEdit: false});
-            this.props.handleEdit(false);
-            // console.log('update',response.data.info);
-            this.props.history.replace('/contact');
+        if(window.confirm('Do you want to delete')) {
+            const {contactInfo} = this.props;
+            axios({
+                method:'DELETE',
+                url:`http://localhost:3000/api/contacts/info/${contactInfo._id}`
+            }).then(response => {       
+                this.setState({isEdit: false});
+                this.props.handleEdit(false);
+                // console.log('update',response.data.info);
+                this.props.history.replace('/contact');
+            }
+            , error => {
+                alert(error);
+                // this.setState({error: true, success: false})
+            })
         }
-        , error => {
-            alert(error);
-            // this.setState({error: true, success: false})
-        })
     }
 
     render() {
@@ -100,6 +108,15 @@ class EditFooter extends Component {
                     style={{display: isEdit ? '':'none'}}
                 >Cancle</Button>
 
+                <br/>
+                <br/>
+                <Button
+                    id='contactBack'
+                    ref={c => this.editButton = c}
+                    variant="contained" 
+                    onClick={this.back}
+                >Back to Group</Button>
+                
                 <br/>
                 <br/>
                 <Alert severity="warning" style={{display: error ? '': 'none'}}>
