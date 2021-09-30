@@ -17,9 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 function PopoverEditEvent(props) {
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
-  let [date, setDate] = useState(
-    new Date(props.eventDetail.date).toISOString().slice(0, 10)
-  );
+  let [date, setDate] = useState(new Date(props.eventDetail.date));
   let [time, setTime] = useState(props.eventDetail.time);
   let [people, setPeople] = useState(props.eventDetail.people.toString());
   let [eventType, setEventType] = useState(props.eventDetail.eventType);
