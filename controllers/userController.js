@@ -37,7 +37,7 @@ exports.userPostRegister = async (req, res) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     phoneNumber: user.phoneNumber,
-                    userID: user._id
+                    userID: user._id,
                   },
                 });
               });
@@ -70,6 +70,7 @@ exports.userPostLogin = async (req, res) => {
             const token = user.generateAuthToken();
             res.cookie("token", token);
             res.status(200).json({
+              token: token,
               success: true,
               user: {
                 id: user.id,
@@ -128,13 +129,11 @@ exports.userPostUpdate = async (req, res) => {
                 if (duplicateUser._id != req.params.id) {
                   console.log(duplicateUser._id);
                   console.log(req.params.id);
-                  res
-                    .status(409)
-                    .json({
-                      success: false,
-                      message:
-                        "another customer has already registered that email",
-                    });
+                  res.status(409).json({
+                    success: false,
+                    message:
+                      "another customer has already registered that email",
+                  });
                 }
               } else {
                 User.findOneAndUpdate(
@@ -150,12 +149,10 @@ exports.userPostUpdate = async (req, res) => {
                   // whether the update is successful or not
                   function (err, updateUser) {
                     if (err) {
-                      res
-                        .status(404)
-                        .json({
-                          success: false,
-                          message: "User email does not exist",
-                        });
+                      res.status(404).json({
+                        success: false,
+                        message: "User email does not exist",
+                      });
                     } else {
                       res
                         .status(200)
