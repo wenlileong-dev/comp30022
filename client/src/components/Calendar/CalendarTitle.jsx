@@ -94,6 +94,7 @@ function CalendarTitle(props) {
         <CalendarPopup
           renderType="new-event"
           handleClose={handleClose}
+          isPopupOpen={isPopupOpen}
         ></CalendarPopup>
       )}
     </React.Fragment>

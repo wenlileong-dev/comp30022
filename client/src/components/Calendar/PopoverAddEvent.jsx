@@ -19,7 +19,7 @@ function PopoverAddEvent(props) {
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(new Date());
-  let [time, setTime] = useState("");
+  let [time, setTime] = useState(null);
   let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState("");
   let [eventType, setEventType] = useState("Online");
