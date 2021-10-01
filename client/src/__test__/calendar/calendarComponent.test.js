@@ -1,8 +1,8 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import CalendarHeader from "../CalendarHeader";
-import CalendarDay from "../CalendarDay";
+import CalendarHeader from "../../components/Calendar/CalendarHeader";
+import CalendarDay from "../../components/Calendar/CalendarDay";
 
 afterEach(() => {
   cleanup();
