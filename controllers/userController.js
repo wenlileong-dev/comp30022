@@ -97,6 +97,8 @@ exports.userLogout = async (req, res, next) => {
   res.status(200).json({ status: 200 });
 };
 
+
+
 exports.userGetDetail = async (req, res) =>{
   let userID = req.user._id;
   try{
@@ -161,47 +163,3 @@ exports.userPostUpdate = async (req, res) =>{
   }
 }
 
-// exports.userPostUpdate = async (req, res) => {
-//   try {
-//     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
-//     if (reg.test(req.body.password)) {
-//       bcrypt.genSalt(10, (err, salt) => {
-//         bcrypt.hash(req.body.password, salt, (err, hash) => {
-//           if (err) throw err;
-//           User.findByIdAndUpdate(
-//             req.params._id,
-//             // update information
-//             {
-//             firstName: req.body.firstName,
-//             lastName: req.body.lastName,
-//             phoneNumber: req.body.phoneNumber,
-//             password: hash,
-//             },
-//             { new: true },
-//             // whether the update is successful or not
-//             function (err, updateUser) {    
-//               if (err) {
-//                 res.status(404).json({
-//                   success: false,
-//                   message: "User account does not exist",
-//                 });
-//               } else {
-//                 res.status(200).json({
-//                   success: true,
-//                   updateUser: updateUser,
-//                 });
-//               }
-//             }
-//           )
-//         });
-//       });
-//     } else {
-//       res
-//         .status(200)
-//         .json({ success: false, error: "New password not valid!" });
-//     }
-//   } catch {
-//     res.status(400);
-//     return res.send("Database update failed");
-//   }
-// };
