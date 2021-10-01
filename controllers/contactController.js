@@ -40,10 +40,12 @@ exports.addContact = async (req, res, next) => {
 		// console.log(req.body);
 
 		//set a group
-		const groupSelected = await Groups.findById(newContact.groupID);
-		groupSelected.contacts.push(newContact._id+'');
-		Groups.updateOne({'_id': groupSelected._id}, 
-		 	{$set: {contacts: groupSelected.contacts}}, () => {});
+		if (newContact.groupID !== undefined && newContact.groupID !== '') {
+			const groupSelected = await Groups.findById(newContact.groupID);
+			groupSelected.contacts.push(newContact._id+'');
+			Groups.updateOne({'_id': groupSelected._id}, 
+			 	{$set: {contacts: groupSelected.contacts}}, () => {});
+		}
 
 		res.status(201).json({
 			newContact
@@ -69,6 +71,7 @@ exports.getInformation = async (req, res, next) => {
 		next(err);
 	}
 }
+
 //all contacts for the one account
 exports.getAllContacts = async (req, res) => {
 	let userID = req.user._id;
@@ -98,7 +101,7 @@ exports.updateInformation = async (req, res, next) => {
 			// console.log(prevInfo.groupID, newInfo.groupID);
 			const prevGroup = await Groups.findById(prevInfo.groupID);
 			const index = prevGroup.contacts.indexOf(req.params.id);
-			console.log(index);
+			// console.log(index);
 			if (index > -1){
 				prevGroup.contacts.splice(index,1)
 				Groups.updateOne({'_id': prevGroup._id}, 
@@ -107,7 +110,7 @@ exports.updateInformation = async (req, res, next) => {
 
 			const currGroup = await Groups.findById(newInfo.groupID);
 			currGroup.contacts.push(req.params.id);
-			Groups.updateOne({'_id': currGroup._id}, 
+				Groups.updateOne({'_id': currGroup._id}, 
 		  		{$set: {contacts: currGroup.contacts}}, () => {});
 		}
 		
@@ -115,8 +118,10 @@ exports.updateInformation = async (req, res, next) => {
 		await Contacts.updateOne({'_id': req.params.id}, 
 			{$set: newInfo}, () => {});
 
-		const info = await Contacts.findById(req.params.id);
-
+		const info = await Contacts.findById(req.params.id, (err,data) => {
+			console.log(data);
+		});
+		
 		res.status(201).json({
 			 info
 		})
