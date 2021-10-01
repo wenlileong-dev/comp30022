@@ -1,11 +1,17 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
+import CalendarTitle from "../../components/Calendar/CalendarTitle";
 import CalendarHeader from "../../components/Calendar/CalendarHeader";
 import CalendarDay from "../../components/Calendar/CalendarDay";
 
 afterEach(() => {
   cleanup();
+});
+test("testing calendar title", () => {
+  render(<CalendarTitle month={8} year={2021} />);
+  const calendarTitleElement = screen.getByText(/September/i);
+  expect(calendarTitleElement).toBeInTheDocument();
 });
 
 test("testing calendar header", () => {
