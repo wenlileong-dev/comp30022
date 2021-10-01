@@ -40,10 +40,12 @@ exports.addContact = async (req, res, next) => {
 		// console.log(req.body);
 
 		//set a group
-		const groupSelected = await Groups.findById(newContact.groupID);
-		groupSelected.contacts.push(newContact._id+'');
-		Groups.updateOne({'_id': groupSelected._id}, 
-		 	{$set: {contacts: groupSelected.contacts}}, () => {});
+		if (newContact.groupID !== undefined && newContact.groupID !== '') {
+			const groupSelected = await Groups.findById(newContact.groupID);
+			groupSelected.contacts.push(newContact._id+'');
+			Groups.updateOne({'_id': groupSelected._id}, 
+			 	{$set: {contacts: groupSelected.contacts}}, () => {});
+		}
 
 		res.status(201).json({
 			newContact
@@ -69,6 +71,7 @@ exports.getInformation = async (req, res, next) => {
 		next(err);
 	}
 }
+
 //all contacts for the one account
 exports.getAllContacts = async (req, res) => {
 	let userID = req.user._id;
