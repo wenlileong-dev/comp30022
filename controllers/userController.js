@@ -98,7 +98,13 @@ exports.userLogout = async (req, res, next) => {
   res.status(200).json({ status: 200 });
 };
 
+<<<<<<< HEAD
+
+
+exports.userGetDetail = async (req, res) =>{
+=======
 exports.userGetDetail = async (req, res) => {
+>>>>>>> development
   let userID = req.user._id;
   try {
     // whether we can find the snack by using snack id
@@ -176,6 +182,8 @@ exports.userPostUpdate = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
 // exports.userPostUpdate = async (req, res) => {
 //   try {
 //     let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
@@ -220,3 +228,4 @@ exports.userPostUpdate = async (req, res) => {
 //     return res.send("Database update failed");
 //   }
 // };
+>>>>>>> development
