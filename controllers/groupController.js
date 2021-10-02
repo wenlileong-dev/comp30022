@@ -62,7 +62,7 @@ exports.updateInformation = async (req, res, next) => {
 exports.deleteGroup = async (req, res) => {
   let groupID = req.body.id;
   let defaultGroup = await Groups.findOne({userID:req.user._id,isDefault:true});
-  console.log(defaultGroup);
+  // console.log(defaultGroup);
   let oldGroup =  await Groups.findById(groupID);
   const moveContact = defaultGroup.contacts.concat(oldGroup.contacts);
   defaultGroup.contacts = moveContact;
@@ -129,8 +129,8 @@ exports.newDefaultGroup = async (req, res) => {
         if(err){
             res.status(400).json({ success: false, err: err});
         }else{
-            console.log("default group");
-            console.log(createdGroup);
+            // console.log("default group");
+            // console.log(createdGroup);
             res.status(200).json({ success: true, order: createdGroup});
         }
     })

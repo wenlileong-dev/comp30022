@@ -19,16 +19,19 @@ export default class GroupSelector extends Component {
     componentDidMount() {
         axios({
             method:'GET',
-            url:`http://localhost:3000/group`
+            url:`http://localhost:3000/group/all`
         }).then(response => {
             this.setState({allGroups: response.data.allGroups});
+            console.log('update allGroups');
             if (this.props.contact === undefined) {
                 this.setState({groupID: response.data.allGroups[0]._id});
+                this.props.handleGroup(response.data.allGroups[0]._id);
             }
             else {
                 this.setState({groupID: this.props.contact.groupID});
+                console.log('update GroupID')
             }
-            this.props.handleGroup(response.data.allGroups[0]._id);
+            
             console.log('contact',this.props.contact);
         }
         , error => {
@@ -37,10 +40,10 @@ export default class GroupSelector extends Component {
 
 
     render() {
-        console.log('render group')
+        // console.log('render group')
         const {groupID, allGroups} = this.state;
         const {contact, isEdit} = this.props;
-        // console.log(this.state.allGroups);
+        console.log('contact in selector', contact);
         return (
             <Fragment>
                 <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>
