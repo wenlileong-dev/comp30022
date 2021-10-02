@@ -91,13 +91,14 @@ export default class ContactInfo extends Component {
     handleGroup = (groupID) => {
         const contact = Object.assign({}, this.state.contact, {groupID});
         this.setState({contact: contact});
+        console.log('handleGroup');
     }
 
     render() {
         
         const {contact} = this.state;
         const {isEdit} = this.state;
-        
+        console.log('contact in info', contact);
         return (
             <Fragment>
                 <Typography className='newContact' variant="h4" gutterBottom component="div">
@@ -199,7 +200,7 @@ export default class ContactInfo extends Component {
                         variant="filled"
                     />
                     
-                    <GroupSelector contact={contact} handleGroup={this.handleGroup} isEdit={isEdit}/>
+                    <GroupSelector contact={contact} handleGroup={this.handleGroup} isEdit={isEdit} isNew={false}/>
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}
