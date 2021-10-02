@@ -102,7 +102,6 @@ exports.userLogout = async (req, res, next) => {
 exports.userGetDetail = async (req, res) => {
   let userID = req.user._id;
   try {
-    // whether we can find the snack by using snack id
     User.findById(userID, function (err, details) {
       if (details) {
         res.status(200).json({ success: true, user: details });
