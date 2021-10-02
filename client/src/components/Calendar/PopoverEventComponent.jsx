@@ -33,7 +33,7 @@ function PopoverEventComponent(props) {
   }
   let time = new Date(props.event.time);
   return (
-    <Grid item xs={9}>
+    <Grid item xs={9} data-testid="event-day-component">
       <Card style={{ backgroundColor: "#EAEEF3" }}>
         <CardContent>
           <Typography variant="h5" component="div" lineHeight={2}>
