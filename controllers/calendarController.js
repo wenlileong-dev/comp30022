@@ -18,46 +18,35 @@ function compare(a, b) {
 
 //create a new event
 exports.addEvent = async (req, res) => {
-  let userID = req.user._id;
-  let { title, description, date, time, people, eventType, location } =
-    req.body;
-  if (people) {
-    people = people.split(",");
+  try {
+    let userID = req.user._id;
+    let { title, description, date, time, people, eventType, location } =
+      req.body;
+    if (people) {
+      people = people.split(",");
+    }
+    const newEvent = new Event({
+      title,
+      description,
+      date,
+      time,
+      people,
+      eventType,
+      location,
+      userID,
+    });
+    const saveEvent = await newEvent.save();
+    res.json({ status: 200, data: saveEvent });
+  } catch (error) {
+    res.json({ status: 400, errorMsg: "Bad Request - invalid input" });
   }
-  const newEvent = new Event({
-    title,
-    description,
-    date,
-    time,
-    people,
-    eventType,
-    location,
-    userID,
-  });
-  const saveEvent = await newEvent.save();
-  res.json({ status: 200, data: saveEvent });
 };
 
 //update event details
 exports.updateEvent = async (req, res) => {
-  let userID = req.user._id;
-  let {
-    title,
-    description,
-    date,
-    time,
-    people,
-    eventType,
-    location,
-    meetingNotes,
-    eventID,
-  } = req.body;
-  if (people) {
-    people = people.split(",");
-  }
-  let updateEvent = await Event.findByIdAndUpdate(
-    eventID,
-    {
+  try {
+    let userID = req.user._id;
+    let {
       title,
       description,
       date,
@@ -66,18 +55,41 @@ exports.updateEvent = async (req, res) => {
       eventType,
       location,
       meetingNotes,
-      userID,
-    },
-    { overwrite: true, new: true }
-  );
-  res.json({ status: 200, data: updateEvent });
+      eventID,
+    } = req.body;
+    if (people) {
+      people = people.split(",");
+    }
+    let updateEvent = await Event.findByIdAndUpdate(
+      eventID,
+      {
+        title,
+        description,
+        date,
+        time,
+        people,
+        eventType,
+        location,
+        meetingNotes,
+        userID,
+      },
+      { overwrite: true, new: true, runValidators: true }
+    );
+    res.json({ status: 200, data: updateEvent });
+  } catch (error) {
+    res.json({ status: 400, errorMsg: "Bad Request - invalid input" });
+  }
 };
 
 //delete event
 exports.deleteEvent = async (req, res) => {
-  let eventID = req.params.id;
-  await Event.findByIdAndDelete(eventID);
-  res.json({ status: 200, msg: "event deleted" });
+  try {
+    let eventID = req.params.id;
+    let deletedEvent = await Event.findByIdAndDelete(eventID);
+    res.json({ status: 200, data: deletedEvent });
+  } catch (error) {
+    res.json({ status: 400, errorMsg: "Bad Request - Invalid eventID" });
+  }
 };
 
 //read the events for a particular month

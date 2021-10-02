@@ -82,13 +82,13 @@ function PopoverAddEvent(props) {
       input.location = location;
     }
     axios.post(`/api/calendar`, input).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="add-event-form">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField

@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 //connect with database
 require("./models/db");
 
-
 //require router
 
 const userRouter = require("./routes/userRouter");
