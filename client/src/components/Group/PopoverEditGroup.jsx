@@ -88,9 +88,8 @@ function PopoverEditGroup(props) {
     if (meetingNotes) {
       input.meetingNotes = meetingNotes;
     }
-    console.log(input);
+    
     axios.put(`/api/calendar`, input).then((res) => {
-      console.log(res.data);
       window.location.href = `/calendar`;
     });
   }

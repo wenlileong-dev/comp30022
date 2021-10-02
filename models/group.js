@@ -8,6 +8,8 @@ const groupSchema = new mongoose.Schema({
     default: [],
   },
   isTop: { type: Boolean },
+  isDefault: { type: Boolean },
+  userID: { type: mongoose.Schema.ObjectId, ref: "User" },
 });
 
 //const Group = mongoose.model("Group", groupSchema);

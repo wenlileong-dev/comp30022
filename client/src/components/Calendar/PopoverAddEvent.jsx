@@ -15,11 +15,11 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import Alert from "@mui/material/Alert";
 
 function PopoverAddEvent(props) {
-  let today = new Date();
+  // let today = new Date();
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
-  let [date, setDate] = useState(today.toISOString().slice(0, 10));
-  let [time, setTime] = useState("");
+  let [date, setDate] = useState(new Date());
+  let [time, setTime] = useState(null);
   let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState("");
   let [eventType, setEventType] = useState("Online");
@@ -88,7 +88,7 @@ function PopoverAddEvent(props) {
   }
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="add-event-form">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField

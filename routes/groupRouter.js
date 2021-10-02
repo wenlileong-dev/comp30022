@@ -16,4 +16,6 @@ router.get("/all", authUser, groupController.getAllGroup);
 
 router.post("/top", authUser, groupController.topGroup);
 
+router.post('/default/:id', authUser, groupController.newDefaultGroup);
+
 module.exports = router;

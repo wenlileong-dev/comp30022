@@ -83,16 +83,22 @@ export default class ContactInfo extends Component {
 
     handleCancle = () => {
         const contact = this.props.location.state.contact;
-        console.log(this.state.contact);
+        // console.log(this.state.contact);
         this.setState({contact});
-        console.log(this.state.contact);
+        // console.log(this.state.contact);
+    }
+    
+    handleGroup = (groupID) => {
+        const contact = Object.assign({}, this.state.contact, {groupID});
+        this.setState({contact: contact});
+        console.log('handleGroup');
     }
 
     render() {
-        const {contact} = this.state;
-        // console.log('ORI', this.props.location.state.contact);
-        const {isEdit} = this.state;
         
+        const {contact} = this.state;
+        const {isEdit} = this.state;
+        console.log('contact in info', contact);
         return (
             <Fragment>
                 <Typography className='newContact' variant="h4" gutterBottom component="div">
@@ -194,6 +200,7 @@ export default class ContactInfo extends Component {
                         variant="filled"
                     />
                     
+                    <GroupSelector contact={contact} handleGroup={this.handleGroup} isEdit={isEdit} isNew={false}/>
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}

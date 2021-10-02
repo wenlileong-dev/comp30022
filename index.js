@@ -34,3 +34,5 @@ app.get("*", function (request, response) {
 app.listen(port, () => {
   console.log(`The server is runnning at port ${port}`);
 });
+
+module.exports = app;

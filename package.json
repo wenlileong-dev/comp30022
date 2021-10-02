@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "test:awesome": "mocha --reporter mochawesome || true",
+    "open:report": "open mochawesome-report/mochawesome.html",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
@@ -29,7 +31,9 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "mocha": "^9.1.2",
+    "mochawesome": "^6.3.0",
     "request": "^2.88.2"
   }
 }

@@ -6,7 +6,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import { withRouter } from "react-router-dom";
 
 
-class Confirm extends Component {
+class AddFooter extends Component {
     state = {
         error: false,
         success: false,
@@ -16,7 +16,8 @@ class Confirm extends Component {
     back = () => {
         this.props.history.push('/contact');
     }
-    confirm = () => {
+
+    handleConfirm = () => {
         console.log('confirm');
         axios({
             method:'POST',
@@ -25,9 +26,6 @@ class Confirm extends Component {
                 contact: {
                     ...this.props
                 },
-                group: {
-                    ...this.props.group
-                }
             }
         }).then(response => {
             this.setState({error:false, success: true})
@@ -46,7 +44,7 @@ class Confirm extends Component {
     render() {
         // const group = this.props.group;
         // group.contacts.push('123');
-        console.log('confirm',this.props.group)
+        console.log('confirm',this.props.groupID)
 
         const {error, success} = this.state;
         return (
@@ -63,7 +61,7 @@ class Confirm extends Component {
                 <Button 
                     variant="contained" 
                     type='submit' 
-                    onClick={this.confirm}
+                    onClick={this.handleConfirm}
                     sx={{
                         float:'right',
                         marginRight:'34px'
@@ -88,4 +86,4 @@ class Confirm extends Component {
     }
 }
 
-export default withRouter(Confirm)
+export default withRouter(AddFooter)

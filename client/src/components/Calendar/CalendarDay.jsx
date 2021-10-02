@@ -25,7 +25,11 @@ function CalendarDay(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-day" onClick={handleOpen}>
+      <div
+        className="calendar-day"
+        onClick={handleOpen}
+        data-testid={`${props.day}-${props.month}`}
+      >
         {new Date().getDate() === props.day &&
         new Date().getMonth() === props.month ? (
           <Stack direction="row" spacing={2}>
@@ -52,6 +56,7 @@ function CalendarDay(props) {
             renderType="day-events"
             events={props.event}
             handleClose={handleClose}
+            isPopupOpen={isPopupOpen}
             year={props.year}
             month={props.month}
             day={props.day}
