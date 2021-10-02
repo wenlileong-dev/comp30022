@@ -28,7 +28,7 @@ function CalendarDay(props) {
       <div
         className="calendar-day"
         onClick={handleOpen}
-        data-testid={`${props.day}-${props.month}`}
+        data-testid={"calendar-a-day"}
       >
         {new Date().getDate() === props.day &&
         new Date().getMonth() === props.month ? (
