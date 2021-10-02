@@ -88,7 +88,7 @@ function PopoverAddEvent(props) {
   }
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="add-event-form">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField

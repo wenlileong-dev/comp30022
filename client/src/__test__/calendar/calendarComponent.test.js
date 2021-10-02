@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import CalendarTitle from "../../components/Calendar/CalendarTitle";
@@ -8,10 +8,47 @@ import CalendarDay from "../../components/Calendar/CalendarDay";
 afterEach(() => {
   cleanup();
 });
-test("testing calendar title", () => {
-  render(<CalendarTitle month={8} year={2021} />);
-  const calendarTitleElement = screen.getByText(/September/i);
-  expect(calendarTitleElement).toBeInTheDocument();
+
+describe("Testing Calendar Title", () => {
+  let month = 8;
+  let year = 2021;
+  const nextMonth = jest.fn();
+  const prevMonth = jest.fn();
+  test("testing calendar title display correct month", () => {
+    render(<CalendarTitle month={month} year={year} />);
+
+    const calendarTitleElement = screen.getByTitle("calendar-title");
+    expect(calendarTitleElement).toBeInTheDocument();
+    expect(calendarTitleElement).toHaveTextContent("September");
+    expect(calendarTitleElement).toHaveTextContent("2021");
+  });
+
+  test("testing next month and previous month function", () => {
+    render(
+      <CalendarTitle
+        month={month}
+        year={year}
+        nextMonth={nextMonth}
+        prevMonth={prevMonth}
+      />
+    );
+    const prevMonthElement = screen.getByTestId("ArrowLeftIcon");
+    const nextMonthElement = screen.getByTestId("ArrowRightIcon");
+    fireEvent.click(prevMonthElement);
+    expect(prevMonth).toHaveBeenCalled();
+    fireEvent.click(nextMonthElement);
+    expect(nextMonth).toHaveBeenCalled();
+  });
+
+  test("render add event form when add new event button is clicked", () => {
+    render(<CalendarTitle month={month} year={year} />);
+    const addNewEventButton = screen.getByRole("button", { name: "New Event" });
+    fireEvent.click(addNewEventButton);
+    const popupElement = screen.getByTestId("modal-popup");
+    const addEventFormElement = screen.getByTestId("add-event-form");
+    expect(popupElement).toBeInTheDocument();
+    expect(addEventFormElement).toBeInTheDocument();
+  });
 });
 
 test("testing calendar header", () => {

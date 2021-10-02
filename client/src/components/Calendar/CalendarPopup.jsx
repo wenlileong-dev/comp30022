@@ -34,7 +34,11 @@ function CalendarPopup(props) {
 
   return (
     <React.Fragment>
-      <Modal open={props.isPopupOpen} onClose={props.handleClose}>
+      <Modal
+        open={props.isPopupOpen}
+        onClose={props.handleClose}
+        data-testid="modal-popup"
+      >
         <Box sx={style}>
           {isOpen === "day-events" && (
             <PopoverEventDetail

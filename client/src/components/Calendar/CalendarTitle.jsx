@@ -48,7 +48,7 @@ function CalendarTitle(props) {
                 <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
               </Grid>
               <Grid item xs={6}>
-                <span className="calendar-month">
+                <span className="calendar-month" title="calendar-title">
                   {monthNames[props.month]} {props.year}
                 </span>
               </Grid>
