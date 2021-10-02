@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -64,9 +65,10 @@ function PopoverEventComponent(props) {
             <Button
               variant="contained"
               size="small"
+              startIcon={<EditIcon />}
               onClick={handleOpenEditEvent}
             >
-              Event Details
+              Edit Event
             </Button>
             <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
               <ExpandMoreIcon />
