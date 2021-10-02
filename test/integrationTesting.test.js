@@ -36,3 +36,38 @@ describe("user integration tests", () => {
     })
 
 })
+
+// Group test
+// const groupUrl = "http://localhost:5000/group"
+
+// const testGroupUpdate = {
+//     validBody: {
+// 	    "groupName": "friend",
+// 	    "contacts": [],
+// 	    "isTop": false,
+// 	    "isDefault": false
+//     }
+// }
+// //knkn
+// const testGroupId = "61535bc37c711676c89c8f38"
+
+// describe("group integration tests", () => {
+
+//     it('should successfully update group details', function (done) {
+//         request.post(
+//             {
+//                 headers: {'content-type': 'application/json'},
+//                 url: groupUrl + '/update/' + testGroupId,
+//                 body: testGroupUpdate.validBody,
+//                 json: true,
+//             },
+//             function (error, response, body) {
+//                 expect(response.statusCode).to.equal(200);
+//                 expect(body.success).to.equal(true);
+//                 if(error) done(error);
+//                 else done();
+//             }
+//         );
+//     })
+
+// })

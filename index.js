@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 //connect with database
 require("./models/db");
 
+
 //require router
 
 const userRouter = require("./routes/userRouter");
@@ -34,3 +35,5 @@ app.get("*", function (request, response) {
 app.listen(port, () => {
   console.log(`The server is runnning at port ${port}`);
 });
+
+module.exports = app;
