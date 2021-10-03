@@ -30,4 +30,9 @@ jobs:
     - run: npm i
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - name: run test
+      run: npm test
+      env:
+        MONGO_USERNAME: crm-project
+        MONGO_PASSWORD: COMP30022
+        JWT_PRIVATE_KEY: COMP30022
