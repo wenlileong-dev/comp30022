@@ -55,7 +55,7 @@ describe('Contact API Testing', () => {
         	token = response.body.token;
         	done();
         }).catch(error => {
-        	console.log('error');
+        	// console.log('error');
         	done(err);
       	});
   	});
@@ -86,7 +86,7 @@ describe('Contact API Testing', () => {
 	// Update Function Test
 	describe('Contact Information Update Test', () => {
 		it('Update contact information successfully', done => {
-			console.log('testID', testID);
+			// console.log('testID', testID);
 			got({
 				method: 'PUT',
 				headers: {
