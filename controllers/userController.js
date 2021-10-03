@@ -98,11 +98,9 @@ exports.userLogout = async (req, res, next) => {
   res.status(200).json({ status: 200 });
 };
 
-
 exports.userGetDetail = async (req, res) => {
   let userID = req.user._id;
   try {
-    // whether we can find the snack by using snack id
     User.findById(userID, function (err, details) {
       if (details) {
         res.status(200).json({ success: true, user: details });
@@ -128,8 +126,8 @@ exports.userPostUpdate = async (req, res) => {
             function (err, duplicateUser) {
               if (duplicateUser) {
                 if (duplicateUser._id != req.params.id) {
-                  console.log(duplicateUser._id);
-                  console.log(req.params.id);
+                  // console.log(duplicateUser._id);
+                  // console.log(req.params.id);
                   res.status(409).json({
                     success: false,
                     message:
@@ -176,4 +174,3 @@ exports.userPostUpdate = async (req, res) => {
     return res.send("Database update failed");
   }
 };
-

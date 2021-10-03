@@ -87,9 +87,8 @@ function PopoverEditEvent(props) {
     if (meetingNotes) {
       input.meetingNotes = meetingNotes;
     }
-    console.log(input);
     axios.put(`/api/calendar`, input).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
@@ -104,7 +103,7 @@ function PopoverEditEvent(props) {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Details
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="edit-event-form">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField

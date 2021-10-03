@@ -5,7 +5,8 @@ exports.displayGroup = async (req, res, next) => {
   try {
     const allGroups = await Groups.find({});
     res.status(200).json({
-      allGroups,
+      success: true,
+      allGroups: allGroups,
     });
   } catch (err) {
     next(err);
@@ -37,14 +38,13 @@ exports.newGroup = async (req, res) => {
 
 exports.updateInformation = async (req, res, next) => {
   try {
-    const newInfo = req.body.group;
+    const newInfo = req.body;
+    // console.log(newInfo);
     // console.log(newInfo);
     Groups.updateOne({ _id: req.params.id }, { $set: newInfo }, () => {});
     const info = await Groups.findById(req.params.id);
-
-    res.status(201).json({
-      info,
-    });
+    // console.log("update?");
+    res.status(200).json({ success: true, info: info });
   } catch (err) {
     next(err);
   }
@@ -59,7 +59,11 @@ exports.updateInformation = async (req, res, next) => {
 
 exports.deleteGroup = async (req, res) => {
   let groupID = req.body.id;
-  let defaultGroup = await Groups.findById("614feba57ed1181a1837746d");
+  let defaultGroup = await Groups.findOne({
+    userID: req.user._id,
+    isDefault: true,
+  });
+  // console.log(defaultGroup);
   let oldGroup = await Groups.findById(groupID);
   const moveContact = defaultGroup.contacts.concat(oldGroup.contacts);
   defaultGroup.contacts = moveContact;
@@ -67,7 +71,7 @@ exports.deleteGroup = async (req, res) => {
 
   try {
     Groups.updateOne(
-      { _id: "614feba57ed1181a1837746d" },
+      { _id: defaultGroup._id },
       { $set: defaultGroup },
       () => {}
     );
@@ -125,8 +129,8 @@ exports.newDefaultGroup = async (req, res) => {
       if (err) {
         res.status(400).json({ success: false, err: err });
       } else {
-        console.log("default group");
-        console.log(createdGroup);
+        // console.log("default group");
+        // console.log(createdGroup);
         res.status(200).json({ success: true, order: createdGroup });
       }
     });
