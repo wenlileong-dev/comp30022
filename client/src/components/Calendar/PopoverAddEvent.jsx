@@ -82,7 +82,7 @@ function PopoverAddEvent(props) {
       input.location = location;
     }
     axios.post(`/api/calendar`, input).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }

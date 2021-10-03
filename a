@@ -1,0 +1,161 @@
+const expect = require('chai').expect;
+// const request = require('request');
+const app = require('../index');
+const got = require('got');
+
+// let chai = require("chai");
+// let chaiHttp = require("chai-http");
+// const app = require("./../index");
+// let should = chai.should();
+// let expect = chai.expect;
+// chai.use(chaiHttp);
+// const api = chai.request(app).keepOpen();
+
+const baseUrl = "http://localhost:5000/group";
+//a
+const testGroupId = "61581b026adc1628244862f7";
+let testID = '';
+
+// Group test
+const testGroupCreate = {
+    validBody: {
+	    "groupName": "group z",
+	    "contacts": [],
+	    "isTop": false,
+	    "isDefault": false
+    }
+}
+
+const testGroupUpdate = {
+    validBody: {
+	    "groupName": "friend",
+	    "contacts": [],
+	    "isTop": false,
+	    "isDefault": false
+    }
+}
+
+describe('Group API Testing', () => {
+	// Set authrization information
+	let token = "";
+  	before(done => {
+        // this.enableTimeouts(false)
+    	let user = {
+      		email: "test@mail.com",
+      		password: "123qwert",
+    	}
+
+      	got({
+      		method: 'POST',
+      		headers: {'content-type': 'application/json'},
+      		url: 'http://localhost:5000/user/login',
+      		body: user,
+      		json: true
+      	}).then(response => {
+        	expect(response.statusCode).to.equal(200);
+        	expect(response.body.success).to.equal(true);
+        	token = response.body.token;
+        	done();
+        }).catch(error => {
+        	console.log('error');
+        	done(err);
+      	});
+  	});
+      
+
+  	// 1. Create Function Test
+	
+
+	// 2. Update Function Test
+	describe('Group Information Update Test', () => {
+		it('Update group information successfully', done => {
+			// console.log('testID', testID);
+			got({
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+					'cookie': `token=${token}`
+				},
+            	url: baseUrl + `/update/${testGroupId}`,
+            	body: testGroupUpdate,
+            	json: true
+			}).then(response => {
+				expect(response.statusCode).to.equal(200);
+				done();
+			}).catch(error => {
+				done(error);
+			});
+		});
+	});
+
+	// 3. Deletion Function Test
+	describe('Contact Information Deletion Test', () => {
+		it('Delete a contact successfully', done => {
+			got({
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+					'cookie': `token=${token}`
+				},
+            	url: baseUrl + '/delete',
+                body: {testID},
+            	json: true
+			}).then(response => {
+                console.log("delete");
+                console.log(token);
+				expect(response.statusCode).to.equal(200);
+				done();
+			}).catch(error => {
+				done(error);
+			});
+		});
+	});
+
+    describe('New Group Addition Test', () => {
+		it('Add a new group successfully', done => {
+			got({
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+					'cookie': `token=${token}`
+				},
+            	url: baseUrl + '/create',
+            	body: testGroupCreate,
+            	json: true
+			}).then(response => {
+                console.log("create");
+                console.log(token);
+				expect(response.statusCode).to.equal(200);
+				console.log('body', response.body);
+				testID = response.body.order._id;
+				done();
+			}).catch(error => {
+				done(error);
+			});
+		});
+	});
+
+	// Information Request Test
+	// describe('All Group Request Test', () => {
+	// 	it('Fetch all groups for one account successfully', done => {
+	// 		got({
+	// 			method: 'GET',
+	// 			headers: {
+	// 				'content-type': 'application/json',
+	// 				'cookie': `token=${token}`
+	// 			},
+    //         	url: baseUrl,
+	// 		}).then(response => {
+	// 			const result = JSON.parse(response.body);
+    //             console.log(result);
+	// 			expect(response.statusCode).to.equal(200);
+	// 			expect(result.status).to.equal(200);
+	// 			expect(result.success).to.equal(true);
+	// 			done();
+	// 		}).catch(error => {
+	// 			done(error);
+	// 		});
+	// 	});
+	// });
+});
+
