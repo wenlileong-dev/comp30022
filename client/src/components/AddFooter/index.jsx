@@ -20,7 +20,7 @@ class AddFooter extends Component {
     // console.log('confirm');
     axios({
       method: "POST",
-      url: "http://localhost:3000/api/contacts/add-contact",
+      url: "https://personal-crm-project.herokuapp.com/api/contacts/add-contact",
       data: {
         contact: {
           ...this.props,
