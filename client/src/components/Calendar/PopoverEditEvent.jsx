@@ -103,7 +103,7 @@ function PopoverEditEvent(props) {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Details
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="edit-event-form">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
