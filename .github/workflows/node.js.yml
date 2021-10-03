@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: "14.15.3"
         cache: 'npm'
+    - name: Upgrade NPM
+    - run: npm install -g npm
     - run: npm ci
     - run: npm install
     - run: npm start 
