@@ -8,10 +8,9 @@ const api = chai.request(app).keepOpen();
 
 //npm run test:awesome
 
-describe("Copy of Group API Testing", () => {
+describe("Event API Testing", () => {
   let token = "";
-  let groupID = "";
-  let userID = "";
+  let eventID = "";
   beforeEach((done) => {
     let user = {
       email: "test@mail.com",
@@ -24,7 +23,6 @@ describe("Copy of Group API Testing", () => {
         res.should.have.status(200);
         res.body.success.should.be.eql(true);
         token = res.body.token;
-        userID = res.body.user.id;
         done();
       });
   });
@@ -34,125 +32,160 @@ describe("Copy of Group API Testing", () => {
     done();
   });
 
-  // 1. get groups
-  describe("get groups", () => {
+  describe("get events", () => {
     it("with valid token", (done) => {
       api
-        .get("/group")
-        .set("Cookie", `token=${token}`)
-        .end((err, res) => {
-          // res.should.have.status(200);
-          res.body.success.should.be.eql(true);
-          res.body.allGroups.should.be.a("array");
-          done();
-        });
-    });
-  });
-
-  // 2. get groups and contacts
-  describe("get all groups", () => {
-    it("with valid token", (done) => {
-      api
-        .get("/group/all")
+        .get("/api/calendar/8/2021")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           // res.should.have.status(200);
           res.body.status.should.be.eql(200);
-          res.body.allGroups.should.be.a("array");
+          res.body.data.should.be.a("array");
           done();
         });
     });
+
+    it("without token", (done) => {
+      api.get("/api/calendar/8/2021").end((err, res) => {
+        // res.should.have.status(200);
+        res.body.status.should.be.eql(401);
+        res.body.errorMsg.should.be.eql("Access denied...No token provided...");
+        done();
+      });
+    });
   });
 
-  // 3. add new group
-  describe("Add Group", () => {
-    it("add group with valid input", (done) => {
+  describe("Add Event", () => {
+    it("add event with valid input", (done) => {
       let testInput = {
-        groupName: "group test",
-        contacts: [],
-        isTop: false,
-        isDefault: false,
+        title: "testing api",
+        description: "description for testing api",
+        date: "2021-9-30",
+        time: "2021-09-30T13:49:51.141Z",
+        people: "Joe,John",
+        eventType: "Online",
+        location: "team",
       };
       api
-        .post("/group/create")
-        .set("Cookie", `token=${token}`)
-        .send(testInput)
-        .end((err, res) => {
-          res.body.success.should.be.eql(true);
-          res.body.order.should.be.a("object");
-          groupID = res.body.order._id;
-          done();
-        });
-    });
-  });
-
-  // 4. update group
-  describe("update group", () => {
-    it("update group with valid input", (done) => {
-      let testInput = {
-        groupName: "group zz",
-        contacts: [],
-        isTop: false,
-        isDefault: false,
-      };
-      api
-        .post(`/group/update/${groupID}`)
-        .set("Cookie", `token=${token}`)
-        .send(testInput)
-        .end((err, res) => {
-          res.body.success.should.be.eql(true);
-          res.body.info.should.be.a("object");
-          done();
-        });
-    });
-  });
-
-  // 5. top group
-  describe("top group", () => {
-    it("top group with valid input", (done) => {
-      let testInput = {
-        isTop: true,
-        id: groupID,
-      };
-      api
-        .post(`/group/top`)
-        .set("Cookie", `token=${token}`)
-        .send(testInput)
-        .end((err, res) => {
-          res.body.group.isTop.should.be.eql(true);
-          done();
-        });
-    });
-  });
-
-  // 6. create default group
-  describe("create default group", () => {
-    it("create default group with valid input", (done) => {
-      api
-        .post(`/group/default/${userID}`)
-        .set("Cookie", `token=${token}`)
-        .end((err, res) => {
-          res.body.success.should.be.eql(true);
-          done();
-        });
-    });
-  });
-
-  // 7. delete group
-  describe("delete group", () => {
-    it("delete group with valid groupID", (done) => {
-      let testInput = {
-        id: groupID,
-      };
-      api
-        .post(`/group/delete`)
+        .post("/api/calendar")
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
           res.body.status.should.be.eql(200);
-          res.body.msg.should.be.a("array");
+          res.body.data.should.be.a("object");
+          res.body.data.title.should.be.eql(testInput.title);
+          eventID = res.body.data._id;
+          done();
+        });
+    });
+
+    it("add event without title", (done) => {
+      let testInput = {
+        description: "description for testing api",
+        date: "2021-9-30",
+        time: "2021-09-30T13:49:51.141Z",
+        people: "Joe,John",
+        eventType: "Online",
+        location: "team",
+      };
+      api
+        .post("/api/calendar")
+        .set("Cookie", `token=${token}`)
+        .send(testInput)
+        .end((err, res) => {
+          res.body.status.should.be.eql(400);
+          res.body.errorMsg.should.be.eql("Bad Request - invalid input");
+          done();
+        });
+    });
+  });
+
+  describe("update event", () => {
+    it("update event with valid input", (done) => {
+      let testInput = {
+        title: "update testing api",
+        description: "description for update testing api",
+        date: "2021-9-30",
+        time: "2021-09-30T13:49:51.141Z",
+        people: "Joe,John",
+        eventType: "Online",
+        location: "team",
+        eventID: eventID,
+      };
+      api
+        .put("/api/calendar")
+        .set("Cookie", `token=${token}`)
+        .send(testInput)
+        .end((err, res) => {
+          res.body.status.should.be.eql(200);
+          res.body.data.should.be.a("object");
+          res.body.data.title.should.be.eql(testInput.title);
+          done();
+        });
+    });
+
+    it("update event without title", (done) => {
+      let testInput = {
+        description: "description for update testing api",
+        date: "2021-9-30",
+        time: "2021-09-30T13:49:51.141Z",
+        people: "Joe,John",
+        eventType: "Online",
+        location: "team",
+        eventID: eventID,
+      };
+      api
+        .put("/api/calendar")
+        .set("Cookie", `token=${token}`)
+        .send(testInput)
+        .end((err, res) => {
+          res.body.status.should.be.eql(400);
+          res.body.errorMsg.should.be.eql("Bad Request - invalid input");
+          done();
+        });
+    });
+  });
+
+  describe("delete event", () => {
+    it("delete event with valid eventID", (done) => {
+      api
+        .delete(`/api/calendar/${eventID}`)
+        .set("Cookie", `token=${token}`)
+        .end((err, res) => {
+          res.body.status.should.be.eql(200);
+          res.body.data.should.be.a("object");
+          res.body.data._id.should.be.eql(eventID);
+          done();
+        });
+    });
+
+    it("delete event with invalid eventID", (done) => {
+      api
+        .delete("/api/calendar/xxxxx")
+        .set("Cookie", `token=${token}`)
+        .end((err, res) => {
+          res.body.status.should.be.eql(400);
+          res.body.errorMsg.should.be.eql("Bad Request - Invalid eventID");
           done();
         });
     });
   });
 });
+
+//   describe("auth User", () => {
+//     let user = {
+//       email: "test@mail.com",
+//       password: "123qwert",
+//     };
+//     it("Login User", (done) => {
+//       api
+//         .post("/user/login")
+//         .send(user)
+//         .end((err, res) => {
+//           res.should.have.status(200);
+//           res.body.success.should.be.eql(true);
+//           token = res.body.token;
+//           done();
+//         });
+//     });
+//   });
