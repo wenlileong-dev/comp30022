@@ -82,11 +82,30 @@ const testUserRegister = {
 };
 
 describe("userPostRegister integration tests", () => {
+  let userID = "";
   it("should successfully register user account", function (done) {
     request.post(
       {
         headers: { "content-type": "application/json" },
         url: userUrl + "/register",
+        body: testUserRegister.validBody,
+        json: true,
+      },
+      function (error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        expect(body.success).to.equal(true);
+        userID = body.user.userID;
+        if (error) done(error);
+        else done();
+      }
+    );
+  });
+
+  it("should successfully delete the registered user account", function (done) {
+    request.delete(
+      {
+        headers: { "content-type": "application/json" },
+        url: userUrl + `/deleteUser/${userID}`,
         body: testUserRegister.validBody,
         json: true,
       },
