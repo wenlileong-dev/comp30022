@@ -25,7 +25,6 @@ describe("Copy of Group API Testing", () => {
         res.body.success.should.be.eql(true);
         token = res.body.token;
         userID = res.body.user.id;
-        console.log(userID);
         done();
       });
   });
