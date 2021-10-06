@@ -102,6 +102,7 @@ describe("userPostRegister integration tests", () => {
   });
 
   it("should successfully delete the registered user account", function (done) {
+    console.log(userID);
     request.delete(
       {
         headers: { "content-type": "application/json" },
