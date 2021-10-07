@@ -24,6 +24,7 @@ function PopoverAddEvent(props) {
   let [people, setPeople] = useState("");
   let [eventType, setEventType] = useState("Online");
   let [location, setLocation] = useState("Zoom");
+  let [meetingLink, setMeetingLink] = useState("");
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -46,6 +47,10 @@ function PopoverAddEvent(props) {
     setLocation(e.target.value);
   }
 
+  function handleMeetingLink(e) {
+    setMeetingLink(e.target.value);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     let input = {
@@ -56,6 +61,7 @@ function PopoverAddEvent(props) {
       people: undefined,
       eventtype: undefined,
       location: undefined,
+      meetingLink: undefined,
     };
     if (title) {
       input.title = title;
@@ -80,6 +86,9 @@ function PopoverAddEvent(props) {
     }
     if (location) {
       input.location = location;
+    }
+    if (meetingLink) {
+      input.meetingLink = meetingLink;
     }
     axios.post(`/api/calendar`, input).then((res) => {
       // console.log(res.data);
@@ -166,16 +175,28 @@ function PopoverAddEvent(props) {
               />
             </Grid>
           ) : (
-            <Grid item xs={12} sm={6}>
-              <FormControl className="event-type-select" variant="standard">
-                <InputLabel>Location</InputLabel>
-                <Select value={location} onChange={handleLocation}>
-                  <MenuItem value="Zoom">Zoom</MenuItem>
-                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
-                  <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            <>
+              <Grid item xs={12} sm={6}>
+                <FormControl className="event-type-select" variant="standard">
+                  <InputLabel>Location</InputLabel>
+                  <Select value={location} onChange={handleLocation}>
+                    <MenuItem value="Zoom">Zoom</MenuItem>
+                    <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                    <MenuItem value="Google Meet">Google Meet</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="standard"
+                  label="Meeting Link"
+                  onChange={handleMeetingLink}
+                  value={meetingLink}
+                  required
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+            </>
           )}
 
           <Grid item xs={12} sm={12}>

@@ -20,8 +20,16 @@ function compare(a, b) {
 exports.addEvent = async (req, res) => {
   try {
     let userID = req.user._id;
-    let { title, description, date, time, people, eventType, location } =
-      req.body;
+    let {
+      title,
+      description,
+      date,
+      time,
+      people,
+      eventType,
+      location,
+      meetingLink,
+    } = req.body;
     if (people) {
       people = people.split(",");
     }
@@ -34,6 +42,7 @@ exports.addEvent = async (req, res) => {
       eventType,
       location,
       userID,
+      meetingLink,
     });
     const saveEvent = await newEvent.save();
     res.json({ status: 200, data: saveEvent });

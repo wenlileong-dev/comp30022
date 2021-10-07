@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -13,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Typography from "@mui/material/Typography";
 
 function PopoverEditEvent(props) {
@@ -26,6 +28,7 @@ function PopoverEditEvent(props) {
   let [meetingNotes, setMeetingNotes] = useState(
     props.eventDetail.meetingNotes
   );
+  let [meetingLink, setMeetingLink] = useState(props.eventDetail.meetingLink);
   function handleTitle(event) {
     setTitle(event.target.value);
   }
@@ -49,6 +52,9 @@ function PopoverEditEvent(props) {
   function handleMeetingNotes(e) {
     setMeetingNotes(e.target.value);
   }
+  function handleMeetingLink(e) {
+    setMeetingLink(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -61,6 +67,7 @@ function PopoverEditEvent(props) {
       eventType: undefined,
       location: undefined,
       meetingNotes: undefined,
+      meetingLink: undefined,
     };
     input.eventID = props.eventDetail._id;
     if (title) {
@@ -87,6 +94,9 @@ function PopoverEditEvent(props) {
     if (meetingNotes) {
       input.meetingNotes = meetingNotes;
     }
+    if (meetingLink) {
+      input.meetingLink = meetingLink;
+    }
     axios.put(`/api/calendar`, input).then((res) => {
       // console.log(res.data);
       window.location.href = `/calendar`;
@@ -98,6 +108,12 @@ function PopoverEditEvent(props) {
       window.location.href = `/calendar`;
     });
   }
+
+  function handleOpenMeeting() {
+    const newWindow = window.open(meetingLink, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  }
+
   return (
     <React.Fragment>
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -177,16 +193,28 @@ function PopoverEditEvent(props) {
               />
             </Grid>
           ) : (
-            <Grid item xs={12} sm={6}>
-              <FormControl className="event-type-select" variant="standard">
-                <InputLabel>Location</InputLabel>
-                <Select value={location} onChange={handleLocation}>
-                  <MenuItem value="Zoom">Zoom</MenuItem>
-                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
-                  <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            <>
+              <Grid item xs={12} sm={6}>
+                <FormControl className="event-type-select" variant="standard">
+                  <InputLabel>Location</InputLabel>
+                  <Select value={location} onChange={handleLocation}>
+                    <MenuItem value="Zoom">Zoom</MenuItem>
+                    <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                    <MenuItem value="Google Meet">Google Meet</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="standard"
+                  label="Meeting Link"
+                  onChange={handleMeetingLink}
+                  value={meetingLink}
+                  required
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+            </>
           )}
           <Grid item xs={12}>
             <TextField
@@ -199,7 +227,17 @@ function PopoverEditEvent(props) {
               value={meetingNotes}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
+            <Button
+              variant="contained"
+              type="button"
+              onClick={handleOpenMeeting}
+              startIcon={<OpenInNewIcon />}
+            >
+              Open Meeting
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <Button
               variant="contained"
               color="success"
@@ -209,7 +247,7 @@ function PopoverEditEvent(props) {
               Update Event
             </Button>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Button
               variant="contained"
               color="error"

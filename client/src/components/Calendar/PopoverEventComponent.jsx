@@ -31,6 +31,15 @@ function PopoverEventComponent(props) {
     props.setEvent(props.event);
     props.openEditEvent();
   }
+
+  function handleOpenMeeting() {
+    const newWindow = window.open(
+      props.event.meetingLink,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
+  }
   let time = new Date(props.event.time);
   return (
     <Grid item xs={9} data-testid="event-day-component">
@@ -59,8 +68,13 @@ function PopoverEventComponent(props) {
             </Typography>
           )}
           <CardActions disableSpacing>
-            <Button variant="outlined" size="small" id="space-btw-event-button">
-              Open Meeting
+            <Button
+              variant="outlined"
+              size="small"
+              id="space-btw-event-button"
+              onClick={handleOpenMeeting}
+            >
+              Open Event
             </Button>
             <Button
               variant="contained"

@@ -10,6 +10,7 @@ const eventSchema = new mongoose.Schema(
     eventType: { type: String, enum: ["Online", "Offline"], required: true },
     location: { type: String, required: true },
     meetingNotes: { type: String, default: "" },
+    meetingLink: { type: String },
     userID: { type: mongoose.Schema.ObjectId, ref: "User" },
   },
   {
