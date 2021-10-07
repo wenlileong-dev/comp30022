@@ -1,14 +1,30 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
+import Button from "@mui/material/Button";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Alert from "@mui/material/Alert";
 import CalendarPopup from "./CalendarPopup";
 
 function WeeklyDayEvent(props) {
   let [isOpen, setIsOpen] = useState(false);
+  let [noMeetingLink, setNoMeetingLink] = useState(false);
   const showEventDetail = () => {
     setIsOpen(true);
   };
+
+  function handleOpenMeeting() {
+    if (props.event.meetingLink) {
+      const newWindow = window.open(
+        props.event.meetingLink,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      if (newWindow) newWindow.opener = null;
+    } else {
+      setNoMeetingLink(true);
+    }
+  }
 
   const handleClose = () => {
     setIsOpen(false);
@@ -36,6 +52,18 @@ function WeeklyDayEvent(props) {
               </p>
             )}
           </div>
+          <Button
+            variant="contained"
+            type="button"
+            onClick={handleOpenMeeting}
+            startIcon={<OpenInNewIcon />}
+            size="small"
+          >
+            Meeting
+          </Button>
+          {noMeetingLink && (
+            <Alert severity="info">Meeting Link is not provided</Alert>
+          )}
         </CardContent>
       </Card>
 

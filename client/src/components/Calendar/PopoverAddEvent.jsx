@@ -192,7 +192,6 @@ function PopoverAddEvent(props) {
                   label="Meeting Link"
                   onChange={handleMeetingLink}
                   value={meetingLink}
-                  required
                   style={{ width: "100%" }}
                 />
               </Grid>

@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+
 import Typography from "@mui/material/Typography";
 
 function PopoverEditEvent(props) {
@@ -107,11 +107,6 @@ function PopoverEditEvent(props) {
     axios.delete(`/api/calendar/${props.eventDetail._id}`).then((res) => {
       window.location.href = `/calendar`;
     });
-  }
-
-  function handleOpenMeeting() {
-    const newWindow = window.open(meetingLink, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
   }
 
   return (
@@ -210,7 +205,6 @@ function PopoverEditEvent(props) {
                   label="Meeting Link"
                   onChange={handleMeetingLink}
                   value={meetingLink}
-                  required
                   style={{ width: "100%" }}
                 />
               </Grid>
@@ -226,16 +220,6 @@ function PopoverEditEvent(props) {
               onChange={handleMeetingNotes}
               value={meetingNotes}
             />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Button
-              variant="contained"
-              type="button"
-              onClick={handleOpenMeeting}
-              startIcon={<OpenInNewIcon />}
-            >
-              Open Meeting
-            </Button>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Button

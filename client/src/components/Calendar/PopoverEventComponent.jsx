@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CardActions from "@mui/material/CardActions";
+import Alert from "@mui/material/Alert";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -23,6 +24,7 @@ const ExpandMore = styled((props) => {
 }));
 function PopoverEventComponent(props) {
   const [expandNotes, setExpandNotes] = React.useState(false);
+  let [noMeetingLink, setNoMeetingLink] = React.useState(false);
 
   const handleExpandNotes = () => {
     setExpandNotes(!expandNotes);
@@ -32,13 +34,17 @@ function PopoverEventComponent(props) {
     props.openEditEvent();
   }
 
-  function handleOpenMeeting() {
-    const newWindow = window.open(
-      props.event.meetingLink,
-      "_blank",
-      "noopener,noreferrer"
-    );
-    if (newWindow) newWindow.opener = null;
+  function handleOpenMeeting(event) {
+    if (props.event.meetingLink) {
+      const newWindow = window.open(
+        props.event.meetingLink,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      if (newWindow) newWindow.opener = null;
+    } else {
+      setNoMeetingLink(true);
+    }
   }
   let time = new Date(props.event.time);
   return (
@@ -67,6 +73,9 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </Typography>
           )}
+          {noMeetingLink && (
+            <Alert severity="info">Meeting Link is not provided</Alert>
+          )}
           <CardActions disableSpacing>
             <Button
               variant="outlined"
@@ -84,6 +93,7 @@ function PopoverEventComponent(props) {
             >
               Edit Event
             </Button>
+
             <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
               <ExpandMoreIcon />
             </ExpandMore>
