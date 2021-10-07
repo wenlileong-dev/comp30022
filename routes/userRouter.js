@@ -11,6 +11,7 @@ router.post("/login", userController.userPostLogin);
 router.post("/logout", userController.userLogout);
 
 router.post("/update/:id", userController.userPostUpdate);
+router.delete("/deleteUser/:id", userController.deleteUser);
 // view detail of snack
-router.get('/',authUser,userController.userGetDetail);
+router.get("/", authUser, userController.userGetDetail);
 module.exports = router;

@@ -5,11 +5,11 @@ const groupSchema = new mongoose.Schema({
   // contactNumber: { type: Number },
   contacts: {
     type: Array,
-    default: []
+    default: [],
   },
-  isTop: {type: Boolean},
-  isDefault: {type: Boolean},
-  userID: { type: mongoose.Schema.ObjectId, ref: "User" }
+  isTop: { type: Boolean },
+  isDefault: { type: Boolean },
+  userID: { type: mongoose.Schema.ObjectId, ref: "User" },
 });
 
 //const Group = mongoose.model("Group", groupSchema);

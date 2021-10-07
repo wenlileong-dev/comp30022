@@ -8,7 +8,7 @@ const api = chai.request(app).keepOpen();
 
 //npm run test:awesome
 
-describe("Calendar API Testing", () => {
+describe("Event API Testing", () => {
   let token = "";
   let eventID = "";
   beforeEach((done) => {
