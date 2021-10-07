@@ -12,6 +12,7 @@ import Collapse from "@mui/material/Collapse";
 import CardActions from "@mui/material/CardActions";
 import Alert from "@mui/material/Alert";
 
+import PeopleEventString from "./PeopleEventString";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -47,6 +48,7 @@ function PopoverEventComponent(props) {
     }
   }
   let time = new Date(props.event.time);
+
   return (
     <Grid item xs={9} data-testid="event-day-component">
       <Card style={{ backgroundColor: "#EAEEF3" }}>
@@ -62,7 +64,15 @@ function PopoverEventComponent(props) {
             {props.event.description}
           </Typography>
           <Typography variant="body1" lineHeight={2}>
-            {props.event.people.toString()}
+            {props.event.people &&
+              props.event.people.map((person, index) => {
+                return (
+                  <PeopleEventString
+                    key={`eventPerson ${index}`}
+                    person={person}
+                  />
+                );
+              })}
           </Typography>
           {props.event.eventType === "Online" ? (
             <Typography variant="subtitle1" lineHeight={2}>

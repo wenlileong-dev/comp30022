@@ -6,7 +6,7 @@ const eventSchema = new mongoose.Schema(
     description: { type: String },
     date: { type: Date, required: true },
     time: { type: Date, required: true },
-    people: { type: [String] },
+    people: { type: [mongoose.Schema.Types.Mixed] },
     eventType: { type: String, enum: ["Online", "Offline"], required: true },
     location: { type: String, required: true },
     meetingNotes: { type: String, default: "" },

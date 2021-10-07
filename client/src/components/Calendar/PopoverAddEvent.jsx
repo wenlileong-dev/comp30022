@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -12,7 +13,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import Alert from "@mui/material/Alert";
+
+import EventPeople from "./EventPeople";
 
 function PopoverAddEvent(props) {
   // let today = new Date();
@@ -21,10 +23,12 @@ function PopoverAddEvent(props) {
   let [date, setDate] = useState(new Date());
   let [time, setTime] = useState(null);
   let [alertTime, setAlertTime] = useState(false);
-  let [people, setPeople] = useState("");
+  let [people, setPeople] = useState([]);
   let [eventType, setEventType] = useState("Online");
   let [location, setLocation] = useState("Zoom");
   let [meetingLink, setMeetingLink] = useState("");
+
+  let [peopleValidate, setPeopleValidate] = useState(false);
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -32,9 +36,9 @@ function PopoverAddEvent(props) {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-  function handlePeople(e) {
-    setPeople(e.target.value);
-  }
+  // function handlePeople(e) {
+  //   setPeople(e.target.value);
+  // }
   function handleEventType(e) {
     setEventType(e.target.value);
     if (e.target.value === "Online") {
@@ -79,6 +83,13 @@ function PopoverAddEvent(props) {
       return;
     }
     if (people) {
+      for (let i = 0; i < people.length; i++) {
+        let splitName = people[i].split(" ");
+        if (splitName.length !== 2) {
+          setPeopleValidate(true);
+          return;
+        }
+      }
       input.people = people;
     }
     if (eventType) {
@@ -91,7 +102,7 @@ function PopoverAddEvent(props) {
       input.meetingLink = meetingLink;
     }
     axios.post(`/api/calendar`, input).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
@@ -145,16 +156,6 @@ function PopoverAddEvent(props) {
             </LocalizationProvider>
             {alertTime && <Alert severity="error">Time is required</Alert>}
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              variant="standard"
-              label="People"
-              multiline
-              placeholder="separate by comma"
-              onChange={handlePeople}
-              value={people}
-            />
-          </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl className="event-type-select" variant="standard">
               <InputLabel>Event Type</InputLabel>
@@ -197,6 +198,12 @@ function PopoverAddEvent(props) {
               </Grid>
             </>
           )}
+          <Grid item xs={12} sm={12}>
+            <EventPeople setPeople={setPeople} people={[]} />
+            {peopleValidate && (
+              <Alert severity="error">Invalid People Input</Alert>
+            )}
+          </Grid>
 
           <Grid item xs={12} sm={12}>
             <Button

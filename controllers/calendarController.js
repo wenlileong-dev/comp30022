@@ -1,4 +1,5 @@
 const Event = require("./../models/event");
+const { Contacts } = require("../models/db.js");
 
 //helper function - get number of days of a month
 const getDaysInMonth = (date) => {
@@ -30,15 +31,25 @@ exports.addEvent = async (req, res) => {
       location,
       meetingLink,
     } = req.body;
-    if (people) {
-      people = people.split(",");
+    let modifyPeople = [];
+    for (let i = 0; i < people.length; i++) {
+      let [firstName, lastName] = people[i].split(" ");
+      let findContact = await Contacts.find({
+        firstName: firstName,
+        lastName: lastName,
+      });
+      if (findContact.length > 0) {
+        modifyPeople.push(findContact[0]);
+      } else {
+        modifyPeople.push({ firstName, lastName });
+      }
     }
     const newEvent = new Event({
       title,
       description,
       date,
       time,
-      people,
+      people: modifyPeople,
       eventType,
       location,
       userID,
@@ -66,8 +77,18 @@ exports.updateEvent = async (req, res) => {
       meetingNotes,
       eventID,
     } = req.body;
-    if (people) {
-      people = people.split(",");
+    let modifyPeople = [];
+    for (let i = 0; i < people.length; i++) {
+      let [firstName, lastName] = people[i].split(" ");
+      let findContact = await Contacts.find({
+        firstName: firstName,
+        lastName: lastName,
+      });
+      if (findContact.length > 0) {
+        modifyPeople.push(findContact[0]);
+      } else {
+        modifyPeople.push({ firstName, lastName });
+      }
     }
     let updateEvent = await Event.findByIdAndUpdate(
       eventID,
@@ -76,7 +97,7 @@ exports.updateEvent = async (req, res) => {
         description,
         date,
         time,
-        people,
+        people: modifyPeople,
         eventType,
         location,
         meetingNotes,
