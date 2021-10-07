@@ -10,7 +10,9 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CardActions from "@mui/material/CardActions";
+import Alert from "@mui/material/Alert";
 
+import PeopleEventString from "./PeopleEventString";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -23,6 +25,7 @@ const ExpandMore = styled((props) => {
 }));
 function PopoverEventComponent(props) {
   const [expandNotes, setExpandNotes] = React.useState(false);
+  let [noMeetingLink, setNoMeetingLink] = React.useState(false);
 
   const handleExpandNotes = () => {
     setExpandNotes(!expandNotes);
@@ -31,7 +34,21 @@ function PopoverEventComponent(props) {
     props.setEvent(props.event);
     props.openEditEvent();
   }
+
+  function handleOpenMeeting(event) {
+    if (props.event.meetingLink) {
+      const newWindow = window.open(
+        props.event.meetingLink,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      if (newWindow) newWindow.opener = null;
+    } else {
+      setNoMeetingLink(true);
+    }
+  }
   let time = new Date(props.event.time);
+
   return (
     <Grid item xs={9} data-testid="event-day-component">
       <Card style={{ backgroundColor: "#EAEEF3" }}>
@@ -47,7 +64,15 @@ function PopoverEventComponent(props) {
             {props.event.description}
           </Typography>
           <Typography variant="body1" lineHeight={2}>
-            {props.event.people.toString()}
+            {props.event.people &&
+              props.event.people.map((person, index) => {
+                return (
+                  <PeopleEventString
+                    key={`eventPerson ${index}`}
+                    person={person}
+                  />
+                );
+              })}
           </Typography>
           {props.event.eventType === "Online" ? (
             <Typography variant="subtitle1" lineHeight={2}>
@@ -58,9 +83,17 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </Typography>
           )}
+          {noMeetingLink && (
+            <Alert severity="info">Meeting Link is not provided</Alert>
+          )}
           <CardActions disableSpacing>
-            <Button variant="outlined" size="small" id="space-btw-event-button">
-              Open Meeting
+            <Button
+              variant="outlined"
+              size="small"
+              id="space-btw-event-button"
+              onClick={handleOpenMeeting}
+            >
+              Open Event
             </Button>
             <Button
               variant="contained"
@@ -70,6 +103,7 @@ function PopoverEventComponent(props) {
             >
               Edit Event
             </Button>
+
             <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
               <ExpandMoreIcon />
             </ExpandMore>

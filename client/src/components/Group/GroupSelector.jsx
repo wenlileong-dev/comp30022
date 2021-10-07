@@ -17,22 +17,21 @@ export default class GroupSelector extends Component {
   };
 
   componentDidMount() {
-    axios({
+    axios("/group/all", {
       method: "GET",
-      url: `https://personal-crm-project.herokuapp.com/group/all`,
     }).then(
       (response) => {
         this.setState({ allGroups: response.data.allGroups });
-        console.log("update allGroups");
+        // console.log("update allGroups");
         if (this.props.contact === undefined) {
           this.setState({ groupID: response.data.allGroups[0]._id });
           this.props.handleGroup(response.data.allGroups[0]._id);
         } else {
           this.setState({ groupID: this.props.contact.groupID });
-          console.log("update GroupID");
+          // console.log("update GroupID");
         }
 
-        console.log("contact", this.props.contact);
+        // console.log("contact", this.props.contact);
       },
       (error) => {}
     );
@@ -42,7 +41,7 @@ export default class GroupSelector extends Component {
     // console.log('render group')
     const { groupID, allGroups } = this.state;
     const { contact, isEdit } = this.props;
-    console.log("contact in selector", contact);
+    // console.log("contact in selector", contact);
     return (
       <Fragment>
         <FormControl variant="filled" sx={{ m: 4, minWidth: "50ch" }}>
