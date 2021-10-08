@@ -21,7 +21,7 @@ function EventPeople(props) {
   return (
     <React.Fragment>
       {contacts && (
-        <Stack spacing={3} sx={{ width: 500 }}>
+        <Stack spacing={3}>
           <Autocomplete
             multiple
             id="tags-filled"
@@ -41,7 +41,12 @@ function EventPeople(props) {
               ))
             }
             renderInput={(params) => (
-              <TextField {...params} variant="standard" label="People" />
+              <TextField
+                {...params}
+                variant="standard"
+                label="People"
+                multiline
+              />
             )}
           />
         </Stack>

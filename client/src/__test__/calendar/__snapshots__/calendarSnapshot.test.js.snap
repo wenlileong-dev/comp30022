@@ -136,9 +136,7 @@ exports[`Snaphot Testing for Event Details 1`] = `
           />
           <p
             className="MuiTypography-root MuiTypography-body1 css-xor7ac-MuiTypography-root"
-          >
-            
-          </p>
+          />
           <h6
             className="MuiTypography-root MuiTypography-subtitle1 css-tdqki2-MuiTypography-root"
           >
@@ -154,6 +152,7 @@ exports[`Snaphot Testing for Event Details 1`] = `
               disabled={false}
               id="space-btw-event-button"
               onBlur={[Function]}
+              onClick={[Function]}
               onContextMenu={[Function]}
               onDragLeave={[Function]}
               onFocus={[Function]}
@@ -168,7 +167,7 @@ exports[`Snaphot Testing for Event Details 1`] = `
               tabIndex={0}
               type="button"
             >
-              Open Meeting
+              Open Event
             </button>
             <button
               className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButtonBase-root css-11qr2p8-MuiButtonBase-root-MuiButton-root"

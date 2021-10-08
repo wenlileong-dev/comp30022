@@ -75,6 +75,7 @@ exports.updateEvent = async (req, res) => {
       eventType,
       location,
       meetingNotes,
+      meetingLink,
       eventID,
     } = req.body;
     let modifyPeople = [];
@@ -101,6 +102,7 @@ exports.updateEvent = async (req, res) => {
         eventType,
         location,
         meetingNotes,
+        meetingLink,
         userID,
       },
       { overwrite: true, new: true, runValidators: true }
