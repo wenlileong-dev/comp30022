@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from "react";
-import axios from "axios";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import React, { Component, Fragment } from 'react';
+import axios from 'axios';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import PubSub from 'pubsub-js';
 
 export default class GroupSelector extends Component {
   state = {
@@ -11,10 +12,11 @@ export default class GroupSelector extends Component {
     allGroups: [],
   };
 
+    // Update groupID
   handleChange = (e) => {
-    this.setState({ groupID: e.target.value });
-    this.props.handleGroup(e.target.value);
-  };
+      this.setState({groupID: e.target.value});
+      this.props.handleGroup(e.target.value);
+  }
 
   componentDidMount() {
     axios("/group/all", {
@@ -29,42 +31,48 @@ export default class GroupSelector extends Component {
         } else {
           this.setState({ groupID: this.props.contact.groupID });
           // console.log("update GroupID");
-        }
+        }}
+        , error => {
+        })
 
-        // console.log("contact", this.props.contact);
-      },
-      (error) => {}
-    );
+    // Update groupID when edition is cancled
+    this.token = PubSub.subscribe('groupID', (msg, stateObj) => {
+        this.setState(stateObj);
+    })
   }
 
-  render() {
-    // console.log('render group')
-    const { groupID, allGroups } = this.state;
-    const { contact, isEdit } = this.props;
-    // console.log("contact in selector", contact);
-    return (
-      <Fragment>
-        <FormControl variant="filled" sx={{ m: 4, minWidth: "50ch" }}>
-          <InputLabel id="demo-simple-select-filled-label">Group</InputLabel>
-          <Select
-            readOnly={!isEdit}
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
-            value={isEdit ? groupID : contact.groupID}
-            onChange={this.handleChange}
-            // autoWidth
-            label="Group"
-          >
-            {allGroups.map((groupObj) => {
-              return (
-                <MenuItem key={groupObj._id} value={groupObj._id}>
-                  {groupObj.groupName}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Fragment>
-    );
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.token);
   }
+
+    render() {
+        // console.log('render group')
+        const {groupID, allGroups} = this.state;
+        const {contact, isEdit} = this.props;
+        //console.log('contact in selector', contact);
+        return (
+            <Fragment>
+                <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>
+                    <InputLabel id="demo-simple-select-filled-label">Group</InputLabel>
+                    <Select
+                        readOnly={!isEdit}
+                        labelId="demo-simple-select-filled-label"
+                        id="demo-simple-select-filled"
+                        value={isEdit ? groupID: contact.groupID}
+                        onChange={this.handleChange}
+                        // autoWidth
+                        label="Group"
+                    >   
+                        {
+                            allGroups.map(groupObj => {
+                                return (
+                                    <MenuItem key={groupObj._id} value={groupObj._id}>{groupObj.groupName}</MenuItem>
+                                )
+                            })
+                        }
+                    </Select>
+                </FormControl>
+            </Fragment>
+        )
+    }
 }

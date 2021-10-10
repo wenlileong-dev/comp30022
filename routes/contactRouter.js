@@ -25,14 +25,10 @@ router.post(
 router.get("/info/:id", authUser, contact.getInformation);
 
 // update information of a specific contact
-router.put(
-  "/info/:id",
-  contactValidator.updateInformation,
-  contact.updateInformation
-);
+router.put('/info/:id', authUser, contactValidator.updateInformation, contact.updateInformation);
 
 // delete a contact
-router.delete("/info/:id", contact.deleteContact);
+router.delete('/info/:id', authUser, contact.deleteContact);
 
 router.get("/allContact/", authUser, contact.getAllContacts);
 
