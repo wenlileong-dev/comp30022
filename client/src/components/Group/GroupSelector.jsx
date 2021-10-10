@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import PubSub from 'pubsub-js';
 
 export default class GroupSelector extends Component {
     state = {
@@ -11,6 +12,7 @@ export default class GroupSelector extends Component {
         allGroups:[],
     }
 
+    // Updated groupID
     handleChange = (e) => {
         this.setState({groupID: e.target.value});
         this.props.handleGroup(e.target.value);
@@ -36,6 +38,15 @@ export default class GroupSelector extends Component {
         }
         , error => {
         })
+
+        // Update groupID when edition is cancled
+        this.token = PubSub.subscribe('groupID', (msg, stateObj) => {
+            this.setState(stateObj);
+        })
+    }
+
+    componentWillUnmount(){
+        PubSub.unsubscribe(this.token);
     }
 
 
@@ -43,7 +54,7 @@ export default class GroupSelector extends Component {
         // console.log('render group')
         const {groupID, allGroups} = this.state;
         const {contact, isEdit} = this.props;
-        console.log('contact in selector', contact);
+        //console.log('contact in selector', contact);
         return (
             <Fragment>
                 <FormControl variant="filled" sx={{ m: 4, minWidth: '50ch'}}>

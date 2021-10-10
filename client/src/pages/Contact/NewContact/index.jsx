@@ -7,10 +7,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Typography from '@mui/material/Typography';
-import AuthFail from "../../../components/AuthFail";
 import axios from 'axios';
 
-
+import AuthFail from "../../../components/AuthFail";
 import AddFooter from '../../../components/AddFooter';
 import GroupSelector from '../../../components/Group/GroupSelector';
 import './index.css';

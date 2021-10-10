@@ -67,6 +67,7 @@ exports.getInformation = async (req, res, next) => {
     }
     res.status(200).json({
       info,
+      status: 200,
     });
   } catch (err) {
     next(err);
