@@ -30,16 +30,13 @@ exports.addContact = async (req, res, next) => {
   try {
     let userID = req.user._id;
     // 	let { firstName, lastName, email, time, people, eventType, location } =
-    // req.body;
     let anotherContact = req.body.contact;
     anotherContact.userID = userID;
-    // console.log(anotherContact)
     const newContact = new Contacts(anotherContact);
     newContact.save();
-    // console.log(req.body);
 
     //set a group
-    if (newContact.groupID !== undefined && newContact.groupID !== "") {
+    if (newContact.groupID) {
       const groupSelected = await Groups.findById(newContact.groupID);
       groupSelected.contacts.push(newContact._id + "");
       Groups.updateOne(
@@ -98,12 +95,16 @@ exports.updateInformation = async (req, res, next) => {
 
     const prevInfo = await Contacts.findById(req.params.id);
 
+    if (!prevInfo) {
+      return res.status(404).end();
+    }
+
     // Update contact group
     if (prevInfo.groupID != newInfo.groupID) {
-      // console.log(prevInfo.groupID, newInfo.groupID);
+      // Remove contact from previous group
       const prevGroup = await Groups.findById(prevInfo.groupID);
       const index = prevGroup.contacts.indexOf(req.params.id);
-      // console.log(index);
+
       if (index > -1) {
         prevGroup.contacts.splice(index, 1);
         Groups.updateOne(
@@ -113,6 +114,7 @@ exports.updateInformation = async (req, res, next) => {
         );
       }
 
+      // Insert contact into the new group
       const currGroup = await Groups.findById(newInfo.groupID);
       currGroup.contacts.push(req.params.id);
       Groups.updateOne(
@@ -122,16 +124,14 @@ exports.updateInformation = async (req, res, next) => {
       );
     }
 
-    // console.log(newInfo);
+    // Update new information
     await Contacts.updateOne(
       { _id: req.params.id },
       { $set: newInfo },
       () => {}
     );
 
-    const info = await Contacts.findById(req.params.id, (err, data) => {
-      // console.log(data);
-    });
+    const info = await Contacts.findById(req.params.id, (err, data) => {});
 
     res.status(201).json({
       info,
@@ -145,6 +145,10 @@ exports.updateInformation = async (req, res, next) => {
 exports.deleteContact = async (req, res, next) => {
   try {
     const contact = await Contacts.findById(req.params.id);
+
+    if (!contact) {
+      return res.status(404).end();
+    }
 
     // Delete the contact from its group
     const group = await Groups.findById(contact.groupID);
@@ -167,4 +171,38 @@ exports.deleteContact = async (req, res, next) => {
   }
 };
 
+// Search Contacts
+exports.searchContacts = async (req, res, next) => {
+  try {
+    // Get search keyword from query params
+    const firstName = req.query.firstname.replace(/\s*/g,"");
+    const lastName = req.query.lastname.replace(/\s*/g,"");
+
+    console.log(firstName, lastName);
+    let userID = req.user._id;
+    let result = [];
+
+    // Search contacts by keywords
+    if (firstName || lastName) {
+      // Construct regular expressions
+      const reg_1 = new RegExp('^'+firstName);
+      const reg_2 = new RegExp('^'+lastName);
+
+      const result = await Contacts.find({
+        userID: userID,
+        firstName: {$regex: reg_1, $options:'i'},
+        lastName: {$regex: reg_2, $options:'i'}
+      })
+
+      res.status(200).json({
+        result,
+      });
+    }
+    else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
 // module.exports = contacts;

@@ -24,6 +24,10 @@ router.put('/info/:id', authUser, contactValidator.updateInformation, contact.up
 // delete a contact
 router.delete('/info/:id', authUser, contact.deleteContact);
 
+// get all contacts for one account
 router.get('/allContact/',authUser,contact.getAllContacts);
+
+// search contacts
+router.get('/search', authUser, contact.searchContacts);
 
 module.exports = router;
