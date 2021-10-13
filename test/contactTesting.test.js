@@ -34,16 +34,6 @@ const updatedContact = {
   },
 };
 
-<<<<<<< HEAD
-describe('Contact API Testing', () => {
-	// Set authrization information
-	let token = "";
-  	before(done => {
-    	let user = {
-      		email: "1111@mail.com",
-      		password: "123qwerty",
-    	}
-=======
 describe("Contact API Testing", () => {
   // Set authrization information
   let token = "";
@@ -52,7 +42,6 @@ describe("Contact API Testing", () => {
       email: "1111@mail.com",
       password: "123qwerty",
     };
->>>>>>> development
 
     got({
       method: "POST",
