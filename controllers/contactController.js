@@ -178,9 +178,7 @@ exports.searchContacts = async (req, res, next) => {
     const firstName = req.query.firstname.replace(/\s*/g,"");
     const lastName = req.query.lastname.replace(/\s*/g,"");
 
-    console.log(firstName, lastName);
     let userID = req.user._id;
-    let result = [];
 
     // Search contacts by keywords
     if (firstName || lastName) {
