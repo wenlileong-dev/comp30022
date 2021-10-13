@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -54,7 +50,6 @@ const Search = styled('div')(({ theme }) => ({
 
 function PopoverSearch(props) {
 
-//   let [groupName, setGroup] = useState("");
   let [contactName, searchName] = useState("");
   let [searchResult, search] = useState("");
 
@@ -72,34 +67,20 @@ function PopoverSearch(props) {
 
     let firstname, lastname;
     if (splitName.length >= 2) {
-        console.log("2");
         firstname = splitName[0];
-        lastname = splitName[1];
-        
+        lastname = splitName[1];      
     }
     else {
-        console.log("1");
         firstname = splitName[0];
         lastname = '';
     }
-    
-    // if (contactName) {
-    //     input.contactName = contactName;
-    // }
-    if(lastname ===""){console.log("is empty")}
-    console.log("f " + typeof firstname);
-    console.log("l " + typeof lastname);
 
     axios.get(`/api/contacts/search`, {params: {firstname:firstname, lastname:lastname}}).then((res) => {
-        // window.location.href = `contact`;
-        // console.log(res);
-        // searchResult = res.data.result;
         search(res.data.result);
-        console.log(searchResult);
     });
     
   }
-  console.log("search: " + searchResult);
+
   return (
     <div style={{ fontSize: "15px" }}>
         <Box sx={{ flexGrow: 1 }}>
@@ -116,7 +97,7 @@ function PopoverSearch(props) {
                 </form>
             </Search>
         </Box>
-        {/* {console.log("search: " + searchResult);} */}
+
         {searchResult&&
             searchResult.map((contact, index) => {
                 return (
@@ -131,36 +112,7 @@ function PopoverSearch(props) {
                 
             })
         }
-        <br/>
     </div>
-    //   <>{console.log("??")}</>
-    // <React.Fragment>
-    //   <form onSubmit={handleSubmit}>
-    //     <Grid container spacing={3}>
-    //       <Grid item xs={12} sm={6}>
-    //         <TextField
-    //           variant="standard"
-    //           required
-    //           label="groupName"
-    //           onChange={handleGroup}
-    //           value={groupName}
-    //         />
-    //       </Grid>
-          
-
-    //       <Grid item xs={12} sm={12}>
-    //         <Button
-    //           color="primary"
-    //           type="submit"
-    //           variant="contained"
-    //           startIcon={<AddBoxIcon />}
-    //         >
-    //           Add Group
-    //         </Button>
-    //       </Grid>
-    //     </Grid>
-    //   </form>
-    // </React.Fragment>
   );
 }
 
