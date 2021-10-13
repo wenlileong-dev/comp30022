@@ -43,8 +43,8 @@ describe("userPostUpdate integration tests", () => {
 //user Post Login
 const testUserLogin = {
   validBody: {
-    email: "test@mail.com",
-    password: "123qwert",
+    email: "1111@mail.com",
+    password: "123qwerty",
   },
 };
 
@@ -73,7 +73,7 @@ describe("userPostLogin integration tests", () => {
 // after the first test is true
 const testUserRegister = {
   validBody: {
-    email: "123456789@mail.com",
+    email: "12345678900@mail.com",
     password: "Hh3502251",
     firstName: "J1234",
     lastName: "X1234",
@@ -105,8 +105,8 @@ describe("User API Testing with login token", () => {
   let userID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
       .post("/user/login")
