@@ -43,11 +43,12 @@ function Contact() {
       {isAuth && (
         <>   
           {/* <SearchContact/>    */}
-          <SearchTitle/>
+          {/* <SearchTitle/> */}
           {/* <GroupTitle/> */}
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <GroupTitle/>
             <AddContactLink />
+            <SearchTitle/>
             
           </ButtonGroup>
           

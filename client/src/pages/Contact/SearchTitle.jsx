@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import SearchPopUp from "./SearchPopUp";
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 function SearchTitle(props) {
 
@@ -21,11 +22,11 @@ function SearchTitle(props) {
     <React.Fragment>
       <div>
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={toggleSearch}
           id="search-contact"
-          startIcon={<GroupAddIcon />}
+          startIcon={<PersonSearchIcon />}
         >
           search
         </Button>

@@ -31,18 +31,8 @@ function SearchPopUp(props) {
             </span>
             
             {isOpen === "search" && (
-              <PopoverSearch
-                // year={props.year}
-                // month={props.month}
-                // day={props.day}
-              />
+              <PopoverSearch/>
             )}
-            {/* {isOpen === "event-detail" && (
-              <PopoverEditGroup eventDetail={eventDetail} />
-            )}
-            {isOpen === "mobile-event-detail" && (
-              <PopoverEditGroup eventDetail={props.eventDetail} />
-            )} */}
           </div>
         </div>
       </React.Fragment>
