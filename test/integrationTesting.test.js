@@ -43,8 +43,8 @@ describe("userPostUpdate integration tests", () => {
 //user Post Login
 const testUserLogin = {
   validBody: {
-    email: "test@mail.com",
-    password: "123qwert",
+    email: "1111@mail.com",
+    password: "123qwerty",
   },
 };
 
@@ -125,8 +125,8 @@ describe("User API Testing with login token", () => {
   let userID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
       .post("/user/login")
