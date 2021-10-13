@@ -200,3 +200,9 @@ exports.userPostUpdate = async (req, res) => {
     return res.send("Database update failed");
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  const userID = req.params.id;
+  const deleteUser = await User.findByIdAndDelete(userID);
+  res.status(200).json({ success: true });
+};

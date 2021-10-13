@@ -8,33 +8,23 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import PubSub from 'pubsub-js';
 
+import AuthFail from "../../../components/AuthFail";
 import EditFooter from '../../../components/EditFooter';
 import GroupSelector from '../../../components/Group/GroupSelector';
 
 export default class ContactInfo extends Component {
     state = {
+        isAuth: false,
+        authFailMsg:'',
+        isFound: false,
         isEdit: false,
         contact: {
-            ...this.props.location.state.contact
+            //...this.props.location.state.contact
         },
         cancle: true,
     }
-    // static getDerivedStateFromProps(props, state) {
-    //     const {id} = props.match.params; 
-    //     axios(
-    //         {
-    //             method: 'GET',
-    //             url: `http://localhost:5000/api/contacts/info/${id}`,
-    //         }).then(response => {
-    //             console.log(response.data);
-    //             this.setState({contact:response.data.info})
-    //             console.log(state.contact.gender)
-    //         }, error => {
-    //             this.setState({error});
-    //         })
-    //     return null;
-    // }
 
     updateFirstName = (e) => {
         const contact = Object.assign({}, this.state.contact, {firstName: e.target.value});
@@ -83,9 +73,8 @@ export default class ContactInfo extends Component {
 
     handleCancle = () => {
         const contact = this.props.location.state.contact;
-        // console.log(this.state.contact);
         this.setState({contact});
-        // console.log(this.state.contact);
+        PubSub.publish('groupID', {groupID: contact.groupID});
     }
     
     handleGroup = (groupID) => {
@@ -94,17 +83,64 @@ export default class ContactInfo extends Component {
         console.log('handleGroup');
     }
 
-    render() {
-        
-        const {contact} = this.state;
-        const {isEdit} = this.state;
+    componentDidMount() {
+        if (!this.props.location.state){
+            axios({
+                method:'GET',
+                url:`http://localhost:3000/api/contacts/info/${'invalid'}`
+            }).then(response => {
+                if(response.status === 404){
+                    this.setState({isAuth: true, isFound: false});
+                    //console.log('auth succ',response);
+                }
+                else {
+                    this.setState({isAuth: false, authFailMsg:response.data.errorMsg});
+                    //console.log('auth fail',response);
+                    window.location.href = "/login";
+                }      
+            }
+            , error => {
+                this.setState({isAuth: true, isFound: false});
+            })
+        }
+        else {
+            const {contact, contact:{_id}} = this.props.location.state;
+            axios({
+                method:'GET',
+                url:`http://localhost:3000/api/contacts/info/${_id}`
+            }).then(response => {
+                if(response.data.status === 200){
+                    this.setState({isAuth: true, isFound: true, contact});
+                    console.log('auth succ',response);
+                }
+                else if(response.status === 404){
+                    this.setState({isAuth: true, isFound: false});
+                    console.log('not found');
+                }
+                else {
+                    this.setState({isAuth: false, authFailMsg:response.data.errorMsg});
+                    console.log('auth fail',response);
+                    window.location.href = "/login";
+                }      
+            }
+            , error => {
+                this.setState({isAuth: false});
+            })
+        }
+    }
+
+    render() {      
+        const {contact, isEdit} = this.state;
+        const {isAuth, authFailMsg, isFound} = this.state;
         console.log('contact in info', contact);
-        return (
+        return (  
             <Fragment>
-                <Typography className='newContact' variant="h4" gutterBottom component="div">
-                    Contact Information
-                </Typography>
-                <Box 
+                {isAuth && isFound && (
+                    <> 
+                    <Typography className='newContact' variant="h4" gutterBottom component="div">
+                        Contact Information
+                    </Typography>
+                    <Box 
                     sx={{
                         width: '117ch',
                         height: '100ch',
@@ -208,8 +244,20 @@ export default class ContactInfo extends Component {
                         contactInfo={this.state.contact}
                     />
                 </Box>
-               
+                    </>
+                )}
+
+                {isAuth && !isFound && (
+                    <>
+                    <Typography className='newContact' variant="h4" gutterBottom component="div">
+                    404 NOT FOUND
+                    </Typography>
+                    </>
+                )}
+
+                {authFailMsg && <AuthFail msg={authFailMsg} />}
             </Fragment>
+            
         )
     }
 }

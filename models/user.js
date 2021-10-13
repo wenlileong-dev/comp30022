@@ -33,7 +33,7 @@ UserSchema.methods.generateAuthToken = function () {
       name: this.name,
     },
     process.env.JWT_PRIVATE_KEY,
-    { expiresIn: "15m" }
+    { expiresIn: "15h" }
   );
   return token;
 };

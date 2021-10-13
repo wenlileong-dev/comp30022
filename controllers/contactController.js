@@ -67,13 +67,14 @@ exports.getInformation = async (req, res, next) => {
     }
     res.status(200).json({
       info,
+      status: 200,
     });
   } catch (err) {
     next(err);
   }
 };
 
-//all contacts for the one account
+//all contacts for the one account (recent)
 exports.getAllContacts = async (req, res) => {
   let userID = req.user._id;
   let result = [];
@@ -87,6 +88,16 @@ exports.getAllContacts = async (req, res) => {
   } else {
     result = allContact;
     res.json({ status: 200, data: result, success: true });
+  }
+};
+
+exports.getUserContacts = async (req, res) => {
+  try {
+    let userID = req.user._id;
+    let userContacts = await Contacts.find({ userID: userID });
+    res.json({ status: 200, data: userContacts });
+  } catch (error) {
+    res.json({ status: 404, errorMsg: "database error" });
   }
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -14,26 +15,36 @@ import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+
+import EventPeople from "./EventPeople";
 
 function PopoverEditEvent(props) {
+  let originPeople = props.eventDetail.people;
+  let modifyPeople = [];
+  for (let i = 0; i < originPeople.length; i++) {
+    modifyPeople.push(
+      `${originPeople[i].firstName} ${originPeople[i].lastName}`
+    );
+  }
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
   let [date, setDate] = useState(new Date(props.eventDetail.date));
   let [time, setTime] = useState(props.eventDetail.time);
-  let [people, setPeople] = useState(props.eventDetail.people.toString());
+  let [people, setPeople] = useState(modifyPeople);
   let [eventType, setEventType] = useState(props.eventDetail.eventType);
   let [location, setLocation] = useState(props.eventDetail.location);
   let [meetingNotes, setMeetingNotes] = useState(
     props.eventDetail.meetingNotes
   );
+  let [meetingLink, setMeetingLink] = useState(props.eventDetail.meetingLink);
+
+  let [peopleValidate, setPeopleValidate] = useState(false);
   function handleTitle(event) {
     setTitle(event.target.value);
   }
   function handleDescription(e) {
     setDescription(e.target.value);
-  }
-  function handlePeople(e) {
-    setPeople(e.target.value);
   }
   function handleEventType(e) {
     setEventType(e.target.value);
@@ -49,6 +60,9 @@ function PopoverEditEvent(props) {
   function handleMeetingNotes(e) {
     setMeetingNotes(e.target.value);
   }
+  function handleMeetingLink(e) {
+    setMeetingLink(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -61,6 +75,7 @@ function PopoverEditEvent(props) {
       eventType: undefined,
       location: undefined,
       meetingNotes: undefined,
+      meetingLink: undefined,
     };
     input.eventID = props.eventDetail._id;
     if (title) {
@@ -76,6 +91,13 @@ function PopoverEditEvent(props) {
       input.time = time;
     }
     if (people) {
+      for (let i = 0; i < people.length; i++) {
+        let splitName = people[i].split(" ");
+        if (splitName.length !== 2) {
+          setPeopleValidate(true);
+          return;
+        }
+      }
       input.people = people;
     }
     if (eventType) {
@@ -86,6 +108,9 @@ function PopoverEditEvent(props) {
     }
     if (meetingNotes) {
       input.meetingNotes = meetingNotes;
+    }
+    if (meetingLink) {
+      input.meetingLink = meetingLink;
     }
     axios.put(`/api/calendar`, input).then((res) => {
       // console.log(res.data);
@@ -98,6 +123,7 @@ function PopoverEditEvent(props) {
       window.location.href = `/calendar`;
     });
   }
+
   return (
     <React.Fragment>
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -147,16 +173,7 @@ function PopoverEditEvent(props) {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              variant="standard"
-              label="People"
-              multiline
-              placeholder="separate by comma"
-              onChange={handlePeople}
-              value={people}
-            />
-          </Grid>
+
           <Grid item xs={12} sm={6}>
             <FormControl className="event-type-select" variant="standard">
               <InputLabel>Event Type</InputLabel>
@@ -177,17 +194,34 @@ function PopoverEditEvent(props) {
               />
             </Grid>
           ) : (
-            <Grid item xs={12} sm={6}>
-              <FormControl className="event-type-select" variant="standard">
-                <InputLabel>Location</InputLabel>
-                <Select value={location} onChange={handleLocation}>
-                  <MenuItem value="Zoom">Zoom</MenuItem>
-                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
-                  <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            <>
+              <Grid item xs={12} sm={6}>
+                <FormControl className="event-type-select" variant="standard">
+                  <InputLabel>Location</InputLabel>
+                  <Select value={location} onChange={handleLocation}>
+                    <MenuItem value="Zoom">Zoom</MenuItem>
+                    <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                    <MenuItem value="Google Meet">Google Meet</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="standard"
+                  label="Meeting Link"
+                  onChange={handleMeetingLink}
+                  value={meetingLink}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+            </>
           )}
+          <Grid item xs={12} sm={12}>
+            <EventPeople setPeople={setPeople} people={people} />
+            {peopleValidate && (
+              <Alert severity="error">Must have a firstName and lastName</Alert>
+            )}
+          </Grid>
           <Grid item xs={12}>
             <TextField
               variant="standard"
@@ -199,7 +233,7 @@ function PopoverEditEvent(props) {
               value={meetingNotes}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Button
               variant="contained"
               color="success"
@@ -209,7 +243,7 @@ function PopoverEditEvent(props) {
               Update Event
             </Button>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Button
               variant="contained"
               color="error"

@@ -1,4 +1,5 @@
 const Event = require("./../models/event");
+const { Contacts } = require("../models/db.js");
 
 //helper function - get number of days of a month
 const getDaysInMonth = (date) => {
@@ -20,12 +21,7 @@ function compare(a, b) {
 exports.addEvent = async (req, res) => {
   try {
     let userID = req.user._id;
-    let { title, description, date, time, people, eventType, location } =
-      req.body;
-    if (people) {
-      people = people.split(",");
-    }
-    const newEvent = new Event({
+    let {
       title,
       description,
       date,
@@ -33,7 +29,31 @@ exports.addEvent = async (req, res) => {
       people,
       eventType,
       location,
+      meetingLink,
+    } = req.body;
+    let modifyPeople = [];
+    for (let i = 0; i < people.length; i++) {
+      let [firstName, lastName] = people[i].split(" ");
+      let findContact = await Contacts.find({
+        firstName: firstName,
+        lastName: lastName,
+      });
+      if (findContact.length > 0) {
+        modifyPeople.push(findContact[0]);
+      } else {
+        modifyPeople.push({ firstName, lastName });
+      }
+    }
+    const newEvent = new Event({
+      title,
+      description,
+      date,
+      time,
+      people: modifyPeople,
+      eventType,
+      location,
       userID,
+      meetingLink,
     });
     const saveEvent = await newEvent.save();
     res.json({ status: 200, data: saveEvent });
@@ -55,10 +75,21 @@ exports.updateEvent = async (req, res) => {
       eventType,
       location,
       meetingNotes,
+      meetingLink,
       eventID,
     } = req.body;
-    if (people) {
-      people = people.split(",");
+    let modifyPeople = [];
+    for (let i = 0; i < people.length; i++) {
+      let [firstName, lastName] = people[i].split(" ");
+      let findContact = await Contacts.find({
+        firstName: firstName,
+        lastName: lastName,
+      });
+      if (findContact.length > 0) {
+        modifyPeople.push(findContact[0]);
+      } else {
+        modifyPeople.push({ firstName, lastName });
+      }
     }
     let updateEvent = await Event.findByIdAndUpdate(
       eventID,
@@ -67,10 +98,11 @@ exports.updateEvent = async (req, res) => {
         description,
         date,
         time,
-        people,
+        people: modifyPeople,
         eventType,
         location,
         meetingNotes,
+        meetingLink,
         userID,
       },
       { overwrite: true, new: true, runValidators: true }
