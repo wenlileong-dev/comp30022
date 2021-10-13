@@ -177,4 +177,39 @@ exports.deleteContact = async (req, res, next) => {
   }
 };
 
+// Search Contacts
+exports.searchContacts = async (req, res, next) => {
+  try {
+    // Get search keyword from query params
+    const firstName = req.query.firstname.replace(/\s*/g,"");
+    const lastName = req.query.lastname.replace(/\s*/g,"");
+
+    console.log(firstName, lastName);
+    let userID = req.user._id;
+    let result = [];
+
+    // Search contacts by keywords
+    if (firstName || lastName) {
+      // Construct regular expressions
+      const reg_1 = new RegExp('^'+firstName);
+      const reg_2 = new RegExp('^'+lastName);
+
+      const result = await Contacts.find({
+        userID: userID,
+        firstName: {$regex: reg_1, $options:'i'},
+        lastName: {$regex: reg_2, $options:'i'}
+      })
+
+      res.status(200).json({
+        result,
+      });
+    }
+    else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
 // module.exports = contacts;

@@ -32,4 +32,6 @@ router.delete('/info/:id', authUser, contact.deleteContact);
 
 router.get("/allContact/", authUser, contact.getAllContacts);
 
+// search contacts
+router.get('/search', authUser, contact.searchContacts);
 module.exports = router;
