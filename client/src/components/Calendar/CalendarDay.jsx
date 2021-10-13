@@ -9,11 +9,6 @@ import CalendarPopup from "./CalendarPopup";
 function CalendarDay(props) {
   let [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // function togglePopup(event) {
-  //   console.log(event.target);
-  //   setIsPopupOpen(!isPopupOpen);
-  // }
-
   function handleOpen(event) {
     setIsPopupOpen(true);
   }
@@ -46,6 +41,11 @@ function CalendarDay(props) {
             props.event.map((event, index) => {
               return (
                 <Typography variant="body2" gutterBottom key={index}>
+                  {new Date(event.time).toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}{" "}
                   {event.title}
                 </Typography>
               );

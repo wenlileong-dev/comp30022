@@ -8,4 +8,6 @@ router.get("/:month/:year", authUser, controller.getEvents);
 router.put("/", authUser, controller.updateEvent);
 router.delete("/:id", controller.deleteEvent);
 
+router.get("/recent/:month/:year",authUser, controller.getTwoMonthEvents);
+
 module.exports = router;

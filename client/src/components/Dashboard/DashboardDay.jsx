@@ -38,6 +38,7 @@ function DashboardDay(props) {
             {new Date().getDate()}/{props.month}/{props.year}
           </Typography>
         ) : (
+          
           <Typography gutterBottom variant="h4" component="div">{props.day}/{props.month}/{props.year}</Typography>
         )}
 
@@ -59,43 +60,10 @@ function DashboardDay(props) {
                   month={props.month}
                   day={props.day}
                 />
-                {/* {<List>
-                  <ListItem disablePadding>
-                    <ListItemButton key={index} onClick={handleOpen}>
-                      <ListItemIcon>
-                        <InboxIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={event.title} />
-                    </ListItemButton>
-                  </ListItem>
-                </List>} */}
-                {/* // <Typography variant="body2" gutterBottom key={index} onClick={handleOpen}>
-                //   {event.title}
-                // </Typography> */}
-                {/* {isPopupOpen &&(
-                <DashboardPopup
-                  renderType="day-events"
-                  events={event}
-                  handleClose={handleClose}
-                  year={props.year}
-                  month={props.month}
-                  day={props.day}
-                />
-                )} */}
                 </div>
               );
             })}
         </div>
-        {/* {isPopupOpen && (
-          <DashboardPopup
-            renderType="day-events"
-            events={props.event}
-            handleClose={handleClose}
-            year={props.year}
-            month={props.month}
-            day={props.day}
-          />
-        )} */}
       </div>
     </React.Fragment>
   );

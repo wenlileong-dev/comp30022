@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 function Dashboard() {
   let today = new Date();
   let [month, setMonth] = useState(today.getMonth()+1);
+  // let [month, setMonth] = useState(today.getMonth()+3);
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
   const [contacts, setContacts] = useState([]);
@@ -27,9 +28,25 @@ function Dashboard() {
   }));
 
   //fetch the events of the month
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios(`/api/calendar/${month-1}/${year}`);
+  //     if (result.data.status !== 200) {
+  //       setIsAuth(false);
+  //       setAuthFailMsg(result.data.errorMsg);
+  //       window.location.href = "/login";
+  //     } else {
+  //       setIsAuth(true);
+  //       // now we get events during the month
+  //       setEvents(result.data.data);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [month, year]);
+
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`/api/calendar/${month-1}/${year}`);
+      const result = await axios(`/api/calendar/recent/${month-1}/${year}`);
       if (result.data.status !== 200) {
         setIsAuth(false);
         setAuthFailMsg(result.data.errorMsg);
@@ -42,7 +59,6 @@ function Dashboard() {
     };
     fetchData();
   }, [month, year]);
-
   useEffect(() => {
     const fetchData = async () => {
       const resultContacts = await axios(`/api/contacts/allContact/`);

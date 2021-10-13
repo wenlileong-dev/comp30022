@@ -16,30 +16,13 @@ class AddFooter extends Component {
     this.props.history.push("/contact");
   };
 
-  handleConfirm = () => {
+  handleConfirm = async () => {
     // console.log('confirm');
-    axios({
-      method: "POST",
-      url: "http://localhost:3000/api/contacts/add-contact",
-      data: {
-        contact: {
-          ...this.props,
-        },
-      },
-    }).then(
-      (response) => {
-        this.setState({ error: false, success: true });
-
-        this.setState({ contact: response.data.newContact });
-        // console.log(response);
-        //this.props.history.push(`/contact/info`, {contact:this.state.contact});
-        this.props.history.push(`/contact`);
-      },
-      (error) => {
-        // alert("Invalid Information Form");
-        this.setState({ error: true, success: false });
-      }
-    );
+    let data = { contact: { ...this.props } };
+    let result = await axios.post("/api/contacts/add-contact", data);
+    this.setState({ error: false, success: true });
+    this.setState({ contact: result.data.newContact });
+    this.props.history.push(`/contact`);
   };
 
   render() {

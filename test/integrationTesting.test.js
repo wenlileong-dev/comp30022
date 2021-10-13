@@ -43,8 +43,8 @@ describe("userPostUpdate integration tests", () => {
 //user Post Login
 const testUserLogin = {
   validBody: {
-    email: "test@mail.com",
-    password: "123qwert",
+    email: "1111@mail.com",
+    password: "123qwerty",
   },
 };
 
@@ -73,7 +73,7 @@ describe("userPostLogin integration tests", () => {
 // after the first test is true
 const testUserRegister = {
   validBody: {
-    email: "123456789@mail.com",
+    email: "123456789009@mail.com",
     password: "Hh3502251",
     firstName: "J1234",
     lastName: "X1234",
@@ -82,11 +82,31 @@ const testUserRegister = {
 };
 
 describe("userPostRegister integration tests", () => {
+  let userID = "";
   it("should successfully register user account", function (done) {
     request.post(
       {
         headers: { "content-type": "application/json" },
         url: userUrl + "/register",
+        body: testUserRegister.validBody,
+        json: true,
+      },
+      function (error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        expect(body.success).to.equal(true);
+        userID = body.user.userID;
+        if (error) done(error);
+        else done();
+      }
+    );
+  });
+
+  it("should successfully delete the registered user account", function (done) {
+    console.log(userID);
+    request.delete(
+      {
+        headers: { "content-type": "application/json" },
+        url: userUrl + `/deleteUser/${userID}`,
         body: testUserRegister.validBody,
         json: true,
       },
@@ -105,8 +125,8 @@ describe("User API Testing with login token", () => {
   let userID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
       .post("/user/login")

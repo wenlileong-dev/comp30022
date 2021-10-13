@@ -7,48 +7,43 @@ import Select from '@mui/material/Select';
 import PubSub from 'pubsub-js';
 
 export default class GroupSelector extends Component {
-    state = {
-        groupID:'',
-        allGroups:[],
-    }
+  state = {
+    groupID: "",
+    allGroups: [],
+  };
 
-    // Updated groupID
-    handleChange = (e) => {
-        this.setState({groupID: e.target.value});
-        this.props.handleGroup(e.target.value);
-    }
+    // Update groupID
+  handleChange = (e) => {
+      this.setState({groupID: e.target.value});
+      this.props.handleGroup(e.target.value);
+  }
 
-    componentDidMount() {
-        axios({
-            method:'GET',
-            url:`http://localhost:3000/group/all`
-        }).then(response => {
-            this.setState({allGroups: response.data.allGroups});
-            console.log('update allGroups');
-            if (this.props.contact === undefined) {
-                this.setState({groupID: response.data.allGroups[0]._id});
-                this.props.handleGroup(response.data.allGroups[0]._id);
-            }
-            else {
-                this.setState({groupID: this.props.contact.groupID});
-                console.log('update GroupID')
-            }
-            
-            console.log('contact',this.props.contact);
-        }
+  componentDidMount() {
+    axios("/group/all", {
+      method: "GET",
+    }).then(
+      (response) => {
+        this.setState({ allGroups: response.data.allGroups });
+        // console.log("update allGroups");
+        if (this.props.contact === undefined) {
+          this.setState({ groupID: response.data.allGroups[0]._id });
+          this.props.handleGroup(response.data.allGroups[0]._id);
+        } else {
+          this.setState({ groupID: this.props.contact.groupID });
+          // console.log("update GroupID");
+        }}
         , error => {
         })
 
-        // Update groupID when edition is cancled
-        this.token = PubSub.subscribe('groupID', (msg, stateObj) => {
-            this.setState(stateObj);
-        })
-    }
+    // Update groupID when edition is cancled
+    this.token = PubSub.subscribe('groupID', (msg, stateObj) => {
+        this.setState(stateObj);
+    })
+  }
 
-    componentWillUnmount(){
-        PubSub.unsubscribe(this.token);
-    }
-
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.token);
+  }
 
     render() {
         // console.log('render group')
