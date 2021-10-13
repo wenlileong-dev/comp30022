@@ -67,81 +67,70 @@ function Account() {
       {isAuth && (
         <>
           <p>Account Page</p>
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
+          <Box 
+                    sx={{
+                        width: '117ch',
+                        height: '100ch',
+                        border: '1px solid rgb(221,225,230)',
+                        margin: 'auto',
+                        '& .MuiTextField-root': { m: 4, width: '50ch'},
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
             <div>
               <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
+                id="outlined-read-only-input"
+                label="Email"
                 // defaultValue="123"
                 value={email}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
+                id="outlined-read-only-input"
+                label="FirstName"
                 // defaultValue="123"
                 value={firstName}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
+                id="outlined-read-only-input"
+                label="LastName"
                 // defaultValue="123"/
                 value={lastName}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
+                id="outlined-read-only-input"
+                label="PhoneNumber"
                 value={phoneNumber}
+                InputProps={{
+                  readOnly: true,
+                }}
                 // defaultValue="123"
               />
-              <Button type="primary" onClick={onEdit}>
+              
+        
+      <div>
+              <Button type="primary" onClick={onEdit} style={{ marginLeft: '1vw '}}>
                 <Link to="/user/editInfo">Edit</Link>
               </Button>
-              <Button variant="primary" onClick={logoutUser}>
+              <Button variant="primary" onClick={logoutUser} style={{ marginLeft: '2vw '}}>
                 Logout
               </Button>
+              </div>
             </div>
           </Box>
+
         </>
       )}
-
       {authFailMsg && <AuthFail msg={authFailMsg} />}
-      {/* <div style={{width:'40%', margin:'auto'}}>
-          <Form form={form} layout="vertical">
-            <Form.Item label="Email">
-              <Input placeholder="email" defaultValue={props.location.state.user.email}/>
-            </Form.Item>      
-            <Form.Item label="First Name">
-              <Input placeholder="first name" defaultValue={props.location.state.user.firstName}/>
-            </Form.Item>
-            <Form.Item label="Last Name">
-              <Input placeholder="last name" defaultValue={props.location.state.user.lastName}/>
-            </Form.Item>
-            <Form.Item label="Phone Number">
-              <Input placeholder="phone number" defaultValue={props.location.state.user.phoneNumber}/>
-            </Form.Item>
-            <Form.Item label="Password">
-              <Input placeholder="password" defaultValue={props.location.state.user.password}/>
-            </Form.Item>
-            <Form.Item> */}
-      {/* <Button type="primary" onClick={onEdit}>Edit</Button> */}
-      {/* </Form.Item>
-          </Form> */}
-
-      {/* <Button variant="primary" onClick={logoutUser}>
-        Logout
-      </Button> */}
-      {/* </div> */}
     </React.Fragment>
   );
 }

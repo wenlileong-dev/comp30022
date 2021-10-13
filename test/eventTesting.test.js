@@ -13,8 +13,13 @@ describe("Event API Testing", () => {
   let eventID = "";
   beforeEach((done) => {
     let user = {
+<<<<<<< HEAD:test/calendarTesting.test.js
+      email: "1111@mail.com",
+      password: "123qwerty",
+=======
       email: "wlleo@mail.com",
       password: "123qwert",
+>>>>>>> development:test/eventTesting.test.js
     };
     api
       .post("/user/login")

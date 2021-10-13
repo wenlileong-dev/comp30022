@@ -73,7 +73,7 @@ describe("userPostLogin integration tests", () => {
 // after the first test is true
 const testUserRegister = {
   validBody: {
-    email: "123456789@mail.com",
+    email: "12345678900@mail.com",
     password: "Hh3502251",
     firstName: "J1234",
     lastName: "X1234",
