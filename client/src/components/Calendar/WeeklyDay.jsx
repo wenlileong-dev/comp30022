@@ -9,7 +9,7 @@ function WeeklyDay(props) {
   const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   return (
     <React.Fragment>
-      <Grid item xs={4}>
+      <Grid item xs={2}>
         <p>{weekDays[new Date(props.day[0].date).getDay()]}</p>
         {new Date().getDate() === new Date(props.day[0].date).getDate() &&
         new Date().getMonth() + 1 === props.month ? (
@@ -22,7 +22,7 @@ function WeeklyDay(props) {
           <p>{new Date(props.day[0].date).getDate()}</p>
         )}
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={10}>
         {props.day.map((event, index) => {
           return <WeeklyDayEvent key={index} event={event} />;
         })}

@@ -67,9 +67,8 @@ export default class NewContact extends Component {
   };
 
   componentDidMount() {
-    axios({
+    axios("/api/contacts/add-contact", {
       method: "GET",
-      url: `https://personal-crm-project.herokuapp.com/api/contacts/add-contact`,
     }).then(
       (response) => {
         if (response.data.status === 200) {
@@ -88,8 +87,8 @@ export default class NewContact extends Component {
   }
 
   render() {
-    console.log("render", this.state.isAuth);
-    console.log("groupID = ", this.state.groupID);
+    // console.log("render", this.state.isAuth);
+    // console.log("groupID = ", this.state.groupID);
     const { isAuth, authFailMsg } = this.state;
     return (
       <Fragment>

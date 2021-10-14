@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "test:awesome": "mocha --reporter mochawesome || true",
     "open:report": "open mochawesome-report/mochawesome.html",
     "start": "node index.js",
@@ -25,7 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.9",
     "nodemon": "^2.0.13",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pubsub-js": "^1.9.3"
   },
   "engines": {
     "node": "14.15.3"

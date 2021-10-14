@@ -25,11 +25,6 @@ function DashboardContacts(props) {
 
   return (
     <div>
-        {/* <p>1</p> */}
-        {/* [...Array(firstDay.getDay())] */}
-      {/* {result.map((day, index) => {
-        return <DashboardDay day="" key={`a${index}`} />;
-      })} */}
       {props.contacts.map((contact, index) => {
         console.log(contact)
         return (
@@ -39,19 +34,6 @@ function DashboardContacts(props) {
           />
         );
       })}
-      {/* {result.length<=4 && result.map((day, index) => {
-        console.log(props.events[day])
-        return (
-        // <p>1</p>
-          <DashboardDay
-            day={day}
-            month={props.month}
-            year={props.year}
-            event={props.events[day-1]}
-            key={index}
-          />
-        );
-      })} */}
     </div>
   );
 }

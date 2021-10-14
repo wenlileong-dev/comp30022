@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
 import ButtonGroup from '@mui/material/ButtonGroup';
+import SearchContact from "./SearchContact";
+import SearchTitle from "./SearchTitle";
 
 function Contact() {
 
@@ -39,11 +41,17 @@ function Contact() {
   return (
     <div>
       {isAuth && (
-        <>
+        <>   
+          {/* <SearchContact/>    */}
+          {/* <SearchTitle/> */}
+          {/* <GroupTitle/> */}
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <GroupTitle/>
             <AddContactLink />
+            <SearchTitle/>
+            
           </ButtonGroup>
+          
           
           {groups &&
             contacts &&

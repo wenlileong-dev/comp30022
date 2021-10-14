@@ -22,7 +22,12 @@
   min-height: 5rem;
   border: 1px solid #3f51b5;
   padding-left: 0.5rem;
+
   /* height: 6rem; */
+}
+
+.calendar-day:hover {
+  background-color: #f2f2f2;
 }
 
 .calendar-event {

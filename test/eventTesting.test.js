@@ -8,12 +8,12 @@ const api = chai.request(app).keepOpen();
 
 //npm run test:awesome
 
-describe("Calendar API Testing", () => {
+describe("Event API Testing", () => {
   let token = "";
   let eventID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
+      email: "wlleo@mail.com",
       password: "123qwert",
     };
     api
