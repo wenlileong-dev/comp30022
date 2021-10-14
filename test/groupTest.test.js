@@ -14,8 +14,8 @@ describe("Group API Testing", () => {
   let userID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
       .post("/user/login")
@@ -68,10 +68,10 @@ describe("Group API Testing", () => {
   describe("Add Group", () => {
     it("add group with valid input", (done) => {
       let testInput = {
-        "groupName": "group test",
-        "contacts": [],
-        "isTop": false,
-        "isDefault": false
+        groupName: "group test",
+        contacts: [],
+        isTop: false,
+        isDefault: false,
       };
       api
         .post("/group/create")
@@ -84,17 +84,16 @@ describe("Group API Testing", () => {
           done();
         });
     });
-
   });
 
   // 4. update group
   describe("update group", () => {
     it("update group with valid input", (done) => {
       let testInput = {
-        "groupName": "group zz",
-        "contacts": [],
-        "isTop": false,
-        "isDefault": false
+        groupName: "group zz",
+        contacts: [],
+        isTop: false,
+        isDefault: false,
       };
       api
         .post(`/group/update/${groupID}`)
@@ -112,8 +111,8 @@ describe("Group API Testing", () => {
   describe("top group", () => {
     it("top group with valid input", (done) => {
       let testInput = {
-        "isTop": true,
-        id: groupID
+        isTop: true,
+        id: groupID,
       };
       api
         .post(`/group/top`)
@@ -143,7 +142,7 @@ describe("Group API Testing", () => {
   describe("delete group", () => {
     it("delete group with valid groupID", (done) => {
       let testInput = {
-        id: groupID
+        id: groupID,
       };
       api
         .post(`/group/delete`)

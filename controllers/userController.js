@@ -77,6 +77,7 @@ exports.userPostLogin = async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                // password: user.password,
                 phoneNumber: user.phoneNumber,
               },
             });
@@ -116,58 +117,83 @@ exports.userGetDetail = async (req, res) => {
 
 exports.userPostUpdate = async (req, res) => {
   try {
-    let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
-    if (reg.test(req.body.password)) {
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-          if (err) throw err;
-          User.findOne(
-            { email: req.body.email },
-            function (err, duplicateUser) {
-              if (duplicateUser) {
-                if (duplicateUser._id != req.params.id) {
-                  // console.log(duplicateUser._id);
-                  // console.log(req.params.id);
-                  res.status(409).json({
-                    success: false,
-                    message:
-                      "another customer has already registered that email",
-                  });
-                }
-              } else {
-                User.findOneAndUpdate(
-                  { _id: req.params.id },
-                  // update information
-                  {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    phoneNumber: req.body.phoneNumber,
-                    password: hash,
-                  },
-                  { new: true },
-                  // whether the update is successful or not
-                  function (err, updateUser) {
-                    if (err) {
-                      res.status(404).json({
-                        success: false,
-                        message: "User email does not exist",
-                      });
-                    } else {
-                      res
-                        .status(200)
-                        .json({ success: true, updateUser: updateUser });
-                    }
+    if(req.body.password){
+      console.log(req.body.password)
+      let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
+      if (reg.test(req.body.password)) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+            if (err) throw err;
+            User.findOne(
+              { email: req.body.email },
+              function (err, duplicateUser) {
+                if (duplicateUser) {
+                  if (duplicateUser._id != req.params.id) {
+                    res.status(409).json({
+                      success: false,
+                      message:
+                        "another customer has already registered that email",
+                    });
                   }
-                );
+                } else {
+                  User.findOneAndUpdate(
+                    { _id: req.params.id },
+                    // update information
+                    {
+                      firstName: req.body.firstName,
+                      lastName: req.body.lastName,
+                      phoneNumber: req.body.phoneNumber,
+                      password: hash,
+                    },
+                    { new: true },
+                    // whether the update is successful or not
+                    function (err, updateUser) {
+                      if (err) {
+                        res.status(404).json({
+                          success: false,
+                          message: "User email does not exist",
+                        });
+                      } else {
+                        res
+                          .status(200)
+                          .json({ success: true, updateUser: updateUser });
+                      }
+                    }
+                  );
+                }
               }
-            }
-          );
+            );
+          });
         });
-      });
-    } else {
-      res
-        .status(200)
-        .json({ success: false, error: "New password not valid!" });
+      }else {
+        res
+          .status(200)
+          .json({ success: false, error: "New password not valid!" });
+      }
+    }else{
+      User.findOneAndUpdate(
+        { _id: req.params.id },
+        // update information
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          phoneNumber: req.body.phoneNumber,
+        },
+        { new: true },
+        // whether the update is successful or not
+        function (err, updateUser) {
+          if (err) {
+            res.status(404).json({
+              success: false,
+              message: "User email does not exist",
+            });
+          } else {
+            res
+              .status(200)
+              .json({ success: true, updateUser: updateUser });
+          }
+        }
+      );
     }
   } catch {
     res.status(400);

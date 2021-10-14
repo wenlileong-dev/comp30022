@@ -13,7 +13,7 @@ describe("Event API Testing", () => {
   let eventID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
+      email: "wlleo@mail.com",
       password: "123qwert",
     };
     api
