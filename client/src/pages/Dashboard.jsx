@@ -3,27 +3,29 @@ import axios from "axios";
 import DashboardDays from "./../components/Dashboard/DashboardDays";
 import DashboardContacts from "../components/Dashboard/DashboardContacts";
 import AuthFail from "./../components/AuthFail";
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+
+import "./../components/Popup.css";
 
 function Dashboard() {
   let today = new Date();
-  let [month, setMonth] = useState(today.getMonth()+1);
+  let [month, setMonth] = useState(today.getMonth() + 1);
   // let [month, setMonth] = useState(today.getMonth()+3);
   let [year, setYear] = useState(today.getFullYear());
   const [events, setEvents] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
-  console.log(contacts)
-  console.log(month)
+  console.log(contacts);
+  console.log(month);
 
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'left',
+    textAlign: "left",
     color: theme.palette.text.secondary,
   }));
 
@@ -46,7 +48,7 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`/api/calendar/recent/${month-1}/${year}`);
+      const result = await axios(`/api/calendar/recent/${month - 1}/${year}`);
       if (result.data.status !== 200) {
         setIsAuth(false);
         setAuthFailMsg(result.data.errorMsg);
@@ -62,7 +64,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       const resultContacts = await axios(`/api/contacts/allContact/`);
-      console.log(resultContacts)
+      console.log(resultContacts);
       if (resultContacts.data.status !== 200) {
         setIsAuth(false);
         setAuthFailMsg(resultContacts.data.errorMsg);
@@ -80,28 +82,31 @@ function Dashboard() {
     <React.Fragment>
       {isAuth && (
         <>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2} columns={16}>
-            <Grid item xs={8}>
-              <Item>
-               <p>Recent Events</p>
-                {events.length > 0 && (<DashboardDays month={month} year={year} events={events} />)}
-              </Item>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2} columns={16}>
+              <Grid item xs={8}>
+                <Item>
+                  <p>Recent Events</p>
+                  {events.length > 0 && (
+                    <DashboardDays month={month} year={year} events={events} />
+                  )}
+                </Item>
+              </Grid>
+              <Grid item xs={8}>
+                <Item>
+                  <p>Recent Contacts</p>
+                  {contacts.length > 0 && (
+                    <DashboardContacts contacts={contacts} />
+                  )}
+                </Item>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Item>
-                <p>Recent Contacts</p>
-                {contacts.length>0 && (<DashboardContacts  contacts={contacts} />)}
-              </Item>
-            </Grid>
-          </Grid>
-
-        </Box>
-      </>)}
+          </Box>
+        </>
+      )}
       {authFailMsg && <AuthFail msg={authFailMsg} />}
     </React.Fragment>
   );
 }
 
 export default Dashboard;
-

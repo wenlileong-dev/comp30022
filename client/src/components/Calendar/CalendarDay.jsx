@@ -20,18 +20,12 @@ function CalendarDay(props) {
 
   return (
     <React.Fragment>
-      <div
-        className="calendar-day"
-        onClick={handleOpen}
-        data-testid={"calendar-a-day"}
-      >
+      <div className="day" onClick={handleOpen} data-testid={"calendar-a-day"}>
         {new Date().getDate() === props.day &&
         new Date().getMonth() === props.month ? (
-          <Stack direction="row" spacing={2}>
-            <Avatar sx={{ bgcolor: indigo[500], width: 22, height: 22 }}>
-              {props.day}
-            </Avatar>
-          </Stack>
+          <p>
+            <mark>{props.day}</mark>
+          </p>
         ) : (
           <p>{props.day}</p>
         )}
@@ -40,7 +34,12 @@ function CalendarDay(props) {
           {props.event &&
             props.event.map((event, index) => {
               return (
-                <Typography variant="body2" gutterBottom key={index}>
+                <Typography
+                  variant="body2"
+                  gutterBottom
+                  key={index}
+                  className="task"
+                >
                   {new Date(event.time).toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",

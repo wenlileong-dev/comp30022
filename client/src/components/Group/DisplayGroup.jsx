@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import GroupFooter from "./GroupFooter";
 import TopGroup from "./TopGroup";
 import GroupComponent from "./GroupComponent";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
