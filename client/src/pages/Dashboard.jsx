@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DashboardDays from "./../components/Dashboard/DashboardDays";
 import DashboardContacts from "../components/Dashboard/DashboardContacts";
+import MobileDashboard from "../components/Dashboard/MobileDashboard";
 import AuthFail from "./../components/AuthFail";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import mobileView from "../screenSize";
 
 import "./../components/Popup.css";
 
@@ -82,26 +84,39 @@ function Dashboard() {
     <React.Fragment>
       {isAuth && (
         <>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} columns={16}>
-              <Grid item xs={8}>
-                <Item>
-                  <p>Recent Events</p>
-                  {events.length > 0 && (
-                    <DashboardDays month={month} year={year} events={events} />
-                  )}
-                </Item>
+          {!mobileView ? (
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Item>
+                    <p>Recent Events</p>
+                    {events.length > 0 && (
+                      <DashboardDays
+                        month={month}
+                        year={year}
+                        events={events}
+                      />
+                    )}
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <p>Recent Contacts</p>
+                    {contacts.length > 0 && (
+                      <DashboardContacts contacts={contacts} />
+                    )}
+                  </Item>
+                </Grid>
               </Grid>
-              <Grid item xs={8}>
-                <Item>
-                  <p>Recent Contacts</p>
-                  {contacts.length > 0 && (
-                    <DashboardContacts contacts={contacts} />
-                  )}
-                </Item>
-              </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          ) : (
+            <MobileDashboard
+              events={events}
+              month={month}
+              year={year}
+              contacts={contacts}
+            />
+          )}
         </>
       )}
       {authFailMsg && <AuthFail msg={authFailMsg} />}
