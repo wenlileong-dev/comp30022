@@ -5,13 +5,11 @@ import AddContactLink from "./index";
 import { useState, useEffect } from "react";
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
-import ButtonGroup from '@mui/material/ButtonGroup';
-import SearchContact from "./SearchContact";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Search from "./Search";
 import SearchTitle from "./SearchTitle";
 
 function Contact() {
-
-  
   //group list and contact list
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
@@ -21,7 +19,7 @@ function Contact() {
 
   const getGroupContacts = async () => {
     const result = await axios("/group/all");
-    if (result.data.status !== 200){
+    if (result.data.status !== 200) {
       setIsAuth(false);
       setAuthFailMsg(result.data.errorMsg);
       window.location.href = "/login";
@@ -32,27 +30,27 @@ function Contact() {
     setContacts(result.data.allContacts);
   };
 
-
   useEffect(() => {
     getGroupContacts();
   }, []);
-  
 
   return (
     <div>
       {isAuth && (
-        <>   
+        <>
           {/* <SearchContact/>    */}
           {/* <SearchTitle/> */}
           {/* <GroupTitle/> */}
-          <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <GroupTitle/>
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+          >
+            <GroupTitle />
             <AddContactLink />
-            <SearchTitle/>
-            
+            <SearchTitle />
+            <Search />
           </ButtonGroup>
-          
-          
+
           {groups &&
             contacts &&
             groups.map((group, index) => {
@@ -62,25 +60,26 @@ function Contact() {
                     group={group}
                     contacts={contacts[index]}
                     key={`group${index}`}
+                    getGroupContacts={getGroupContacts}
                   />
                 );
               }
             })}
-            
+
           {groups &&
-          contacts &&
-          groups.map((group, index) => {
-            if (!group.isTop) {
-              return (
-                <DisplayGroup
-                  group={group}
-                  contacts={contacts[index]}
-                  key={`group${index}`}
-                />
-              );
-            }
-          })}
-      
+            contacts &&
+            groups.map((group, index) => {
+              if (!group.isTop) {
+                return (
+                  <DisplayGroup
+                    group={group}
+                    contacts={contacts[index]}
+                    key={`group${index}`}
+                    getGroupContacts={getGroupContacts}
+                  />
+                );
+              }
+            })}
         </>
       )}
 
@@ -88,6 +87,5 @@ function Contact() {
     </div>
   );
 }
-
 
 export default Contact;
