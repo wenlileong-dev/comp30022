@@ -3,6 +3,7 @@
 exports[`Snaphot Testing for Calendar Title 1`] = `
 <div
   className="calendar-header"
+  title="calendar-title"
 >
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
@@ -604,6 +605,7 @@ exports[`Snapshot Testing for Calendar Header 1`] = `
 Array [
   <span
     className="day-name"
+    data-testid="Sunday"
   >
     Sun
   </span>,

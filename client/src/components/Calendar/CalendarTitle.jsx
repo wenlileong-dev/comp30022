@@ -40,7 +40,7 @@ function CalendarTitle(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-header">
+      <div className="calendar-header" title="calendar-title">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={2}>

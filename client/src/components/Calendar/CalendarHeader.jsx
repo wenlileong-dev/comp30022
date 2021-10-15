@@ -3,7 +3,9 @@ import "./CalendarMonth.scss";
 function CalendarHeader() {
   return (
     <React.Fragment>
-      <span className="day-name">Sun</span>
+      <span className="day-name" data-testid="Sunday">
+        Sun
+      </span>
       <span className="day-name">Mon</span>
       <span className="day-name">Tue</span>
       <span className="day-name">Wed</span>
