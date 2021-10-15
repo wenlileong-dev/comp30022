@@ -7,6 +7,7 @@ import WeeklyCalendar from "../components/Calendar/WeeklyCalendar";
 import mobileView from "../screenSize";
 import AuthFail from "./../components/AuthFail";
 
+import "./../components/Calendar/CalendarMonth.scss";
 function Calendar() {
   let today = new Date();
   let [month, setMonth] = useState(today.getMonth());
@@ -55,18 +56,33 @@ function Calendar() {
     <React.Fragment>
       {isAuth && (
         <>
-          <CalendarTitle
-            month={month}
-            year={year}
-            nextMonth={nextMonth}
-            prevMonth={prevMonth}
-          />
-          {!mobileView && <CalendarHeader />}
+          {!mobileView ? (
+            <div className="calendar-container">
+              <CalendarTitle
+                month={month}
+                year={year}
+                nextMonth={nextMonth}
+                prevMonth={prevMonth}
+              />
 
-          {!mobileView && events.length > 0 && (
-            <CalendarDays month={month} year={year} events={events} />
+              <div className="calendar">
+                {!mobileView && <CalendarHeader />}
+                {!mobileView && events.length > 0 && (
+                  <CalendarDays month={month} year={year} events={events} />
+                )}
+              </div>
+            </div>
+          ) : (
+            <>
+              <CalendarTitle
+                month={month}
+                year={year}
+                nextMonth={nextMonth}
+                prevMonth={prevMonth}
+              />
+              <WeeklyCalendar events={events} month={month + 1} />
+            </>
           )}
-          {mobileView && <WeeklyCalendar events={events} month={month + 1} />}
         </>
       )}
       {authFailMsg && <AuthFail msg={authFailMsg} />}

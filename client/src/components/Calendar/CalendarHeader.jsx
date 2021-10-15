@@ -1,16 +1,16 @@
 import React from "react";
-import "./Calendar.css";
+import "./CalendarMonth.scss";
 function CalendarHeader() {
   return (
-    <div className="calendar-header" data-testid="mytestid">
-      <div>Sun</div>
-      <div>Mon</div>
-      <div>Tue</div>
-      <div>Wed</div>
-      <div>Thu</div>
-      <div>Fri</div>
-      <div>Sat</div>
-    </div>
+    <React.Fragment>
+      <span className="day-name">Sun</span>
+      <span className="day-name">Mon</span>
+      <span className="day-name">Tue</span>
+      <span className="day-name">Wed</span>
+      <span className="day-name">Thu</span>
+      <span className="day-name">Fri</span>
+      <span className="day-name">Sat</span>
+    </React.Fragment>
   );
 }
 

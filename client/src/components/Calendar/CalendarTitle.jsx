@@ -40,19 +40,18 @@ function CalendarTitle(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-title">
+      <div className="calendar-header">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={2}>
-              <Grid item xs={3} className="calendar-month">
+              <Grid item xs={3}>
                 <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
               </Grid>
               <Grid item xs={6}>
-                <span className="calendar-month" title="calendar-title">
-                  {monthNames[props.month]} {props.year}
-                </span>
+                <h1>{monthNames[props.month]}</h1>
+                <p>{props.year}</p>
               </Grid>
-              <Grid item xs={3} className="calendar-month">
+              <Grid item xs={3}>
                 <ArrowRightIcon onClick={props.nextMonth}></ArrowRightIcon>
               </Grid>
             </Grid>
