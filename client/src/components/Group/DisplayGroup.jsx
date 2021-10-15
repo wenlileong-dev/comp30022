@@ -10,7 +10,6 @@ import TopGroup from "./TopGroup";
 import GroupComponent from "./GroupComponent";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -48,31 +47,39 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function DisplayGroup(props) {
-
   // highlight button and delete button
   const renderTwoButton = (group) => {
-    if (! group.isDefault) {
+    if (!group.isDefault) {
       return (
         <>
-          <div style={{ position: 'absolute' ,right:'50px',top:'4px'}}>
-            <TopGroup groupID={props.group._id} groupTop={props.group.isTop} />
+          <div style={{ position: "absolute", right: "50px", top: "4px" }}>
+            <TopGroup
+              groupID={props.group._id}
+              groupTop={props.group.isTop}
+              getGroupContacts={props.getGroupContacts}
+            />
           </div>
 
-          <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
-            <GroupFooter groupID={group._id} />
+          <div style={{ position: "absolute", right: "10px", top: "4px" }}>
+            <GroupFooter
+              groupID={group._id}
+              getGroupContacts={props.getGroupContacts}
+            />
           </div>
         </>
-        
-      )
-    }else {
+      );
+    } else {
       return (
-        <div style={{ position: 'absolute' ,right:'10px',top:'4px'}}>
-            <TopGroup groupID={props.group._id} groupTop={props.group.isTop} />
+        <div style={{ position: "absolute", right: "10px", top: "4px" }}>
+          <TopGroup
+            groupID={props.group._id}
+            groupTop={props.group.isTop}
+            getGroupContacts={props.getGroupContacts}
+          />
         </div>
-      )
-      
+      );
     }
-  }
+  };
 
   return (
     <React.Fragment>
@@ -86,10 +93,15 @@ export default function DisplayGroup(props) {
           {renderTwoButton(props.group)}
         </AccordionSummary>
         <AccordionDetails>
-
           {props.contacts &&
             props.contacts.map((contact, index) => {
-              return <GroupComponent contact={contact} contactId={contact._id} key={contact._id + index} />;
+              return (
+                <GroupComponent
+                  contact={contact}
+                  contactId={contact._id}
+                  key={contact._id + index}
+                />
+              );
             })}
         </AccordionDetails>
       </Accordion>
