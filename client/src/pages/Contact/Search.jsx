@@ -5,6 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
 function Search() {
   let [contacts, setContacts] = useState([]);
   let history = useHistory();
@@ -30,7 +31,22 @@ function Search() {
         }}
         renderInput={(params) => {
           return (
-            <TextField {...params} variant="filled" placeholder="Search" />
+            <TextField
+              {...params}
+              variant="standard"
+              placeholder="Search"
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                    {params.InputProps.startAdornment}
+                  </>
+                ),
+              }}
+            />
           );
         }}
         onChange={(e, v) => {
@@ -41,9 +57,6 @@ function Search() {
           history.push(location);
         }}
       />
-      <IconButton type="button" sx={{ p: "10px" }}>
-        <SearchIcon />
-      </IconButton>
     </React.Fragment>
   );
 }
