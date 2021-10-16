@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import GroupTitle from "../../components/Group/GroupTitle";
 import AuthFail from "../../components/AuthFail";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Grid from "@mui/material/Grid";
 import Search from "./Search";
 import SearchTitle from "./SearchTitle";
 
@@ -41,15 +42,21 @@ function Contact() {
           {/* <SearchContact/>    */}
           {/* <SearchTitle/> */}
           {/* <GroupTitle/> */}
-          <ButtonGroup
-            variant="contained"
-            aria-label="outlined primary button group"
-          >
-            <GroupTitle />
-            <AddContactLink />
-            <SearchTitle />
-            <Search />
-          </ButtonGroup>
+          <Grid container justifyContent="space-between">
+            <Grid item mb={2}>
+              <ButtonGroup
+                variant="contained"
+                aria-label="outlined primary button group"
+              >
+                <GroupTitle />
+                <AddContactLink />
+                {/* <SearchTitle /> */}
+              </ButtonGroup>
+            </Grid>
+            <Grid item mb={2}>
+              <Search />
+            </Grid>
+          </Grid>
 
           {groups &&
             contacts &&
@@ -65,7 +72,6 @@ function Contact() {
                 );
               }
             })}
-
           {groups &&
             contacts &&
             groups.map((group, index) => {
