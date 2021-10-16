@@ -20,10 +20,14 @@ class AddFooter extends Component {
   handleConfirm = async () => {
     // console.log('confirm');
     let data = { contact: { ...this.props } };
-    let result = await axios.post("/api/contacts/add-contact", data);
-    this.setState({ error: false, success: true });
-    this.setState({ contact: result.data.newContact });
-    this.props.history.push(`/contact`);
+    try {
+      let result = await axios.post("/api/contacts/add-contact", data);
+      this.setState({ error: false, success: true });
+      this.setState({ contact: result.data.newContact });
+      this.props.history.push(`/contact`);
+    } catch (error) {
+      this.setState({ error: true });
+    }
   };
 
   render() {

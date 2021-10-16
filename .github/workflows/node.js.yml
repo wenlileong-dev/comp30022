@@ -35,3 +35,8 @@ jobs:
           MONGO_USERNAME: crm-project
           MONGO_PASSWORD: COMP30022
           JWT_PRIVATE_KEY: COMP30022
+      - name: run front end testing
+        run: |
+          cd client
+          npm i
+          npm test
