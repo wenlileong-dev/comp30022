@@ -32,11 +32,7 @@ jobs:
       - name: run test
         run: npm test
         env:
-          MONGO_USERNAME: crm-project
-          MONGO_PASSWORD: COMP30022
-          JWT_PRIVATE_KEY: COMP30022
-      - name: run front end testing
-        run: |
-          cd client
-          npm i
-          npm test
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+ 
