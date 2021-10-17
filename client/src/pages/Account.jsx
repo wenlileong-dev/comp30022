@@ -138,6 +138,7 @@ function Account() {
                   variant="primary"
                   onClick={logoutUser}
                   style={{ marginLeft: "2vw " }}
+                  data-cy="logout-button"
                 >
                   Logout
                 </Button>
