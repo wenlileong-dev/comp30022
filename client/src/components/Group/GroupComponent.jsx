@@ -1,6 +1,5 @@
 import React from "react";
-import Divider from "@mui/material/Divider";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function GroupComponent(props) {
   if (props.contact.remark) {

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Switch, Route, Redirect, Link } from "react-router-dom";
-import NewContact from './NewContact/';
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 

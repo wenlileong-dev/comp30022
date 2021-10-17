@@ -1,34 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-import { indigo } from "@mui/material/colors";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
 import DashboardPopup from "./DashboardPopup";
 
 function DashboardDay(props) {
-  let [isPopupOpen, setIsPopupOpen] = useState(false);
-  let [isShowOne, setIsShowOne] = useState(false);
+  // let [isPopupOpen, setIsPopupOpen] = useState(false);
+  // let [isShowOne, setIsShowOne] = useState(false);
 
-  function handleOpen(event) {
-    setIsPopupOpen(true);
-    // setIsShowOne(true);
-  }
-  function handleShow(event) {
-    setIsShowOne(true);
-  }
+  // function handleOpen(event) {
+  //   setIsPopupOpen(true);
+  // }
+  // function handleShow(event){
+  //   setIsShowOne(true)
+  // }
   function handleClose(event) {
     event.stopPropagation();
-    setIsPopupOpen(false);
-    setIsShowOne(false);
+    // setIsPopupOpen(false);
+    // setIsShowOne(false);
   }
-  console.log(props);
+  // console.log(props)
   return (
     <React.Fragment>
       <div>
@@ -55,6 +44,7 @@ function DashboardDay(props) {
                 <div>
                   <DashboardPopup
                     // renderType="day-events"
+                    key={index}
                     events={event}
                     handleClose={handleClose}
                     year={props.year}

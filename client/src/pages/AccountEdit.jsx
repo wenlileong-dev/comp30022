@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-// import axios from '../commons/axios.js';
 import axios from "axios";
 
 function Account() {
@@ -21,14 +20,13 @@ function Account() {
 
   useEffect(() => {
     getUserDetails();
-    console.log(email);
   }, []);
 
   const getUserDetails = () => {
     axios
       .get(`/user/`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data)
         if (!response.data.success) {
           alert(response.data.errorMsg);
           window.location.href = "/login";
@@ -37,7 +35,6 @@ function Account() {
           setEmail(response.data.user.email);
           setFirstName(response.data.user.firstName);
           setLastName(response.data.user.lastName);
-          // setPassword(response.data.user.password);
           setPhoneNumber(response.data.user.phoneNumber);
         }
       })
@@ -58,11 +55,6 @@ function Account() {
   };
   const onBack = () => {
     window.location.href = "/user";
-    // history.push({
-    //   pathname: "/user/editInfo", state: {
-    //     user: props
-    //   }
-    // })
   };
 
   const onSubmit = () => {
@@ -75,7 +67,7 @@ function Account() {
           phoneNumber,
         })
         .then((response) => {
-          console.log(password);
+          // console.log(password)
           if (response.data.success) {
             message.success("Account detail update successfully");
             window.location.href = "/user";
@@ -91,7 +83,7 @@ function Account() {
           phoneNumber,
         })
         .then((response) => {
-          console.log(password);
+          // console.log(password)
           if (response.data.success) {
             message.success("Account detail update successfully");
             window.location.href = "/user";
@@ -100,134 +92,80 @@ function Account() {
           }
         });
     }
-    // axios.post('/user/update/'+id,{
-    //   firstName,
-    //   lastName,
-    //   password,
-    //   phoneNumber
-    // }).then(response => {
-    //   console.log(password)
-    //   if(response.data.success){
-    //     message.success("Account detail update successfully")
-    //     window.location.href = "/user";
-    //   }else{
-    //     message.error(response.data.error)
-    //   }
-    // })
   };
   return (
     <React.Fragment>
-      {/* <div style={{width:'40%', margin:'auto'}}>
-        <Form form={form} layout="vertical">
-          <Form.Item label="Email (You can not change your email address)">
-            <Input placeholder="email" value={email} disabled={true} />
-          </Form.Item>      
-          <Form.Item label="First Name">
-            <Input placeholder="first name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-          </Form.Item>
-          <Form.Item label="Last Name">
-            <Input placeholder="last name" value={lastName} onChange={e => setLastName(e.target.value)} />
-          </Form.Item>
-          <Form.Item label="Phone Number">
-            <Input placeholder="phone number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
-          </Form.Item>
-          <Divider>Click <Link onClick={enablePassword} target="_blank">here</Link> to change password</Divider>
-          <Form.Item label="Change Password">
-            <p disabled={disable}>At least one alphabet character</p>
-            <p disabled={disable}>At least one numerical digit</p>
-            <p disabled={disable}>A length of at least 8 characters</p>
-            <Input placeholder="enter your new password" type="password" DefaultValue="" disabled={disable} onChange={e => setPassword(e.target.value)} />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" onClick={onSubmit}>Submit</Button>
-          </Form.Item>
-        </Form>
-      </div> */}
+      <p style={{ marginLeft: "43vw " }}>Account Edit Page</p>
       <Box
         sx={{
-          width: "80%",
+          width: "117ch",
+          height: "100ch",
           border: "1px solid rgb(221,225,230)",
           margin: "auto",
-          padding: "3rem",
+          "& .MuiTextField-root": { m: 4, width: "50ch" },
         }}
         noValidate
         autoComplete="off"
       >
-        <Grid container spacing={6}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled
-              id="outlined-required"
-              label="Email"
-              fullWidth
-              // defaultValue="123"
-              value={email}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            {" "}
-            <TextField
-              required
-              id="outlined-required"
-              label="FirstName"
-              fullWidth
-              // defaultValue="123"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="outlined-required"
-              label="LastName"
-              fullWidth
-              // defaultValue="123"/
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="outlined-required"
-              label="PhoneNumber"
-              fullWidth
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Divider style={{ marginLeft: "3vw " }}>
-              Click{" "}
-              <Link onClick={enablePassword} target="_blank">
-                here
-              </Link>{" "}
-              to change password
-            </Divider>
-          </Grid>
+        <div>
+          <TextField
+            disabled
+            id="outlined-required"
+            label="Email"
+            // defaultValue="123"
+            value={email}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="FirstName"
+            // defaultValue="123"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="LastName"
+            // defaultValue="123"/
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="PhoneNumber"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <Divider style={{ marginLeft: "3vw " }}>
+            Click{" "}
+            <Link onClick={enablePassword} target="_blank">
+              here
+            </Link>{" "}
+            to change password
+          </Divider>
+          <Divider style={{ marginLeft: "3vw " }} />
+          {/* <p style={{ marginLeft: '2vw '}}>At least one alphabet character</p> */}
+          {/* <p style={{ marginLeft: '2vw '}}>At least one numerical digit</p> */}
+          {/* <p style={{ marginLeft: '2vw '}}>password must have at least 8 characters, containing at least one alphabet character and one numerical digit</p> */}
+          <TextField
+            required
+            id="outlined-required"
+            label="Password"
+            defaultValue=""
+            disabled={disable}
+            onChange={(e) => setPassword(e.target.value)}
+            // value={password}
+          />
+          {open && (
+            <p style={{ marginLeft: "3vw " }}>
+              password must have at least 8 characters, containing at least one
+              alphabet character and one numerical digit
+            </p>
+          )}
 
-          <Grid item xs={12} sm={6}>
-            <Divider style={{ marginLeft: "3vw " }} />
-
-            {open && (
-              <>
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Password"
-                  fullWidth
-                  defaultValue=""
-                  // disabled={disable}
-                  onChange={(e) => setPassword(e.target.value)}
-                  helperText="password must have at least 8 characters, containing at least
-                one alphabet character and one numerical digit"
-                  // value={password}
-                />
-              </>
-            )}
-          </Grid>
-          <Grid item xs={12}>
+          <div>
             <Button
               type="primary"
               onClick={onBack}
@@ -242,8 +180,8 @@ function Account() {
             >
               Submit
             </Button>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </Box>
     </React.Fragment>
   );

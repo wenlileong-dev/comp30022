@@ -14,15 +14,17 @@ import "./../components/Popup.css";
 
 function Dashboard() {
   let today = new Date();
-  let [month, setMonth] = useState(today.getMonth() + 1);
+  // let [month, setMonth] = useState(today.getMonth()+1);
+  let month = today.getMonth() + 1;
   // let [month, setMonth] = useState(today.getMonth()+3);
-  let [year, setYear] = useState(today.getFullYear());
+  // let [year, setYear] = useState(today.getFullYear());
+  let year = today.getFullYear();
   const [events, setEvents] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
-  console.log(contacts);
-  console.log(month);
+  // console.log(contacts)
+  // console.log(month)
 
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -30,23 +32,6 @@ function Dashboard() {
     textAlign: "left",
     color: theme.palette.text.secondary,
   }));
-
-  //fetch the events of the month
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await axios(`/api/calendar/${month-1}/${year}`);
-  //     if (result.data.status !== 200) {
-  //       setIsAuth(false);
-  //       setAuthFailMsg(result.data.errorMsg);
-  //       window.location.href = "/login";
-  //     } else {
-  //       setIsAuth(true);
-  //       // now we get events during the month
-  //       setEvents(result.data.data);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [month, year]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +51,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       const resultContacts = await axios(`/api/contacts/allContact/`);
-      console.log(resultContacts);
+      // console.log(resultContacts)
       if (resultContacts.data.status !== 200) {
         setIsAuth(false);
         setAuthFailMsg(resultContacts.data.errorMsg);

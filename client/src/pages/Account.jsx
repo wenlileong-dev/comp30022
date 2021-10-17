@@ -32,7 +32,6 @@ function Account() {
   const [phoneNumber, setPhoneNumber] = useState("");
   useEffect(() => {
     getUserDetails();
-    // console.log(email);
   }, []);
 
   const getUserDetails = () => {

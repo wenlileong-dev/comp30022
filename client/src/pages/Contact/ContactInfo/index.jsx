@@ -4,13 +4,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PubSub from "pubsub-js";
-
 import AuthFail from "../../../components/AuthFail";
 import EditFooter from "../../../components/EditFooter";
 import GroupSelector from "../../../components/Group/GroupSelector";
@@ -153,6 +154,17 @@ export default class ContactInfo extends Component {
         }
       );
     }
+  }
+
+  onEmail() {
+    const {
+      contact: { _id },
+    } = this.props.location.state;
+    axios({
+      method: "GET",
+      url: `http://localhost:3000/api/contacts/updateContactTime/${_id}`,
+    });
+    window.open("mailto:" + this.state.contact.email);
   }
 
   render() {
@@ -301,6 +313,15 @@ export default class ContactInfo extends Component {
                     isNew={false}
                   />
                 </Grid>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  endIcon={<MailOutlineIcon />}
+                  style={{ marginLeft: "7vw ", marginTop: "2vw" }}
+                  onClick={() => this.onEmail()}
+                >
+                  Send Email
+                </Button>
                 <Grid item xs={12} sm={12}>
                   <EditFooter
                     handleEdit={this.handleEdit}

@@ -41,15 +41,15 @@ describe("Testing Calendar Title", () => {
     expect(nextMonth).toHaveBeenCalled();
   });
 
-  // test("render add event form when add new event button is clicked", () => {
-  //   render(<CalendarTitle month={month} year={year} />);
-  //   const addNewEventButton = screen.getByRole("button", { name: "New Event" });
-  //   fireEvent.click(addNewEventButton);
-  //   const popupElement = screen.getByTestId("modal-popup");
-  //   const addEventFormElement = screen.getByTestId("add-event-form");
-  //   expect(popupElement).toBeInTheDocument();
-  //   expect(addEventFormElement).toBeInTheDocument();
-  // });
+  test("render add event form when add new event button is clicked", () => {
+    render(<CalendarTitle month={month} year={year} />);
+    const addNewEventButton = screen.getByRole("button", { name: "New Event" });
+    fireEvent.click(addNewEventButton);
+    const popupElement = screen.getByTestId("modal-popup");
+    const addEventFormElement = screen.getByTestId("add-event-form");
+    expect(popupElement).toBeInTheDocument();
+    expect(addEventFormElement).toBeInTheDocument();
+  });
 });
 
 test("testing calendar header", () => {
