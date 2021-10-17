@@ -33,6 +33,8 @@ jobs:
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
           FRONT_END_URL: ${{ secrets.JWT_PRIVATE_KEY }}
+      - name: back end directory
+        run: cd client
       - name: Front End Checkout
         uses: actions/checkout@v2
       - name: Cypress run
