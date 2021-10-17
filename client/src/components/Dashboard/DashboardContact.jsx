@@ -2,33 +2,17 @@ import React from "react";
 import Divider from '@mui/material/Divider';
 import { Link } from "react-router-dom";
 function DashboardDay(props) {
-  // let [isPopupOpen, setIsPopupOpen] = useState(false);
-  // let [isShowOne, setIsShowOne] = useState(false);
-
-  // function handleOpen(event) {
-  //   setIsPopupOpen(true);
-  //   // setIsShowOne(true);
-  // }
-  // function handleShow(event){
-  //   setIsShowOne(true)
-  // }
-  // function handleClose(event) {
-  //   event.stopPropagation();
-  //   setIsPopupOpen(false);
-  //   setIsShowOne(false);
-  // }
-  // console.log(props.firstName)
   return (
     <React.Fragment>
       <div>
-      <Link
-                
-                to={{pathname:`/contact/info`,
-                state:{contact:props.contacts}}}
-            >
+        <Link
+          to={{ pathname: `/contact/info`, state: { contact: props.contacts } }}
+        >
+          <Typography variant="subtitle1" gutterBottom component="div" mt={2}>
             {props.contacts.firstName} {props.contacts.lastName}
-          </Link>
-          <Divider/>
+          </Typography>
+        </Link>
+        <Divider />
       </div>
     </React.Fragment>
   );
