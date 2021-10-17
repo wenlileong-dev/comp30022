@@ -26,6 +26,7 @@ function PopoverEditEvent(props) {
       `${originPeople[i].firstName} ${originPeople[i].lastName}`
     );
   }
+
   let [title, setTitle] = useState(props.eventDetail.title);
   let [description, setDescription] = useState(props.eventDetail.description);
   let [date, setDate] = useState(new Date(props.eventDetail.date));

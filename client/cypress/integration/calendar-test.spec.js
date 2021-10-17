@@ -92,6 +92,7 @@ describe("End to End Testing for Calendar", () => {
       cy.get("[data-cy=description]").type("test event description");
       cy.get("[data-cy=people]").type("Testing E2E{enter}Not Contact{enter}");
       cy.get("[data-cy=add-event-confirm-button]").click();
+      cy.reload();
       cy.contains("test event").should("be.visible");
     });
 

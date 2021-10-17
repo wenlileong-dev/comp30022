@@ -26,6 +26,7 @@ function EventPeople(props) {
           <Autocomplete
             multiple
             id="tags-filled"
+            data-cy="people"
             options={contacts.map((option) => {
               return `${option.firstName} ${option.lastName}`;
             })}
