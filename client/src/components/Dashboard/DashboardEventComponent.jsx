@@ -4,13 +4,13 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 function PopoverEvent(props) {
-  console.log(props)
+  // console.log(props)
   let time = new Date(props.event.time);
   // console.log(props.setEvent(props.event))
   // console.log(props.openEditEvent())
   function handleOpenEvent() {
     props.setEvent(props.event);
-    console.log(props.event)
+    // console.log(props.event)
     props.openEditEvent();
   }
   return (

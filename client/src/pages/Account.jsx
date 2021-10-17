@@ -31,14 +31,13 @@ function Account() {
   const [phoneNumber, setPhoneNumber] = useState("");
   useEffect(() => {
     getUserDetails();
-    console.log(email);
   }, []);
 
   const getUserDetails = () => {
     axios
       .get(`/user/`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (!response.data.success) {
           setIsAuth(false);
           setAuthFailMsg(response.data.errorMsg);
@@ -66,7 +65,7 @@ function Account() {
     <React.Fragment>
       {isAuth && (
         <>
-          <p>Account Page</p>
+          <p style={{ marginLeft: '43vw '}}>Account Page</p>
           <Box 
                     sx={{
                         width: '117ch',

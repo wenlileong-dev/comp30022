@@ -178,3 +178,28 @@ exports.deleteContact = async (req, res, next) => {
 };
 
 // module.exports = contacts;
+
+
+// update contactTime
+exports.updateContactTime = async (req, res, next) => {
+  try {
+    // console.log(Date.now())
+    const newContactTime = Date.now();
+    // console.log(newInfo);
+    await Contacts.updateOne(
+      { _id: req.params.id },
+      { contactTime: newContactTime },
+      () => {}
+    );
+
+    const info = await Contacts.findById(req.params.id, (err, data) => {
+      // console.log(data);
+    });
+
+    res.status(201).json({
+      info,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

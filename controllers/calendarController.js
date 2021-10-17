@@ -174,7 +174,7 @@ exports.getTwoMonthEvents = async (req, res) => {
     userID: userID,
   });
   let daysInMonth = getDaysInMonth(new Date(year, month));
-  console.log(daysInMonth)
+  // console.log(daysInMonth)
   let daysInNextMonth = 0;
   if(month==12){
     daysInNextMonth = getDaysInMonth(new Date(year+1,0))
@@ -182,7 +182,7 @@ exports.getTwoMonthEvents = async (req, res) => {
     daysInNextMonth = getDaysInMonth(new Date(year,month+1))
   }
   // let daysInNextMonth = getDaysInMonth(new Date(year, month+1))
-  console.log(daysInNextMonth)
+  // console.log(daysInNextMonth)
 
   let result = [...Array(daysInMonth+daysInNextMonth)].map((e) => []);
 

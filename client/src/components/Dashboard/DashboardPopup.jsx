@@ -6,15 +6,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 function DashboardPopup(props) {
-  // let [isOpen, setIsOpen] = useState(false);
   let [isOpen, setIsOpen] = useState("");
   let [eventDetail, setEventDetail] = useState({});
-  // function toggleOpen() {
-  //   setIsOpen(!isOpen);
-  // }
   function handleOpen(){
     setIsOpen("day-events");
   }
@@ -31,13 +26,14 @@ function DashboardPopup(props) {
         <ListItem disablePadding>
           <ListItemButton onClick={handleOpen}>
             <ListItemIcon>
-              <InboxIcon />
+              <EventAvailableIcon />
             </ListItemIcon>
             <ListItemText primary={props.events.title} />
           </ListItemButton>
         </ListItem>
       </List>
-      {(isOpen === "day-events"||isOpen ==="event-detail") && <div className="popup-box">
+      {(isOpen === "day-events"||isOpen ==="event-detail") && 
+      <div className="popup-box">
         <div className="box">
           <span className="close-icon" onClick={handleClose}>
             x
@@ -48,12 +44,11 @@ function DashboardPopup(props) {
               setEventDetail={setEventDetail}
               toggleEditEvent={oepnEventDetail}
             />
-            )}
-            {isOpen === "event-detail" && (
-            <DashboardEditEvent eventDetail={eventDetail} />
           )}
+          {isOpen === "event-detail" && (<DashboardEditEvent eventDetail={eventDetail} />)}
         </div>
-      </div>}
+      </div>
+      }
     </React.Fragment>
   );
 }

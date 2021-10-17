@@ -32,4 +32,6 @@ router.delete('/info/:id', authUser, contact.deleteContact);
 
 router.get("/allContact/", authUser, contact.getAllContacts);
 
+router.get("/updateContactTime/:id",authUser, contact.updateContactTime);
+
 module.exports = router;

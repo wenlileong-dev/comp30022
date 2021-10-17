@@ -1,13 +1,11 @@
 import React, { useState ,useEffect} from 'react';
-import {  Form, Input, Divider, Typography, message } from 'antd';
+import { Divider, Typography, message } from 'antd';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-// import axios from '../commons/axios.js';
 import axios from "axios";
 
 function Account() {
-  const [form] = Form.useForm();
   const {Link}=Typography;
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -21,14 +19,13 @@ function Account() {
 
   useEffect(() => {
     getUserDetails();
-    console.log(email)
   }, []);
 
   const getUserDetails = () => {
     axios
       .get(`/user/`)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         if (!response.data.success) {
           alert(response.data.errorMsg);
           window.location.href = "/login";
@@ -37,7 +34,6 @@ function Account() {
           setEmail(response.data.user.email);
           setFirstName(response.data.user.firstName);
           setLastName(response.data.user.lastName);
-          // setPassword(response.data.user.password);
           setPhoneNumber(response.data.user.phoneNumber);
         }
       })
@@ -54,11 +50,6 @@ function Account() {
   }
   const onBack = () => {
     window.location.href = "/user";
-    // history.push({
-    //   pathname: "/user/editInfo", state: {
-    //     user: props
-    //   }
-    // })
   };
 
   const onSubmit = () =>{
@@ -69,7 +60,7 @@ function Account() {
       password,
       phoneNumber
     }).then(response => {
-      console.log(password)
+      // console.log(password)
       if(response.data.success){
         message.success("Account detail update successfully")
         window.location.href = "/user";
@@ -83,7 +74,7 @@ function Account() {
       lastName,
       phoneNumber
     }).then(response => {
-      console.log(password)
+      // console.log(password)
       if(response.data.success){
         message.success("Account detail update successfully")
         window.location.href = "/user";
@@ -92,50 +83,10 @@ function Account() {
       }
     })
     }
-    // axios.post('/user/update/'+id,{
-    //   firstName,
-    //   lastName,
-    //   password,
-    //   phoneNumber
-    // }).then(response => {
-    //   console.log(password)
-    //   if(response.data.success){
-    //     message.success("Account detail update successfully")
-    //     window.location.href = "/user";
-    //   }else{
-    //     message.error(response.data.error)
-    //   }
-    // })
   }
   return (
     <React.Fragment>
-      <p>Account Edit Page</p>
-      {/* <div style={{width:'40%', margin:'auto'}}>
-        <Form form={form} layout="vertical">
-          <Form.Item label="Email (You can not change your email address)">
-            <Input placeholder="email" value={email} disabled={true} />
-          </Form.Item>      
-          <Form.Item label="First Name">
-            <Input placeholder="first name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-          </Form.Item>
-          <Form.Item label="Last Name">
-            <Input placeholder="last name" value={lastName} onChange={e => setLastName(e.target.value)} />
-          </Form.Item>
-          <Form.Item label="Phone Number">
-            <Input placeholder="phone number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
-          </Form.Item>
-          <Divider>Click <Link onClick={enablePassword} target="_blank">here</Link> to change password</Divider>
-          <Form.Item label="Change Password">
-            <p disabled={disable}>At least one alphabet character</p>
-            <p disabled={disable}>At least one numerical digit</p>
-            <p disabled={disable}>A length of at least 8 characters</p>
-            <Input placeholder="enter your new password" type="password" DefaultValue="" disabled={disable} onChange={e => setPassword(e.target.value)} />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" onClick={onSubmit}>Submit</Button>
-          </Form.Item>
-        </Form>
-      </div> */}
+      <p style={{ marginLeft: '43vw '}}>Account Edit Page</p>
       <Box 
                     sx={{
                         width: '117ch',

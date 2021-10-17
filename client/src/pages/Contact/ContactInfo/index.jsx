@@ -9,10 +9,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import PubSub from 'pubsub-js';
-
+import Button from '@mui/material/Button';
 import AuthFail from "../../../components/AuthFail";
 import EditFooter from '../../../components/EditFooter';
 import GroupSelector from '../../../components/Group/GroupSelector';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 export default class ContactInfo extends Component {
     state = {
@@ -80,7 +81,7 @@ export default class ContactInfo extends Component {
     handleGroup = (groupID) => {
         const contact = Object.assign({}, this.state.contact, {groupID});
         this.setState({contact: contact});
-        console.log('handleGroup');
+        // console.log('handleGroup');
     }
 
     componentDidMount() {
@@ -111,15 +112,15 @@ export default class ContactInfo extends Component {
             }).then(response => {
                 if(response.data.status === 200){
                     this.setState({isAuth: true, isFound: true, contact});
-                    console.log('auth succ',response);
+                    // console.log('auth succ',response);
                 }
                 else if(response.status === 404){
                     this.setState({isAuth: true, isFound: false});
-                    console.log('not found');
+                    // console.log('not found');
                 }
                 else {
                     this.setState({isAuth: false, authFailMsg:response.data.errorMsg});
-                    console.log('auth fail',response);
+                    // console.log('auth fail',response);
                     window.location.href = "/login";
                 }      
             }
@@ -128,11 +129,20 @@ export default class ContactInfo extends Component {
             })
         }
     }
+    
+    onEmail() {
+        const {contact:{_id}} = this.props.location.state;
+        axios({
+            method:'GET',
+            url:`http://localhost:3000/api/contacts/updateContactTime/${_id}`
+        })
+        window.open('mailto:'+this.state.contact.email);
+    };
 
     render() {      
         const {contact, isEdit} = this.state;
         const {isAuth, authFailMsg, isFound} = this.state;
-        console.log('contact in info', contact);
+        // console.log('contact in info', contact);
         return (  
             <Fragment>
                 {isAuth && isFound && (
@@ -235,8 +245,15 @@ export default class ContactInfo extends Component {
                         }}
                         variant="filled"
                     />
+
+                    {/* <Button variant="contained" endIcon={<MailOutlineIcon />}>
+                        Send Email
+                    </Button> */}
                     
                     <GroupSelector contact={contact} handleGroup={this.handleGroup} isEdit={isEdit} isNew={false}/>
+                    <Button variant="outlined" size="large" endIcon={<MailOutlineIcon />} style={{ marginLeft: '7vw ',marginTop:'2vw'}} onClick={()=>this.onEmail()}>
+                        Send Email
+                    </Button>
                     <br/>
                     <EditFooter 
                         handleEdit={this.handleEdit}
