@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import EditIcon from "@mui/icons-material/Edit";
@@ -14,22 +14,30 @@ import PeopleEventString from "./PeopleEventString";
 
 function WeeklyDayEvent(props) {
   let [isOpen, setIsOpen] = useState(false);
-  let [noMeetingLink, setNoMeetingLink] = useState(false);
+  let [linkDisable, setLinkDisable] = React.useState(false);
   const showEventDetail = () => {
     setIsOpen(true);
   };
 
-  function handleOpenMeeting() {
+  useEffect(() => {
+    checkLinkExist();
+  }, []);
+
+  function checkLinkExist() {
     if (props.event.meetingLink) {
-      const newWindow = window.open(
-        props.event.meetingLink,
-        "_blank",
-        "noopener,noreferrer"
-      );
-      if (newWindow) newWindow.opener = null;
+      setLinkDisable(false);
     } else {
-      setNoMeetingLink(true);
+      setLinkDisable(true);
     }
+  }
+
+  function handleOpenMeeting(event) {
+    const newWindow = window.open(
+      props.event.meetingLink,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
   }
 
   const handleClose = () => {
@@ -91,6 +99,7 @@ function WeeklyDayEvent(props) {
               variant="contained"
               type="button"
               onClick={handleOpenMeeting}
+              disabled={linkDisable}
               startIcon={<OpenInNewIcon />}
               size="small"
             >
@@ -106,9 +115,6 @@ function WeeklyDayEvent(props) {
               Edit
             </Button>
           </AccordionActions>
-          {noMeetingLink && (
-            <Alert severity="info">Meeting Link is not provided</Alert>
-          )}
         </AccordionDetails>
       </Accordion>
       {isOpen && (

@@ -5,6 +5,7 @@ function PeopleEventString(props) {
     <React.Fragment>
       {props.person._id ? (
         <Link
+          data-cy="people-link"
           to={{ pathname: `/contact/info`, state: { contact: props.person } }}
         >
           {props.person.firstName} {props.person.lastName}{" "}

@@ -21,7 +21,7 @@ function PopoverAddEvent(props) {
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(new Date());
-  let [time, setTime] = useState(null);
+  let [time, setTime] = useState(new Date());
   let [alertTime, setAlertTime] = useState(false);
   let [people, setPeople] = useState([]);
   let [eventType, setEventType] = useState("Online");
@@ -102,19 +102,23 @@ function PopoverAddEvent(props) {
       input.meetingLink = meetingLink;
     }
     axios.post(`/api/calendar`, input).then((res) => {
-      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit} data-testid="add-event-form">
+      <form
+        onSubmit={handleSubmit}
+        data-testid="add-event-form"
+        data-cy="add-event-form"
+      >
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
               variant="standard"
               required
               label="Title"
+              data-cy="title"
               onChange={handleTitle}
               value={title}
             />
@@ -123,6 +127,7 @@ function PopoverAddEvent(props) {
             <TextField
               variant="standard"
               label="Description"
+              data-cy="description"
               multiline
               onChange={handleDescription}
               value={description}
@@ -132,6 +137,7 @@ function PopoverAddEvent(props) {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
+                data-cy="date"
                 value={date}
                 onChange={(newValue) => {
                   setDate(newValue);
@@ -157,7 +163,11 @@ function PopoverAddEvent(props) {
             {alertTime && <Alert severity="error">Time is required</Alert>}
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="event-type-select" variant="standard">
+            <FormControl
+              className="event-type-select"
+              variant="standard"
+              data-cy="event-type"
+            >
               <InputLabel>Event Type</InputLabel>
               <Select value={eventType} onChange={handleEventType}>
                 <MenuItem value="Online">Online</MenuItem>
@@ -170,6 +180,7 @@ function PopoverAddEvent(props) {
               <TextField
                 variant="standard"
                 label="Location"
+                data-cy="location-offline"
                 onChange={handleLocation}
                 value={location}
                 required
@@ -178,7 +189,11 @@ function PopoverAddEvent(props) {
           ) : (
             <>
               <Grid item xs={12} sm={6}>
-                <FormControl className="event-type-select" variant="standard">
+                <FormControl
+                  className="event-type-select"
+                  variant="standard"
+                  data-cy="location-online"
+                >
                   <InputLabel>Location</InputLabel>
                   <Select value={location} onChange={handleLocation}>
                     <MenuItem value="Zoom">Zoom</MenuItem>
@@ -191,6 +206,7 @@ function PopoverAddEvent(props) {
                 <TextField
                   variant="standard"
                   label="Meeting Link"
+                  data-cy="meetingLink"
                   onChange={handleMeetingLink}
                   value={meetingLink}
                   style={{ width: "100%" }}
@@ -210,6 +226,7 @@ function PopoverAddEvent(props) {
               color="primary"
               type="submit"
               variant="contained"
+              data-cy="add-event-confirm-button"
               startIcon={<AddBoxIcon />}
             >
               Add Event

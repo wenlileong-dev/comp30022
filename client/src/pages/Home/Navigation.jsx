@@ -132,7 +132,12 @@ function Navigation(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              className="page-title"
+            >
               {pageTitle}
             </Typography>
           </Toolbar>

@@ -17,18 +17,19 @@ function Calendar() {
   const [authFailMsg, setAuthFailMsg] = useState("");
 
   //fetch the events of the month
+  const fetchData = async () => {
+    const result = await axios(`/api/calendar/${month}/${year}`);
+    if (result.data.status !== 200) {
+      setIsAuth(false);
+      setAuthFailMsg(result.data.errorMsg);
+      window.location.href = "/login";
+    } else {
+      setIsAuth(true);
+      setEvents(result.data.data);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(`/api/calendar/${month}/${year}`);
-      if (result.data.status !== 200) {
-        setIsAuth(false);
-        setAuthFailMsg(result.data.errorMsg);
-        window.location.href = "/login";
-      } else {
-        setIsAuth(true);
-        setEvents(result.data.data);
-      }
-    };
     fetchData();
   }, [month, year]);
 
@@ -63,12 +64,18 @@ function Calendar() {
                 year={year}
                 nextMonth={nextMonth}
                 prevMonth={prevMonth}
+                fetchData={fetchData}
               />
 
               <div className="calendar">
-                {!mobileView && <CalendarHeader />}
-                {!mobileView && events.length > 0 && (
-                  <CalendarDays month={month} year={year} events={events} />
+                <CalendarHeader />
+                {events.length > 0 && (
+                  <CalendarDays
+                    month={month}
+                    year={year}
+                    events={events}
+                    fetchData={fetchData}
+                  />
                 )}
               </div>
             </div>
