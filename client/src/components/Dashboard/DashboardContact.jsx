@@ -5,14 +5,14 @@ function DashboardDay(props) {
   return (
     <React.Fragment>
       <div>
-        <Link
-          to={{ pathname: `/contact/info`, state: { contact: props.contacts } }}
-        >
-          <Typography variant="subtitle1" gutterBottom component="div" mt={2}>
+      <Link
+                
+                to={{pathname:`/contact/info`,
+                state:{contact:props.contacts}}}
+            >
             {props.contacts.firstName} {props.contacts.lastName}
-          </Typography>
-        </Link>
-        <Divider />
+          </Link>
+          <Divider/>
       </div>
     </React.Fragment>
   );
