@@ -20,7 +20,12 @@ function CalendarDay(props) {
 
   return (
     <React.Fragment>
-      <div className="day" onClick={handleOpen} data-testid={"calendar-a-day"}>
+      <div
+        className="day"
+        onClick={handleOpen}
+        data-testid={"calendar-a-day"}
+        data-cy="curr-month-day"
+      >
         {new Date().getDate() === props.day &&
         new Date().getMonth() === props.month ? (
           <p>
@@ -30,7 +35,7 @@ function CalendarDay(props) {
           <p>{props.day}</p>
         )}
 
-        <div>
+        <div data-cy="day-events">
           {props.event &&
             props.event.map((event, index) => {
               return (
@@ -55,6 +60,7 @@ function CalendarDay(props) {
             renderType="day-events"
             events={props.event}
             handleClose={handleClose}
+            fetchData={props.fetchData}
             isPopupOpen={isPopupOpen}
             year={props.year}
             month={props.month}

@@ -113,13 +113,14 @@ function PopoverEditEvent(props) {
       input.meetingLink = meetingLink;
     }
     axios.put(`/api/calendar`, input).then((res) => {
-      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
 
-  function handleDelEvent() {
+  function handleDelEvent(e) {
     axios.delete(`/api/calendar/${props.eventDetail._id}`).then((res) => {
+      props.fetchData();
+      props.handleClose(e);
       window.location.href = `/calendar`;
     });
   }
@@ -209,6 +210,7 @@ function PopoverEditEvent(props) {
                 <TextField
                   variant="standard"
                   label="Meeting Link"
+                  data-cy="meetingLink"
                   onChange={handleMeetingLink}
                   value={meetingLink}
                   style={{ width: "100%" }}
@@ -226,6 +228,7 @@ function PopoverEditEvent(props) {
             <TextField
               variant="standard"
               label="Meeting Notes"
+              data-cy="meetingNotes"
               multiline
               rows={4}
               className="form-notes"
@@ -238,6 +241,7 @@ function PopoverEditEvent(props) {
               variant="contained"
               color="success"
               type="submit"
+              data-cy="update-event-button-submit"
               startIcon={<UpdateIcon />}
             >
               Update Event
@@ -248,6 +252,7 @@ function PopoverEditEvent(props) {
               variant="contained"
               color="error"
               type="button"
+              data-cy="delete-event-button"
               onClick={handleDelEvent}
               startIcon={<DeleteIcon />}
             >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
@@ -27,6 +27,19 @@ const ExpandMore = styled((props) => {
 function PopoverEventComponent(props) {
   const [expandNotes, setExpandNotes] = React.useState(false);
   let [noMeetingLink, setNoMeetingLink] = React.useState(false);
+  let [linkDisable, setLinkDisable] = React.useState(false);
+
+  useEffect(() => {
+    checkLinkExist();
+  }, []);
+
+  function checkLinkExist() {
+    if (props.event.meetingLink) {
+      setLinkDisable(false);
+    } else {
+      setLinkDisable(true);
+    }
+  }
 
   const handleExpandNotes = () => {
     setExpandNotes(!expandNotes);
@@ -48,6 +61,7 @@ function PopoverEventComponent(props) {
       setNoMeetingLink(true);
     }
   }
+
   let time = new Date(props.event.time);
 
   return (
@@ -92,6 +106,7 @@ function PopoverEventComponent(props) {
               <Button
                 variant="outlined"
                 size="small"
+                disabled={linkDisable}
                 onClick={handleOpenMeeting}
               >
                 Open Event
@@ -107,7 +122,11 @@ function PopoverEventComponent(props) {
               </Button>
             </Stack>
 
-            <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
+            <ExpandMore
+              expand={expandNotes}
+              onClick={handleExpandNotes}
+              data-cy="meeting-notes-expansion"
+            >
               <ExpandMoreIcon />
             </ExpandMore>
           </CardActions>
@@ -118,7 +137,9 @@ function PopoverEventComponent(props) {
             {props.event.meetingNotes ? (
               <>
                 <Typography variant="h5">Meeting Notes</Typography>
-                <Typography paragraph>{props.event.meetingNotes}</Typography>
+                <Typography paragraph data-cy="meeting-notes-paragraph">
+                  {props.event.meetingNotes}
+                </Typography>
               </>
             ) : (
               <Typography paragraph>

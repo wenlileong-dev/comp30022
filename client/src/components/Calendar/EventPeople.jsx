@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 function EventPeople(props) {
-  let [contacts, setContacts] = useState([]);
+  let [contacts, setContacts] = useState(null);
 
   const getUserContacts = async () => {
     let result = await axios("/api/contacts/user-contact");
@@ -20,11 +20,12 @@ function EventPeople(props) {
   }, []);
   return (
     <React.Fragment>
-      {contacts.length > 0 && (
+      {contacts && (
         <Stack spacing={3}>
           <Autocomplete
             multiple
             id="tags-filled"
+            data-cy="people"
             defaultValue={props.people}
             options={contacts.map((option) => {
               return `${option.firstName} ${option.lastName}`;

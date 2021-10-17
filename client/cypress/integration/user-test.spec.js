@@ -10,10 +10,10 @@ describe("Test Authentication", () => {
       },
     };
     cy.request(options);
+    cy.visit("/user");
   });
 
   it("User Logout", () => {
-    cy.visit("http://localhost:3000/user");
     cy.get("[data-cy=logout-button]").click();
     cy.get(".page-title").should("have.text", "Login");
   });

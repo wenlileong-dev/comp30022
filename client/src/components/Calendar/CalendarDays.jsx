@@ -2,7 +2,6 @@ import React from "react";
 
 import CalendarDay from "./CalendarDay";
 import CalendarEmptyDay from "./CalendarEmptyDay";
-import "./CalendarMonth.scss";
 
 function CalendarDays(props) {
   let firstDay = new Date(props.year, props.month, 1);
@@ -24,6 +23,7 @@ function CalendarDays(props) {
             year={props.year}
             event={props.events[index]}
             key={index}
+            fetchData={props.fetchData}
           />
         );
       })}
