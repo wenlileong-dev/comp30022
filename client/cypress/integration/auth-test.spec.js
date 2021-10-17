@@ -13,7 +13,7 @@
 
 describe("Test Authentication", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
     cy.clearCookies();
   });
 
@@ -49,6 +49,13 @@ describe("Test Authentication", () => {
     cy.get("[data-cy=register-button]").click();
     cy.get(".page-title").should("have.text", "Dashboard");
     cy.getCookie("token").should("exist");
+
+    //delete registered user
+    const options = {
+      method: "Delete",
+      url: "http://localhost:5000/user/deleteUser/testing@mail.com",
+    };
+    cy.request(options);
   });
 
   it("testing for register - invalid password", () => {

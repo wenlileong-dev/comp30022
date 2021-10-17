@@ -106,7 +106,7 @@ describe("userPostRegister integration tests", () => {
     request.delete(
       {
         headers: { "content-type": "application/json" },
-        url: userUrl + `/deleteUser/${userID}`,
+        url: userUrl + `/deleteUser/${testUserRegister.validBody.email}`,
         body: testUserRegister.validBody,
         json: true,
       },
