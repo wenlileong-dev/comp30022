@@ -1,18 +1,19 @@
 import React from "react";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 function DashboardDay(props) {
   return (
     <React.Fragment>
       <div>
-      <Link
-                
-                to={{pathname:`/contact/info`,
-                state:{contact:props.contacts}}}
-            >
+        <Link
+          to={{ pathname: `/contact/info`, state: { contact: props.contacts } }}
+        >
+          <Typography variant="subtitle1" gutterBottom component="div" mt={2}>
             {props.contacts.firstName} {props.contacts.lastName}
-          </Link>
-          <Divider/>
+          </Typography>
+        </Link>
+        <Divider />
       </div>
     </React.Fragment>
   );

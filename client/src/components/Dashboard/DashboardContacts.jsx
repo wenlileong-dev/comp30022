@@ -4,12 +4,7 @@ function DashboardContacts(props) {
   return (
     <div>
       {props.contacts.map((contact, index) => {
-        return (
-          <DashboardContact
-            contacts={contact}
-            key={index}
-          />
-        );
+        return <DashboardContact contacts={contact} key={index} />;
       })}
     </div>
   );

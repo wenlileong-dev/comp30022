@@ -20,7 +20,7 @@ function EventPeople(props) {
   }, []);
   return (
     <React.Fragment>
-      {contacts && (
+      {contacts.length > 0 && (
         <Stack spacing={3}>
           <Autocomplete
             multiple

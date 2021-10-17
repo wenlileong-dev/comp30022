@@ -22,17 +22,18 @@ function DashboardDay(props) {
     <React.Fragment>
       <div>
         {new Date().getDate() === props.day &&
-        new Date().getMonth()  === props.month ? (
+        new Date().getMonth() === props.month ? (
           <Typography gutterBottom variant="h4" component="div">
             {new Date().getDate()}/{props.month}/{props.year}
           </Typography>
         ) : (
-          
-          <Typography gutterBottom variant="h4" component="div">{props.day}/{props.month}/{props.year}</Typography>
+          <Typography gutterBottom variant="h6" component="div">
+            {props.day}/{props.month}/{props.year}
+          </Typography>
         )}
 
         <div>
-        {props.event.length === 0 && (
+          {props.event.length === 0 && (
             <Typography variant="subtitle2" component="div">
               No event for this day
             </Typography>
@@ -42,14 +43,14 @@ function DashboardDay(props) {
               return (
                 <div>
                   <DashboardPopup
-                  // renderType="day-events"
-                  key={index}
-                  events={event}
-                  handleClose={handleClose}
-                  year={props.year}
-                  month={props.month}
-                  day={props.day}
-                />
+                    // renderType="day-events"
+                    key={index}
+                    events={event}
+                    handleClose={handleClose}
+                    year={props.year}
+                    month={props.month}
+                    day={props.day}
+                  />
                 </div>
               );
             })}

@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CardActions from "@mui/material/CardActions";
 import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 import PeopleEventString from "./PeopleEventString";
 const ExpandMore = styled((props) => {
@@ -87,22 +88,24 @@ function PopoverEventComponent(props) {
             <Alert severity="info">Meeting Link is not provided</Alert>
           )}
           <CardActions disableSpacing>
-            <Button
-              variant="outlined"
-              size="small"
-              id="space-btw-event-button"
-              onClick={handleOpenMeeting}
-            >
-              Open Event
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<EditIcon />}
-              onClick={handleOpenEditEvent}
-            >
-              Edit Event
-            </Button>
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleOpenMeeting}
+              >
+                Open Event
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<EditIcon />}
+                onClick={handleOpenEditEvent}
+                mx={5}
+              >
+                Edit Event
+              </Button>
+            </Stack>
 
             <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
               <ExpandMoreIcon />

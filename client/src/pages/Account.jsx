@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 // import axios from '../commons/axios.js';
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -65,68 +66,83 @@ function Account() {
     <React.Fragment>
       {isAuth && (
         <>
-          <p style={{ marginLeft: '43vw '}}>Account Page</p>
-          <Box 
-                    sx={{
-                        width: '117ch',
-                        height: '100ch',
-                        border: '1px solid rgb(221,225,230)',
-                        margin: 'auto',
-                        '& .MuiTextField-root': { m: 4, width: '50ch'},
-                    }}
-                    noValidate
-                    autoComplete="off"
+          <Box
+            sx={{
+              width: "80%",
+              border: "1px solid rgb(221,225,230)",
+              margin: "auto",
+              padding: "3rem",
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <Grid container spacing={6}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Email"
+                  fullWidth
+                  // defaultValue="123"
+                  value={email}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="FirstName"
+                  fullWidth
+                  // defaultValue="123"
+                  value={firstName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="LastName"
+                  fullWidth
+                  // defaultValue="123"/
+                  value={lastName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="PhoneNumber"
+                  fullWidth
+                  value={phoneNumber}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  // defaultValue="123"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="primary"
+                  onClick={onEdit}
+                  style={{ marginLeft: "1vw " }}
                 >
-            <div>
-              <TextField
-                id="outlined-read-only-input"
-                label="Email"
-                // defaultValue="123"
-                value={email}
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                id="outlined-read-only-input"
-                label="FirstName"
-                // defaultValue="123"
-                value={firstName}
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                id="outlined-read-only-input"
-                label="LastName"
-                // defaultValue="123"/
-                value={lastName}
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                id="outlined-read-only-input"
-                label="PhoneNumber"
-                value={phoneNumber}
-                InputProps={{
-                  readOnly: true,
-                }}
-                // defaultValue="123"
-              />
-              
-        
-      <div>
-              <Button type="primary" onClick={onEdit} style={{ marginLeft: '1vw '}}>
-                <Link to="/user/editInfo">Edit</Link>
-              </Button>
-              <Button variant="primary" onClick={logoutUser} style={{ marginLeft: '2vw '}}>
-                Logout
-              </Button>
-              </div>
-            </div>
+                  <Link to="/user/editInfo">Edit</Link>
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={logoutUser}
+                  style={{ marginLeft: "2vw " }}
+                >
+                  Logout
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
-
         </>
       )}
       {authFailMsg && <AuthFail msg={authFailMsg} />}

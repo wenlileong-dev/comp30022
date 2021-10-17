@@ -161,10 +161,10 @@ exports.getTwoMonthEvents = async (req, res) => {
   let month = parseInt(req.params.month);
   let year = parseInt(req.params.year);
   const firstDay = new Date(year, month, 1);
-  let lastDay=0;
-  if(month==12){
-    lastDay = new Date(year+1, 2, 1);
-  }else{
+  let lastDay = 0;
+  if (month == 12) {
+    lastDay = new Date(year + 1, 2, 1);
+  } else {
     lastDay = new Date(year, month + 2, 1);
   }
 
@@ -176,23 +176,23 @@ exports.getTwoMonthEvents = async (req, res) => {
   let daysInMonth = getDaysInMonth(new Date(year, month));
   // console.log(daysInMonth)
   let daysInNextMonth = 0;
-  if(month==12){
-    daysInNextMonth = getDaysInMonth(new Date(year+1,0))
-  }else{
-    daysInNextMonth = getDaysInMonth(new Date(year,month+1))
+  if (month == 12) {
+    daysInNextMonth = getDaysInMonth(new Date(year + 1, 0));
+  } else {
+    daysInNextMonth = getDaysInMonth(new Date(year, month + 1));
   }
   // let daysInNextMonth = getDaysInMonth(new Date(year, month+1))
   // console.log(daysInNextMonth)
 
-  let result = [...Array(daysInMonth+daysInNextMonth)].map((e) => []);
+  let result = [...Array(daysInMonth + daysInNextMonth)].map((e) => []);
 
   //add the event to the day respectively
   for (let i = 0; i < monthEvents.length; i++) {
-    if(monthEvents[i].date.getMonth()===month){
+    if (monthEvents[i].date.getMonth() === month) {
       let eventDay = monthEvents[i].date.getDate();
       result[eventDay - 1].push(monthEvents[i]);
-    }else{
-      let eventDay = monthEvents[i].date.getDate()+daysInMonth;
+    } else {
+      let eventDay = monthEvents[i].date.getDate() + daysInMonth;
       result[eventDay - 1].push(monthEvents[i]);
     }
   }

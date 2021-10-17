@@ -23,6 +23,7 @@ const testUserId = "614eca3f7677f9a310f2b469";
 
 describe("userPostUpdate integration tests", () => {
   it("should successfully update user details", function (done) {
+    this.timeout(10000);
     request.post(
       {
         headers: { "content-type": "application/json" },
@@ -102,7 +103,6 @@ describe("userPostRegister integration tests", () => {
   });
 
   it("should successfully delete the registered user account", function (done) {
-    console.log(userID);
     request.delete(
       {
         headers: { "content-type": "application/json" },
