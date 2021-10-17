@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -119,8 +118,6 @@ function PopoverEditEvent(props) {
 
   function handleDelEvent(e) {
     axios.delete(`/api/calendar/${props.eventDetail._id}`).then((res) => {
-      props.fetchData();
-      props.handleClose(e);
       window.location.href = `/calendar`;
     });
   }

@@ -4,8 +4,9 @@ import Chip from "@mui/material/Chip";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+
 function EventPeople(props) {
-  let [contacts, setContacts] = useState(null);
+  let [contacts, setContacts] = useState([]);
 
   const getUserContacts = async () => {
     let result = await axios("/api/contacts/user-contact");
@@ -20,16 +21,15 @@ function EventPeople(props) {
   }, []);
   return (
     <React.Fragment>
-      {contacts && (
+      {contacts && props.people && (
         <Stack spacing={3}>
           <Autocomplete
             multiple
             id="tags-filled"
-            data-cy="people"
-            defaultValue={props.people}
             options={contacts.map((option) => {
               return `${option.firstName} ${option.lastName}`;
             })}
+            defaultValue={props.people}
             freeSolo
             onChange={handlePeople}
             renderTags={(value, getTagProps) =>
@@ -42,12 +42,7 @@ function EventPeople(props) {
               ))
             }
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label="People"
-                multiline
-              />
+              <TextField {...params} variant="standard" label="People" />
             )}
           />
         </Stack>

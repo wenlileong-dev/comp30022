@@ -118,7 +118,7 @@ exports.userGetDetail = async (req, res) => {
 exports.userPostUpdate = async (req, res) => {
   try {
     if (req.body.password) {
-      console.log(req.body.password);
+      // console.log(req.body.password)
       let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
       if (reg.test(req.body.password)) {
         bcrypt.genSalt(10, (err, salt) => {

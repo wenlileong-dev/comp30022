@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
 // import { useHistory } from "react-router-dom";
@@ -25,7 +25,7 @@ function Auth() {
     let loginUser = await axios.post("/user/login", loginData, {
       withCredentials: true,
     });
-    console.log(loginUser.data);
+    // console.log(loginUser.data);
     if (!loginUser.data.success) {
       setIsLoginAlert(true);
       setAlertMessage(loginUser.data.error);

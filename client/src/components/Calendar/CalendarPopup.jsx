@@ -46,7 +46,6 @@ function CalendarPopup(props) {
               events={props.events}
               setEventDetail={setEventDetail}
               toggleEditEvent={oepnEventDetail}
-              handleClose={props.handleClose}
             />
           )}
           {isOpen === "new-event" && (
@@ -54,23 +53,13 @@ function CalendarPopup(props) {
               year={props.year}
               month={props.month}
               day={props.day}
-              fetchData={props.fetchData}
-              handleClose={props.handleClose}
             />
           )}
           {isOpen === "event-detail" && (
-            <PopoverEditEvent
-              eventDetail={eventDetail}
-              handleClose={props.handleClose}
-              fetchData={props.fetchData}
-            />
+            <PopoverEditEvent eventDetail={eventDetail} />
           )}
           {isOpen === "mobile-event-detail" && (
-            <PopoverEditEvent
-              eventDetail={props.eventDetail}
-              handleClose={props.handleClose}
-              fetchData={props.fetchData}
-            />
+            <PopoverEditEvent eventDetail={props.eventDetail} />
           )}
         </Box>
       </Modal>

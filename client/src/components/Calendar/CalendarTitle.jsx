@@ -50,8 +50,9 @@ function CalendarTitle(props) {
                   color="primary"
                   component="span"
                   data-cy="calendar-prevMonth"
+                  onClick={props.prevMonth}
                 >
-                  <ArrowLeftIcon onClick={props.prevMonth} />
+                  <ArrowLeftIcon />
                 </IconButton>
               </Grid>
               <Grid item xs={6}>
@@ -65,8 +66,9 @@ function CalendarTitle(props) {
                   color="primary"
                   component="span"
                   data-cy="calendar-nextMonth"
+                  onClick={props.nextMonth}
                 >
-                  <ArrowRightIcon onClick={props.nextMonth} />
+                  <ArrowRightIcon />
                 </IconButton>
               </Grid>
             </Grid>

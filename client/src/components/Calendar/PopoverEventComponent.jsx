@@ -26,7 +26,6 @@ const ExpandMore = styled((props) => {
 }));
 function PopoverEventComponent(props) {
   const [expandNotes, setExpandNotes] = React.useState(false);
-  let [noMeetingLink, setNoMeetingLink] = React.useState(false);
   let [linkDisable, setLinkDisable] = React.useState(false);
 
   useEffect(() => {
@@ -50,16 +49,12 @@ function PopoverEventComponent(props) {
   }
 
   function handleOpenMeeting(event) {
-    if (props.event.meetingLink) {
-      const newWindow = window.open(
-        props.event.meetingLink,
-        "_blank",
-        "noopener,noreferrer"
-      );
-      if (newWindow) newWindow.opener = null;
-    } else {
-      setNoMeetingLink(true);
-    }
+    const newWindow = window.open(
+      props.event.meetingLink,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
   }
 
   let time = new Date(props.event.time);
@@ -98,9 +93,7 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </Typography>
           )}
-          {noMeetingLink && (
-            <Alert severity="info">Meeting Link is not provided</Alert>
-          )}
+
           <CardActions disableSpacing>
             <Stack spacing={2} direction="row">
               <Button
