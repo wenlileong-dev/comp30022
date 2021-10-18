@@ -1,4 +1,7 @@
 {
   "projectId": "wcb4ra",
-  "baseUrl": "https://personal-crm-project.herokuapp.com"
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "backend_url": "http://localhost:5000"
+  }
 }

@@ -2,7 +2,7 @@ describe("Test Authentication", () => {
   beforeEach(() => {
     const options = {
       method: "POST",
-      url: "https://personal-crm-project.herokuapp.com/user/login",
+      url: `${Cypress.env("backend_url")}/user/login`,
 
       body: {
         email: "test@mail.com",
