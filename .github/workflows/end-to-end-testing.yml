@@ -17,9 +17,12 @@ jobs:
       - name: install packages
         working-directory: client
         run: npm install
-      - name: run cypress
-        working-directory: client
-        run: npm run cypress:open
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          working-directory: client
 
           
 
