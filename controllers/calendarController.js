@@ -118,6 +118,7 @@ exports.updateEvent = async (req, res) => {
         meetingLink,
         userID,
         reminder,
+        sendEmail: false,
       },
       { overwrite: true, new: true, runValidators: true }
     );
