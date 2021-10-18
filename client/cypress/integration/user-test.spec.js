@@ -2,7 +2,7 @@ describe("Test Authentication", () => {
   beforeEach(() => {
     const options = {
       method: "POST",
-      url: "http://localhost:5000/user/login",
+      url: "https://personal-crm-project.herokuapp.com/user/login",
 
       body: {
         email: "test@mail.com",
