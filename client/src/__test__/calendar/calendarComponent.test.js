@@ -121,16 +121,16 @@ describe("show calendar events", () => {
     expect(eventDetailComponent[1]).toHaveTextContent(event[1].title);
   });
 
-  // test("render edit event form when edit event button is clicked", () => {
-  //   render(<CalendarDay day={1} month={month} year={year} event={event} />);
-  //   const calendarDayElement = screen.getByTestId("calendar-a-day");
-  //   fireEvent.click(calendarDayElement);
-  //   const editEventButton = screen.getAllByRole("button", {
-  //     name: "Edit Event",
-  //   });
-  //   fireEvent.click(editEventButton[0]);
-  //   const editEventFormComponent = screen.getByTestId("edit-event-form");
-  //   expect(editEventFormComponent).toBeInTheDocument();
-  //   expect(editEventFormComponent).toHaveTextContent(event[0].title);
-  // });
+  test("render edit event form when edit event button is clicked", () => {
+    render(<CalendarDay day={1} month={month} year={year} event={event} />);
+    const calendarDayElement = screen.getByTestId("calendar-a-day");
+    fireEvent.click(calendarDayElement);
+    const editEventButton = screen.getAllByRole("button", {
+      name: "Edit Event",
+    });
+    fireEvent.click(editEventButton[0]);
+    const editEventFormComponent = screen.getByTestId("edit-event-form");
+    expect(editEventFormComponent).toBeInTheDocument();
+    expect(editEventFormComponent).toHaveTextContent(event[0].title);
+  });
 });

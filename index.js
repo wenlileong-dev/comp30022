@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+var cron = require("node-cron");
 //connect with database
 require("./models/db");
 
@@ -12,6 +13,8 @@ const userRouter = require("./routes/userRouter");
 const calendarRouter = require("./routes/calendarRouter");
 const contactRouter = require("./routes/contactRouter");
 const group = require("./routes/groupRouter");
+
+const { sendEventReminders } = require("./controllers/calendarController");
 
 let port = process.env.PORT || 5000;
 const app = express();
@@ -29,6 +32,11 @@ app.use("/group", group);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+
+cron.schedule("* * * * *", () => {
+  console.log("schedule");
+  sendEventReminders();
 });
 
 app.listen(port, () => {
