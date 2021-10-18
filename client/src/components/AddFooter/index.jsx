@@ -3,6 +3,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 import { withRouter } from "react-router-dom";
 
 class AddFooter extends Component {
@@ -19,10 +20,14 @@ class AddFooter extends Component {
   handleConfirm = async () => {
     // console.log('confirm');
     let data = { contact: { ...this.props } };
-    let result = await axios.post("/api/contacts/add-contact", data);
-    this.setState({ error: false, success: true });
-    this.setState({ contact: result.data.newContact });
-    this.props.history.push(`/contact`);
+    try {
+      let result = await axios.post("/api/contacts/add-contact", data);
+      this.setState({ error: false, success: true });
+      this.setState({ contact: result.data.newContact });
+      this.props.history.push(`/contact`);
+    } catch (error) {
+      this.setState({ error: true });
+    }
   };
 
   render() {
@@ -33,30 +38,22 @@ class AddFooter extends Component {
     const { error, success } = this.state;
     return (
       <Fragment>
-        <Button
-          variant="contained"
-          type="submit"
-          onClick={this.back}
-          sx={{
-            marginLeft: "32px",
-          }}
-        >
-          Back to Group
-        </Button>
+        <Stack spacing={3} direction="row">
+          <Button variant="contained" type="submit" onClick={this.back}>
+            Back to Group
+          </Button>
 
-        <Button
-          variant="contained"
-          type="submit"
-          onClick={this.handleConfirm}
-          sx={{
-            float: "right",
-            marginRight: "34px",
-          }}
-          // style={{display:'block', margin:'auto'}}
-          // disabled={success}
-        >
-          Confirm
-        </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={this.handleConfirm}
+
+            // style={{display:'block', margin:'auto'}}
+            // disabled={success}
+          >
+            Confirm
+          </Button>
+        </Stack>
 
         <br />
         <br />

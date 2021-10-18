@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 exports.authUser = (req, res, next) => {
   // Read the token from the cookie
@@ -21,4 +22,32 @@ exports.authUser = (req, res, next) => {
       errorMsg: "Access denied...Invalied token",
     });
   }
+};
+
+//Less secure app access
+exports.sendEmail = async (email, subject, text) => {
+  var transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.GMAIL_USER, // generated ethereal user
+      pass: process.env.GMAIL_PASS, //generated ethereal password
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: email,
+    subject: subject,
+    text: text,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };

@@ -24,6 +24,13 @@ var UserSchema = new Schema({
     type: String,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  emailToken: {
+    type: String,
+  },
 });
 
 UserSchema.methods.generateAuthToken = function () {

@@ -11,7 +11,10 @@ router.post("/login", userController.userPostLogin);
 router.post("/logout", userController.userLogout);
 
 router.post("/update/:id", userController.userPostUpdate);
-router.delete("/deleteUser/:id", userController.deleteUser);
+router.delete("/deleteUser/:email", userController.deleteUser);
 // view detail of snack
 router.get("/", authUser, userController.userGetDetail);
+
+router.post("/sendVerifyEmail", authUser, userController.sendVerifyEmail);
+router.put("/api/verify/:userID/:emailToken", userController.verifyUserEmail);
 module.exports = router;

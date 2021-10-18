@@ -12,6 +12,7 @@ describe("Group API Testing", () => {
   let token = "";
   let groupID = "";
   let userID = "";
+  let defaultGroupID = "";
   beforeEach((done) => {
     let user = {
       email: "1111@mail.com",
@@ -133,6 +134,7 @@ describe("Group API Testing", () => {
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           res.body.success.should.be.eql(true);
+          defaultGroupID = res.body.order._id;
           done();
         });
     });
@@ -143,6 +145,24 @@ describe("Group API Testing", () => {
     it("delete group with valid groupID", (done) => {
       let testInput = {
         id: groupID,
+      };
+      api
+        .post(`/group/delete`)
+        .set("Cookie", `token=${token}`)
+        .send(testInput)
+        .end((err, res) => {
+          res.body.status.should.be.eql(200);
+          res.body.msg.should.be.a("array");
+          done();
+        });
+    });
+  });
+
+  //8. delete default group
+  describe("delete default group", () => {
+    it("delete group with valid groupID", (done) => {
+      let testInput = {
+        id: defaultGroupID,
       };
       api
         .post(`/group/delete`)

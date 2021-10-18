@@ -54,7 +54,7 @@ describe("Testing Calendar Title", () => {
 
 test("testing calendar header", () => {
   render(<CalendarHeader />);
-  const calendarHElement = screen.getByTestId("mytestid");
+  const calendarHElement = screen.getByTestId("Sunday");
   expect(calendarHElement).toBeInTheDocument();
 });
 
@@ -97,9 +97,8 @@ describe("show calendar events", () => {
         events={[...Array(30)].map((e) => [])}
       />
     );
-    let additionalSpace = new Date(year, month, 1).getDay();
     const calendarDayComponenet = screen.getAllByTestId("calendar-a-day");
-    expect(calendarDayComponenet).toHaveLength(30 + additionalSpace);
+    expect(calendarDayComponenet).toHaveLength(30);
   });
 
   test("show event for a day", () => {

@@ -25,11 +25,22 @@ router.post(
 router.get("/info/:id", authUser, contact.getInformation);
 
 // update information of a specific contact
-router.put('/info/:id', authUser, contactValidator.updateInformation, contact.updateInformation);
+router.put(
+  "/info/:id",
+  authUser,
+  contactValidator.updateInformation,
+  contact.updateInformation
+);
 
 // delete a contact
-router.delete('/info/:id', authUser, contact.deleteContact);
+router.delete("/info/:id", authUser, contact.deleteContact);
 
+// get all contacts for one account
 router.get("/allContact/", authUser, contact.getAllContacts);
+
+router.get("/updateContactTime/:id", authUser, contact.updateContactTime);
+
+// search contacts
+router.get("/search", authUser, contact.searchContacts);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const got = require("got");
 const app = require("../index");
 
 const baseUrl = "http://localhost:5000/api/contacts/";
-const testGroupID = "6166e1f7679e3001ab8e17c9";
+const testGroupID = "616a438be011d518900b00fc";
 let testID = "";
 
 const testContact = {

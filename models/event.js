@@ -12,6 +12,8 @@ const eventSchema = new mongoose.Schema(
     meetingNotes: { type: String, default: "" },
     meetingLink: { type: String },
     userID: { type: mongoose.Schema.ObjectId, ref: "User" },
+    reminder: { type: Boolean, default: false },
+    emailSend: { type: Boolean, default: false },
   },
   {
     toJSON: { virtuals: true },
