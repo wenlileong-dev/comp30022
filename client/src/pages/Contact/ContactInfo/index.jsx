@@ -105,7 +105,7 @@ export default class ContactInfo extends Component {
     if (!this.props.location.state) {
       axios({
         method: "GET",
-        url: `https://personal-crm-project.herokuapp.com/api/contacts/info/${"invalid"}`,
+        url: `http://localhost:3000/api/contacts/info/${"invalid"}`,
       }).then(
         (response) => {
           if (response.status === 404) {
@@ -131,7 +131,7 @@ export default class ContactInfo extends Component {
       } = this.props.location.state;
       axios({
         method: "GET",
-        url: `https://personal-crm-project.herokuapp.com/api/contacts/info/${_id}`,
+        url: `http://localhost:3000/api/contacts/info/${_id}`,
       }).then(
         (response) => {
           if (response.data.status === 200) {
@@ -162,7 +162,7 @@ export default class ContactInfo extends Component {
     } = this.props.location.state;
     axios({
       method: "GET",
-      url: `https://personal-crm-project.herokuapp.com/api/contacts/updateContactTime/${_id}`,
+      url: `http://localhost:3000/api/contacts/updateContactTime/${_id}`,
     });
     window.open("mailto:" + this.state.contact.email);
   }

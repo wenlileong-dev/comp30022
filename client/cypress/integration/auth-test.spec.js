@@ -53,7 +53,7 @@ describe("Test Authentication", () => {
     //delete registered user
     const options = {
       method: "Delete",
-      url: "https://personal-crm-project.herokuapp.com/user/deleteUser/testing@mail.com",
+      url: `${Cypress.env("backend_url")}/user/deleteUser/testing@mail.com`,
     };
     cy.request(options);
   });
