@@ -117,8 +117,8 @@ exports.userGetDetail = async (req, res) => {
 
 exports.userPostUpdate = async (req, res) => {
   try {
-    if(req.body.password){
-      console.log(req.body.password)
+    if (req.body.password) {
+      // console.log(req.body.password)
       let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
       if (reg.test(req.body.password)) {
         bcrypt.genSalt(10, (err, salt) => {
@@ -165,12 +165,12 @@ exports.userPostUpdate = async (req, res) => {
             );
           });
         });
-      }else {
+      } else {
         res
           .status(200)
           .json({ success: false, error: "New password not valid!" });
       }
-    }else{
+    } else {
       User.findOneAndUpdate(
         { _id: req.params.id },
         // update information
@@ -188,9 +188,7 @@ exports.userPostUpdate = async (req, res) => {
               message: "User email does not exist",
             });
           } else {
-            res
-              .status(200)
-              .json({ success: true, updateUser: updateUser });
+            res.status(200).json({ success: true, updateUser: updateUser });
           }
         }
       );
@@ -202,7 +200,7 @@ exports.userPostUpdate = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const userID = req.params.id;
-  const deleteUser = await User.findByIdAndDelete(userID);
+  const email = req.params.email;
+  const deleteUser = await User.findOneAndDelete({ email });
   res.status(200).json({ success: true });
 };

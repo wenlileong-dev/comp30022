@@ -8,6 +8,7 @@ import NewContact from "../Contact/NewContact";
 import ContactInfo from "../Contact/ContactInfo";
 import Dashboard from "../Dashboard";
 import Login from "../Auth";
+
 function Content() {
   return (
     <React.Fragment>
@@ -31,6 +32,7 @@ function Content() {
         <Route path="/calendar" exact>
           <Calendar />
         </Route>
+
         <Route path="/login">
           <Login />
         </Route>

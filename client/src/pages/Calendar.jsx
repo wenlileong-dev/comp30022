@@ -7,6 +7,7 @@ import WeeklyCalendar from "../components/Calendar/WeeklyCalendar";
 import mobileView from "../screenSize";
 import AuthFail from "./../components/AuthFail";
 
+import "./../components/Calendar/CalendarMonth.scss";
 function Calendar() {
   let today = new Date();
   let [month, setMonth] = useState(today.getMonth());
@@ -16,18 +17,19 @@ function Calendar() {
   const [authFailMsg, setAuthFailMsg] = useState("");
 
   //fetch the events of the month
+  const fetchData = async () => {
+    const result = await axios(`/api/calendar/${month}/${year}`);
+    if (result.data.status !== 200) {
+      setIsAuth(false);
+      setAuthFailMsg(result.data.errorMsg);
+      window.location.href = "/login";
+    } else {
+      setIsAuth(true);
+      setEvents(result.data.data);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(`/api/calendar/${month}/${year}`);
-      if (result.data.status !== 200) {
-        setIsAuth(false);
-        setAuthFailMsg(result.data.errorMsg);
-        window.location.href = "/login";
-      } else {
-        setIsAuth(true);
-        setEvents(result.data.data);
-      }
-    };
     fetchData();
   }, [month, year]);
 
@@ -55,18 +57,39 @@ function Calendar() {
     <React.Fragment>
       {isAuth && (
         <>
-          <CalendarTitle
-            month={month}
-            year={year}
-            nextMonth={nextMonth}
-            prevMonth={prevMonth}
-          />
-          {!mobileView && <CalendarHeader />}
+          {!mobileView ? (
+            <div className="calendar-container">
+              <CalendarTitle
+                month={month}
+                year={year}
+                nextMonth={nextMonth}
+                prevMonth={prevMonth}
+                fetchData={fetchData}
+              />
 
-          {!mobileView && events.length > 0 && (
-            <CalendarDays month={month} year={year} events={events} />
+              <div className="calendar">
+                <CalendarHeader />
+                {events.length > 0 && (
+                  <CalendarDays
+                    month={month}
+                    year={year}
+                    events={events}
+                    fetchData={fetchData}
+                  />
+                )}
+              </div>
+            </div>
+          ) : (
+            <>
+              <CalendarTitle
+                month={month}
+                year={year}
+                nextMonth={nextMonth}
+                prevMonth={prevMonth}
+              />
+              <WeeklyCalendar events={events} month={month + 1} />
+            </>
           )}
-          {mobileView && <WeeklyCalendar events={events} month={month + 1} />}
         </>
       )}
       {authFailMsg && <AuthFail msg={authFailMsg} />}

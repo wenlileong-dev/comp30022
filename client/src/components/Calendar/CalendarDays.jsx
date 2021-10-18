@@ -1,6 +1,7 @@
 import React from "react";
 
 import CalendarDay from "./CalendarDay";
+import CalendarEmptyDay from "./CalendarEmptyDay";
 
 function CalendarDays(props) {
   let firstDay = new Date(props.year, props.month, 1);
@@ -10,9 +11,9 @@ function CalendarDays(props) {
   let daysInMonth = getDaysInMonth(new Date(props.year, props.month));
 
   return (
-    <div className="calendar-container">
+    <React.Fragment>
       {[...Array(firstDay.getDay())].map((day, index) => {
-        return <CalendarDay day="" key={`a${index}`} />;
+        return <CalendarEmptyDay day="" key={`a${index}`} />;
       })}
       {[...Array(daysInMonth)].map((day, index) => {
         return (
@@ -22,10 +23,11 @@ function CalendarDays(props) {
             year={props.year}
             event={props.events[index]}
             key={index}
+            fetchData={props.fetchData}
           />
         );
       })}
-    </div>
+    </React.Fragment>
   );
 }
 

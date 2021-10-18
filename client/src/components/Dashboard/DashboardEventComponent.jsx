@@ -3,14 +3,15 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import PeopleEventString from "../Calendar/PeopleEventString";
 function PopoverEvent(props) {
-  console.log(props)
+  // console.log(props)
   let time = new Date(props.event.time);
   // console.log(props.setEvent(props.event))
   // console.log(props.openEditEvent())
   function handleOpenEvent() {
     props.setEvent(props.event);
-    console.log(props.event)
+    // console.log(props.event)
     props.openEditEvent();
   }
   return (
@@ -25,7 +26,16 @@ function PopoverEvent(props) {
             {props.event.title}
           </p>
           <p>{props.event.description}</p>
-          <p>{props.event.people.toString()}</p>
+          {props.event.people &&
+            props.event.people.map((person, index) => {
+              return (
+                <PeopleEventString
+                  key={`eventPerson ${index}`}
+                  person={person}
+                />
+              );
+            })}
+
           {props.event.eventType === "Online" ? (
             <p>
               {props.event.eventType} via {props.event.location}
@@ -35,11 +45,7 @@ function PopoverEvent(props) {
               {props.event.eventType} at {props.event.location}
             </p>
           )}
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleOpenEvent}
-          >
+          <Button variant="contained" size="small" onClick={handleOpenEvent}>
             Event Details
           </Button>
         </CardContent>
