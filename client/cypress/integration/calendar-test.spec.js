@@ -3,7 +3,7 @@ describe("End to End Testing for Calendar", () => {
     //login user without animation (from api)
     const options = {
       method: "POST",
-      url: "http://localhost:5000/user/login",
+      url: "https://personal-crm-project.herokuapp.com/user/login",
 
       body: {
         email: "e2e@mail.com",
