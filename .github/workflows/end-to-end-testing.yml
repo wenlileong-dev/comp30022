@@ -7,34 +7,44 @@ on:
     branches: [main, development]
 
 jobs:
-  backend setup:
+  build:
+    runs-on: ubuntu-latest
+
+    # strategy:
+    #   matrix:
+    #     node-version: [12.x, 14.x, 16.x]
+    # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with: 
+      - name: BackEnd Setup
+        uses: actions/setup-node@v2
+        with:
           node-version: "14"
           cache: "npm"
-      - run: |
-        rm package-lock.json
-        npm i
-        npm ci
+      - run: rm package-lock.json
+      - run: npm i
+      - run: npm ci
       - run: npm run build --if-present
-      - name: start backend server
-        run: npm start
+      - name: run test
+        run: npm start & 
         env:
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
           FRONT_END_URL: ${{ secrets.JWT_PRIVATE_KEY }}
-
-  frontend setup:
-    working-directory: ./client
-    steps: 
       - name: Front End Checkout
         uses: actions/checkout@v2
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
-    
+      - name: Cypress
+        run: |
+          cd client
+          npm install
+          npm start &
+          wait-on http://localhost:3000
+          npm run cypress:open
+
+          
+
+      
+          
+ 
