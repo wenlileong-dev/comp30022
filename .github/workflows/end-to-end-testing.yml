@@ -35,12 +35,14 @@ jobs:
           FRONT_END_URL: ${{ secrets.JWT_PRIVATE_KEY }}
       - name: Front End Checkout
         uses: actions/checkout@v2
-      - name: Cypress run
+      - name: Front End Setup
         run: |
           cd client
           npm install
           npm start &
-          npm run cypress:open
+      - name: Cypress Run
+        uses: cypress-io/github-action@v2
+
 
       
           
