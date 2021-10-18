@@ -11,9 +11,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: remove package-lock.json
+        working-directory: client
+        run: rm package-lock.json
       - uses: cypress-io/github-action@v2
         with:
-          start: npm start
           working-directory: client
           
 
