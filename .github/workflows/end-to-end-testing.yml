@@ -14,9 +14,13 @@ jobs:
       - name: remove package-lock.json
         working-directory: client
         run: rm package-lock.json
-      - uses: cypress-io/github-action@v2
-        with:
-          working-directory: client
+      - name: install packages
+        working-directory: client
+        run: npm install
+      - name: run cypress
+        working-directory: client
+        run: npm run cypress:open
+
           
 
       
