@@ -1,5 +1,8 @@
 const bcrypt = require("bcrypt");
+var CryptoJS = require("crypto-js");
+const { sendEmail } = require("./authUser");
 var User = require("../models/user");
+
 // register user acc
 exports.userPostRegister = async (req, res) => {
   try {
@@ -203,4 +206,40 @@ exports.deleteUser = async (req, res) => {
   const email = req.params.email;
   const deleteUser = await User.findOneAndDelete({ email });
   res.status(200).json({ success: true });
+};
+
+exports.sendVerifyEmail = async (req, res) => {
+  let userID = req.user._id;
+  var emailToken = CryptoJS.AES.encrypt(userID, process.env.EMAIL_TOKEN_KEY)
+    .toString()
+    .replace("/", "OPZ8o0");
+
+  try {
+    let setEmailToken = await User.findByIdAndUpdate(
+      userID,
+      { emailToken },
+      { new: true }
+    );
+    const message = `${process.env.FRONT_END_URL}user/verify/${userID}/${emailToken}`;
+    await sendEmail(setEmailToken.email, "Verify Email", message);
+    res.json({ message: "An Email sent to your account, please verify" });
+  } catch (error) {
+    res.json({ message: "An error occured" });
+  }
+};
+
+exports.verifyUserEmail = async (req, res) => {
+  let { userID, emailToken } = req.params;
+  var bytes = CryptoJS.AES.decrypt(emailToken, process.env.EMAIL_TOKEN_KEY);
+  var originalText = bytes.toString(CryptoJS.enc.Utf8).replace("OPZ8o0", "/");
+  const user = await User.findById(userID);
+  if (user.emailToken === emailToken) {
+    await User.findByIdAndUpdate(userID, { verified: true });
+    res.json({ status: 200, message: "Your email is verified" });
+  } else {
+    res.json({
+      status: 400,
+      message: "Your link is invalid, please try again",
+    });
+  }
 };

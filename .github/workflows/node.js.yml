@@ -35,4 +35,8 @@ jobs:
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
- 
+      - name: run front end testing
+        run: |
+          cd client
+          npm i
+          npm test

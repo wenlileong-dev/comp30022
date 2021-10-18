@@ -1,4 +1,6 @@
 const Event = require("./../models/event");
+const User = require("./../models/user");
+const { sendEmail } = require("./authUser");
 const { Contacts } = require("../models/db.js");
 
 //helper function - get number of days of a month
@@ -44,6 +46,11 @@ exports.addEvent = async (req, res) => {
         modifyPeople.push({ firstName, lastName });
       }
     }
+    let reminder = false;
+    let currUser = await User.findById(userID);
+    if (currUser.verified) {
+      reminder = true;
+    }
     const newEvent = new Event({
       title,
       description,
@@ -54,6 +61,7 @@ exports.addEvent = async (req, res) => {
       location,
       userID,
       meetingLink,
+      reminder,
     });
     const saveEvent = await newEvent.save();
     res.json({ status: 200, data: saveEvent });
@@ -91,6 +99,11 @@ exports.updateEvent = async (req, res) => {
         modifyPeople.push({ firstName, lastName });
       }
     }
+    let reminder = false;
+    let currUser = await User.findById(userID);
+    if (currUser.verified) {
+      reminder = true;
+    }
     let updateEvent = await Event.findByIdAndUpdate(
       eventID,
       {
@@ -104,6 +117,7 @@ exports.updateEvent = async (req, res) => {
         meetingNotes,
         meetingLink,
         userID,
+        reminder,
       },
       { overwrite: true, new: true, runValidators: true }
     );
@@ -204,4 +218,34 @@ exports.getTwoMonthEvents = async (req, res) => {
     }
   }
   res.json({ status: 200, data: result });
+};
+
+exports.sendEventReminders = async () => {
+  let allEvents = await Event.find({ reminder: true, emailSend: false });
+  let currDateTime = new Date();
+  for (let i = 0; i < allEvents.length; i++) {
+    let eventDateTime = new Date(
+      allEvents[i].date.getFullYear(),
+      allEvents[i].date.getMonth(),
+      allEvents[i].date.getDate(),
+      allEvents[i].time.getHours(),
+      allEvents[i].time.getMinutes(),
+      allEvents[i].time.getSeconds()
+    );
+    console.log(eventDateTime - currDateTime);
+    if (
+      eventDateTime - currDateTime <= 900000 &&
+      eventDateTime - currDateTime > 0
+    ) {
+      let user = await User.findById(allEvents[i].userID);
+      let eventTime = new Date(allEvents[i].time);
+      let message = `${
+        allEvents[i].title
+      } start on ${eventTime.toLocaleTimeString("en-US")}`;
+      sendEmail(user.email, "event reminder", message);
+      let eventNotification = await Event.findByIdAndUpdate(allEvents[i]._id, {
+        emailSend: true,
+      });
+    }
+  }
 };

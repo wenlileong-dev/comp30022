@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthFail from "./../components/AuthFail";
+import InputAdornment from "@mui/material/InputAdornment";
+import Chip from "@mui/material/Chip";
 // import { useHistory } from "react-router-dom";
 
 function Account() {
@@ -30,6 +32,8 @@ function Account() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isVerify, setIsVerify] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
   useEffect(() => {
     getUserDetails();
   }, []);
@@ -49,6 +53,7 @@ function Account() {
           setFirstName(response.data.user.firstName);
           setLastName(response.data.user.lastName);
           setPhoneNumber(response.data.user.phoneNumber);
+          setIsVerify(response.data.user.verified);
         }
       })
       .catch((error) => console.error(`Error: ${error}`));
@@ -62,6 +67,12 @@ function Account() {
     //   }
     // })
   };
+
+  const handleVerify = async () => {
+    const sendEmail = await axios.post("/user/sendVerifyEmail", {});
+    setEmailMessage(sendEmail.data.message);
+  };
+
   return (
     <React.Fragment>
       {isAuth && (
@@ -86,6 +97,13 @@ function Account() {
                   value={email}
                   InputProps={{
                     readOnly: true,
+                    startAdornment: isVerify ? (
+                      <InputAdornment position="start">
+                        <Chip label="Verified" />
+                      </InputAdornment>
+                    ) : (
+                      <></>
+                    ),
                   }}
                 />
               </Grid>
@@ -141,8 +159,18 @@ function Account() {
                 >
                   Logout
                 </Button>
+                {!isVerify && (
+                  <Button
+                    variant="primary"
+                    onClick={handleVerify}
+                    style={{ marginLeft: "2vw " }}
+                  >
+                    Verify Email
+                  </Button>
+                )}
               </Grid>
             </Grid>
+            <p>{emailMessage}</p>
           </Box>
         </>
       )}
