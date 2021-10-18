@@ -33,7 +33,7 @@ class EditFooter extends Component {
     const { contactInfo } = this.props;
     axios({
       method: "PUT",
-      url: `http://localhost:3000/api/contacts/info/${contactInfo._id}`,
+      url: `https://personal-crm-project.herokuapp.com/api/contacts/info/${contactInfo._id}`,
       data: {
         contact: {
           ...contactInfo,
@@ -58,7 +58,7 @@ class EditFooter extends Component {
       const { contactInfo } = this.props;
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/api/contacts/info/${contactInfo._id}`,
+        url: `https://personal-crm-project.herokuapp.com/api/contacts/info/${contactInfo._id}`,
       }).then(
         (response) => {
           this.setState({ isEdit: false });
