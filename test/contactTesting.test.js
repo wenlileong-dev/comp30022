@@ -3,7 +3,7 @@ const got = require("got");
 const app = require("../index");
 
 const baseUrl = "http://localhost:5000/api/contacts/";
-const testGroupID = "61569f084cd18a3ec4bb4a2c";
+const testGroupID = "6166e1f7679e3001ab8e17c9";
 let testID = "";
 
 const testContact = {
@@ -39,8 +39,8 @@ describe("Contact API Testing", () => {
   let token = "";
   before((done) => {
     let user = {
-      email: "1111@mail.com",
-      password: "123qwerty",
+    	email: "1111@mail.com",
+      	password: "123qwerty"
     };
 
     got({
@@ -51,13 +51,14 @@ describe("Contact API Testing", () => {
       json: true,
     })
       .then((response) => {
+      	console.log('response');
         expect(response.statusCode).to.equal(200);
         expect(response.body.success).to.equal(true);
         token = response.body.token;
         done();
       })
       .catch((error) => {
-        // console.log('error');
+        console.log('error');
         done(err);
       });
   });
