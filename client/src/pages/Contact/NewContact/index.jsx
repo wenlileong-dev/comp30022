@@ -206,9 +206,11 @@ export default class NewContact extends Component {
                     isNew={true}
                   />
                 </Grid>
+                
                 <Grid item xs={12}>
                   <AddFooter {...this.state} />
                 </Grid>
+                
               </Grid>
             </Box>
           </>

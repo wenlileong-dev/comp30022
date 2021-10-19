@@ -76,6 +76,16 @@ class EditFooter extends Component {
     return (
       <Fragment>
         <Grid container spacing={6}>
+          <Grid item xs={12} sm={6}>
+            <Button
+              id="contactBack"
+              ref={(c) => (this.editButton = c)}
+              variant="contained"
+              onClick={this.back}
+            >
+              Back to Group
+            </Button>
+          </Grid>
           {isEdit ? (
             <Grid item xs={12} sm={6}>
               <Stack spacing={2} direction="row">
@@ -120,16 +130,6 @@ class EditFooter extends Component {
               </Stack>
             </Grid>
           )}
-          <Grid item xs={12} sm={6}>
-            <Button
-              id="contactBack"
-              ref={(c) => (this.editButton = c)}
-              variant="contained"
-              onClick={this.back}
-            >
-              Back to Group
-            </Button>
-          </Grid>
         </Grid>
 
         <Alert severity="warning" style={{ display: error ? "" : "none" }}>
