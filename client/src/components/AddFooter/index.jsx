@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
@@ -38,23 +39,24 @@ class AddFooter extends Component {
     const { error, success } = this.state;
     return (
       <Fragment>
-        <Stack spacing={3} direction="row">
-          <Button variant="contained" type="submit" onClick={this.back}>
-            Back to Group
-          </Button>
-
+        {/* <Stack  //direction="row"
+        > */}
           <Button
             variant="contained"
             type="submit"
             onClick={this.handleConfirm}
-
-            // style={{display:'block', margin:'auto'}}
+            style={{display:'block', margin:'auto'}}
             // disabled={success}
           >
             Confirm
           </Button>
-        </Stack>
-
+          <br/>
+          <Button variant="contained" type="submit" onClick={this.back}
+             style={{display:'block', margin:'auto'}}
+          >
+            Back to Group
+          </Button>
+          {/* </Stack> */}
         <br />
         <br />
         <Alert severity="warning" style={{ display: error ? "" : "none" }}>
