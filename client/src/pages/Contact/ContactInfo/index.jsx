@@ -313,15 +313,19 @@ export default class ContactInfo extends Component {
                     isNew={false}
                   />
                 </Grid>
+
+                <Grid item xs={12} sm={6}> 
                 <Button
                   variant="outlined"
                   size="large"
                   endIcon={<MailOutlineIcon />}
-                  style={{ marginLeft: "7vw ", marginTop: "2vw" }}
+                  //style={{ marginLeft: "3.6vw ", marginTop: "3.5vw", marginBottom: "0.2vw" }}
+                  style={{height: "55px" }}
                   onClick={() => this.onEmail()}
                 >
                   Send Email
                 </Button>
+                </Grid>
                 <Grid item xs={12} sm={12}>
                   <EditFooter
                     handleEdit={this.handleEdit}
