@@ -18,7 +18,6 @@
 
 | Name | Student ID | Task | State |
 | :---:  | :---: | :---: | :---: |
-
 | Wen Li Leong | 993469| Front End, Back End | Finished |
 | Jun Xu | 1074120| Front End, Back End | Finished |
 | Ruidi He | 983877| Front End, Back End | Finished |
