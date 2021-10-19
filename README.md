@@ -43,8 +43,8 @@ https://personal-crm-project.herokuapp.com/
 
 ## Frontend Access Details
 ### One possible login detail:
-Email address: test@mail.com \
-Password: 123qwert
+Email address: rachelhrd123@gmail.com \
+Password: 1234qwer
 
 ## Technologies
 Project is created with:
