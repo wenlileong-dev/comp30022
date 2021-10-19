@@ -65,6 +65,15 @@ exports.deleteGroup = async (req, res) => {
   });
   // console.log(defaultGroup);
   let oldGroup = await Groups.findById(groupID);
+
+  for(let i=0; i<oldGroup.contacts.length; i++){
+    Contacts.updateOne(
+      { _id: oldGroup.contacts[i] },
+      { $set: {groupID: defaultGroup._id} },
+      () => {}
+    );
+  }
+  
   const moveContact = defaultGroup.contacts.concat(oldGroup.contacts);
   defaultGroup.contacts = moveContact;
   res.json({ status: 200, msg: moveContact });
