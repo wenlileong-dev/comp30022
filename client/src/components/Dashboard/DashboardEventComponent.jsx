@@ -51,28 +51,26 @@ function PopoverEvent(props) {
           )}
           {props.event.meetingLink?(
           <>
-          <p>{props.event.meetingLink}</p>
+          <a href={props.event.meetingLink} style={{color:"blue"}}>Open meeting</a>
+          <p></p>
           </>):(
-          <Typography paragraph>
+          <Typography variant="body2">
                 There is no meeting link for this event
               </Typography>
               )}
             {props.event.meetingNotes ? (
               <>
                 <Typography variant="h5">Meeting Notes</Typography>
-                <Typography paragraph data-cy="meeting-notes-paragraph">
+                <Typography variant="body2">
                   {props.event.meetingNotes}
                 </Typography>
               </>
             ) : (
-              <Typography paragraph>
+              <Typography variant="body2">
                 There is no meeting notes for this event
               </Typography>
             )}
           
-          {/* <Button variant="contained" size="small" onClick={handleOpenEvent}>
-            Event Details
-          </Button> */}
         </CardContent>
       </Card>
     </Grid>

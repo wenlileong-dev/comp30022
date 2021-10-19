@@ -7,6 +7,7 @@ function PeopleEventString(props) {
         <Link
           data-cy="people-link"
           to={{ pathname: `/contact/info`, state: { contact: props.person } }}
+          style={{color:"blue"}}
         >
           {props.person.firstName} {props.person.lastName}{" "}
         </Link>
