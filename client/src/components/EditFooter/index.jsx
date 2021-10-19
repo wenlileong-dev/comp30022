@@ -93,7 +93,7 @@ class EditFooter extends Component {
                   color="error"
                   onClick={this.cancle}
                 >
-                  Cancle
+                  Cancel
                 </Button>
               </Stack>
             </Grid>

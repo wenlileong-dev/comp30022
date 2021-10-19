@@ -51,7 +51,7 @@ function PopoverEvent(props) {
           )}
           {props.event.meetingLink?(
           <>
-          <p>props.event.meetingLink</p>
+          <p>{props.event.meetingLink}</p>
           </>):(
           <Typography paragraph>
                 There is no meeting link for this event
