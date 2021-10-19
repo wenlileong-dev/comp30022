@@ -3,7 +3,7 @@ import DashboardContact from "./DashboardContact";
 function DashboardContacts(props) {
   return (
     <div>
-      {props.contacts.map((contact, index) => {
+      {props.contacts.slice(0,4).map((contact, index) => {
         return <DashboardContact contacts={contact} key={index} />;
       })}
     </div>

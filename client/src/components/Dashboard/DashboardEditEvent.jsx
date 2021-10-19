@@ -9,7 +9,7 @@ function DashboardEditEvent(props) {
   let description = props.eventDetail.description;
   let date=new Date(props.eventDetail.date).toISOString().slice(0, 10);
   let time = props.eventDetail.time;
-  let people = props.eventDetail.people.toString();
+  let people = props.eventDetail.people;
   let eventType = props.eventDetail.eventType;
   let location =props.eventDetail.location;
   let meetingNotes = props.eventDetail.meetingNotes;

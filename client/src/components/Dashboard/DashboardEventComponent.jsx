@@ -4,9 +4,11 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import PeopleEventString from "../Calendar/PeopleEventString";
+import Typography from "@mui/material/Typography";
 function PopoverEvent(props) {
   // console.log(props)
   let time = new Date(props.event.time);
+  let date = new Date(props.event.date).toISOString().slice(0, 10);
   // console.log(props.setEvent(props.event))
   // console.log(props.openEditEvent())
   function handleOpenEvent() {
@@ -18,7 +20,9 @@ function PopoverEvent(props) {
     <Grid item xs={12} sm={6}>
       <Card style={{ backgroundColor: "#EAEEF3" }}>
         <CardContent>
+          <p>{date }</p>
           <p>
+            
             {time.toLocaleTimeString("en-US", {
               hour: "2-digit",
               minute: "2-digit",
@@ -35,7 +39,7 @@ function PopoverEvent(props) {
                 />
               );
             })}
-
+            <p></p>
           {props.event.eventType === "Online" ? (
             <p>
               {props.event.eventType} via {props.event.location}
@@ -45,9 +49,30 @@ function PopoverEvent(props) {
               {props.event.eventType} at {props.event.location}
             </p>
           )}
-          <Button variant="contained" size="small" onClick={handleOpenEvent}>
+          {props.event.meetingLink?(
+          <>
+          <p>props.event.meetingLink</p>
+          </>):(
+          <Typography paragraph>
+                There is no meeting link for this event
+              </Typography>
+              )}
+            {props.event.meetingNotes ? (
+              <>
+                <Typography variant="h5">Meeting Notes</Typography>
+                <Typography paragraph data-cy="meeting-notes-paragraph">
+                  {props.event.meetingNotes}
+                </Typography>
+              </>
+            ) : (
+              <Typography paragraph>
+                There is no meeting notes for this event
+              </Typography>
+            )}
+          
+          {/* <Button variant="contained" size="small" onClick={handleOpenEvent}>
             Event Details
-          </Button>
+          </Button> */}
         </CardContent>
       </Card>
     </Grid>
