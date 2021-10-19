@@ -19,9 +19,7 @@ export default class GroupSelector extends Component {
   };
 
   componentDidMount() {
-    axios("/group/all", {
-      method: "GET",
-    }).then(
+    axios.get("/api/group/all").then(
       (response) => {
         this.setState({ allGroups: response.data.allGroups });
         // console.log("update allGroups");

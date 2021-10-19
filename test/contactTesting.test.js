@@ -46,7 +46,7 @@ describe("Contact API Testing", () => {
     got({
       method: "POST",
       headers: { "content-type": "application/json" },
-      url: "http://localhost:5000/user/login",
+      url: "http://localhost:5000/api/user/login",
       body: user,
       json: true,
     })

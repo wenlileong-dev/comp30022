@@ -233,7 +233,14 @@ exports.verifyUserEmail = async (req, res) => {
   var bytes = CryptoJS.AES.decrypt(emailToken, process.env.EMAIL_TOKEN_KEY);
   var originalText = bytes.toString(CryptoJS.enc.Utf8).replace("OPZ8o0", "/");
   const user = await User.findById(userID);
-  if (user.emailToken === emailToken) {
+  let decryptDBtoken = CryptoJS.AES.decrypt(
+    user.emailToken,
+    process.env.EMAIL_TOKEN_KEY
+  );
+  let dbOriginalText = decryptDBtoken
+    .toString(CryptoJS.enc.Utf8)
+    .replace("OPZ8o0", "/");
+  if (originalText === dbOriginalText) {
     await User.findByIdAndUpdate(userID, { verified: true });
     res.json({ status: 200, message: "Your email is verified" });
   } else {

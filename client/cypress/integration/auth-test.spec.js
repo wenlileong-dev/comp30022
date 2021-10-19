@@ -19,7 +19,7 @@ describe("Test Authentication", () => {
 
   it("testing for login - correct input", () => {
     cy.get(".page-title").should("have.text", "Login");
-    cy.get("[data-cy=login-email]").type("test@mail.com");
+    cy.get("[data-cy=login-email]").type("e2e@mail.com");
     cy.get("[data-cy=login-password]").type("123qwert");
     cy.get("[data-cy=login-button]").click();
     cy.get(".page-title").should("have.text", "Dashboard");
@@ -28,7 +28,7 @@ describe("Test Authentication", () => {
 
   it("testing for login - wrong password", () => {
     cy.get(".page-title").should("have.text", "Login");
-    cy.get("[data-cy=login-email]").type("test@mail.com");
+    cy.get("[data-cy=login-email]").type("e2e@mail.com");
     cy.get("[data-cy=login-password]").type("123qw");
     cy.get("[data-cy=login-button]").click();
     cy.get("[data-cy=login-error]").should(
@@ -53,7 +53,7 @@ describe("Test Authentication", () => {
     //delete registered user
     const options = {
       method: "Delete",
-      url: `${Cypress.env("backend_url")}/user/deleteUser/testing@mail.com`,
+      url: `${Cypress.env("backend_url")}/api/user/deleteUser/testing@mail.com`,
     };
     cy.request(options);
   });

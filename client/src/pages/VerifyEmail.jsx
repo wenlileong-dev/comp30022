@@ -6,7 +6,7 @@ function VerifyEmail() {
   let { userID, emailToken } = useParams();
   const [message, setMessage] = useState("");
   const verifyEmail = async () => {
-    let result = await axios.put(`/user/api/verify/${userID}/${emailToken}`);
+    let result = await axios.put(`/api/user/verify/${userID}/${emailToken}`);
     setMessage(result.data.message);
     if (result.data.status === 200) {
       window.location = "/user";

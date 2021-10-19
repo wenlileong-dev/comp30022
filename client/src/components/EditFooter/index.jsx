@@ -31,35 +31,30 @@ class EditFooter extends Component {
 
   update = () => {
     const { contactInfo } = this.props;
-    axios({
-      method: "PUT",
-      url: `http://localhost:3000/api/contacts/info/${contactInfo._id}`,
-      data: {
+    axios
+      .put(`/api/contacts/info/${contactInfo._id}`, {
         contact: {
           ...contactInfo,
         },
-      },
-    }).then(
-      (response) => {
-        this.setState({ isEdit: false, error: false });
-        this.props.handleEdit(false);
-        // console.log('update',response.data.info);
-        // this.props.history.push('/contact/info', {contact: response.data.info});
-        this.props.history.replace("/contact");
-      },
-      (error) => {
-        this.setState({ error: true });
-      }
-    );
+      })
+      .then(
+        (response) => {
+          this.setState({ isEdit: false, error: false });
+          this.props.handleEdit(false);
+          // console.log('update',response.data.info);
+          // this.props.history.push('/contact/info', {contact: response.data.info});
+          this.props.history.replace("/contact");
+        },
+        (error) => {
+          this.setState({ error: true });
+        }
+      );
   };
 
   delete = () => {
     if (window.confirm("Do you want to delete")) {
       const { contactInfo } = this.props;
-      axios({
-        method: "DELETE",
-        url: `http://localhost:3000/api/contacts/info/${contactInfo._id}`,
-      }).then(
+      axios.delete(`/api/contacts/info/${contactInfo._id}`).then(
         (response) => {
           this.setState({ isEdit: false });
           this.props.handleEdit(false);

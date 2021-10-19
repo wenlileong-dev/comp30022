@@ -2,10 +2,10 @@ describe("Test Authentication", () => {
   beforeEach(() => {
     const options = {
       method: "POST",
-      url: `${Cypress.env("backend_url")}/user/login`,
+      url: `${Cypress.env("backend_url")}/api/user/login`,
 
       body: {
-        email: "test@mail.com",
+        email: "e2e@mail.com",
         password: "123qwert",
       },
     };

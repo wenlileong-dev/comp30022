@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-// import axios from '../commons/axios.js';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthFail from "./../components/AuthFail";
@@ -15,10 +14,10 @@ import Chip from "@mui/material/Chip";
 function Account() {
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
+  // let history = useHistory();
 
-  // let history = useHistory()
   const logoutUser = async () => {
-    let result = await axios.post("/user/logout");
+    let result = await axios.post("api/user/logout");
     if (result.data.status !== 200) {
       alert(result.data.errorMsg);
     } else {
@@ -40,7 +39,7 @@ function Account() {
 
   const getUserDetails = () => {
     axios
-      .get(`/user/`)
+      .get(`api/user/`)
       .then((response) => {
         // console.log(response.data);
         if (!response.data.success) {
@@ -61,15 +60,10 @@ function Account() {
 
   const onEdit = () => {
     window.location.href = "/user/editInfo";
-    // history.push({
-    //   pathname: "/user/editInfo", state: {
-    //     user: props
-    //   }
-    // })
   };
 
   const handleVerify = async () => {
-    const sendEmail = await axios.post("/user/sendVerifyEmail", {});
+    const sendEmail = await axios.post("api/user/sendVerifyEmail", {});
     setEmailMessage(sendEmail.data.message);
   };
 

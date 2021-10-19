@@ -8,7 +8,6 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 function PopoverAddGroup(props) {
   let [groupName, setGroup] = useState("");
 
-
   function handleGroup(event) {
     setGroup(event.target.value);
   }
@@ -16,13 +15,13 @@ function PopoverAddGroup(props) {
   function handleSubmit(e) {
     e.preventDefault();
     let input = {
-        groupName: undefined
+      groupName: undefined,
     };
     if (groupName) {
       input.groupName = groupName;
     }
 
-    axios.post(`/group/create`, input).then((res) => {
+    axios.post(`api/group/create`, input).then((res) => {
       window.location.href = `/contact`;
     });
   }
@@ -39,7 +38,6 @@ function PopoverAddGroup(props) {
               value={groupName}
             />
           </Grid>
-          
 
           <Grid item xs={12} sm={12}>
             <Button

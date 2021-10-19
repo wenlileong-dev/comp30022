@@ -118,6 +118,7 @@ exports.updateEvent = async (req, res) => {
         meetingLink,
         userID,
         reminder,
+        sendEmail: false,
       },
       { overwrite: true, new: true, runValidators: true }
     );
@@ -232,7 +233,6 @@ exports.sendEventReminders = async () => {
       allEvents[i].time.getMinutes(),
       allEvents[i].time.getSeconds()
     );
-    console.log(eventDateTime - currDateTime);
     if (
       eventDateTime - currDateTime <= 900000 &&
       eventDateTime - currDateTime > 0

@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 
-function Account() {
+function Account(props) {
   const [form] = Form.useForm();
   const { Link } = Typography;
   const [id, setId] = useState("");
@@ -18,27 +18,25 @@ function Account() {
   const [disable, setDisable] = useState(true);
   const [open, setOpen] = useState(false);
 
+  console.log(props.location);
+
   useEffect(() => {
     getUserDetails();
   }, []);
 
-  const getUserDetails = () => {
-    axios
-      .get(`/user/`)
-      .then((response) => {
-        // console.log(response.data)
-        if (!response.data.success) {
-          alert(response.data.errorMsg);
-          window.location.href = "/login";
-        } else {
-          setId(response.data.user._id);
-          setEmail(response.data.user.email);
-          setFirstName(response.data.user.firstName);
-          setLastName(response.data.user.lastName);
-          setPhoneNumber(response.data.user.phoneNumber);
-        }
-      })
-      .catch((error) => console.error(`Error: ${error}`));
+  const getUserDetails = async () => {
+    const userDetail = await axios("/api/user");
+
+    if (!userDetail.data.success) {
+      // alert(response.data.errorMsg);
+      window.location.href = "/login";
+    } else {
+      setId(userDetail.data.user._id);
+      setEmail(userDetail.data.user.email);
+      setFirstName(userDetail.data.user.firstName);
+      setLastName(userDetail.data.user.lastName);
+      setPhoneNumber(userDetail.data.user.phoneNumber);
+    }
   };
 
   const enablePassword = () => {
@@ -60,7 +58,7 @@ function Account() {
   const onSubmit = () => {
     if (password) {
       axios
-        .post("/user/update/" + id, {
+        .post(`/api/user/update/${id}`, {
           firstName,
           lastName,
           password,
@@ -77,7 +75,7 @@ function Account() {
         });
     } else {
       axios
-        .post("/user/update/" + id, {
+        .post(`/api/user/update/${id}`, {
           firstName,
           lastName,
           phoneNumber,

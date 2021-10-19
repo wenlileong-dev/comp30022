@@ -19,7 +19,7 @@ describe("Group API Testing", () => {
       password: "123qwerty",
     };
     api
-      .post("/user/login")
+      .post("/api/user/login")
       .send(user)
       .end((err, res) => {
         res.should.have.status(200);
@@ -39,7 +39,7 @@ describe("Group API Testing", () => {
   describe("get groups", () => {
     it("with valid token", (done) => {
       api
-        .get("/group")
+        .get("/api/group")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           // res.should.have.status(200);
@@ -54,7 +54,7 @@ describe("Group API Testing", () => {
   describe("get all groups", () => {
     it("with valid token", (done) => {
       api
-        .get("/group/all")
+        .get("/api/group/all")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           // res.should.have.status(200);
@@ -75,7 +75,7 @@ describe("Group API Testing", () => {
         isDefault: false,
       };
       api
-        .post("/group/create")
+        .post("/api/group/create")
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -97,7 +97,7 @@ describe("Group API Testing", () => {
         isDefault: false,
       };
       api
-        .post(`/group/update/${groupID}`)
+        .post(`/api/group/update/${groupID}`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -116,7 +116,7 @@ describe("Group API Testing", () => {
         id: groupID,
       };
       api
-        .post(`/group/top`)
+        .post(`/api/group/top`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -130,7 +130,7 @@ describe("Group API Testing", () => {
   describe("create default group", () => {
     it("create default group with valid input", (done) => {
       api
-        .post(`/group/default/${userID}`)
+        .post(`/api/group/default/${userID}`)
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           res.body.success.should.be.eql(true);
@@ -147,7 +147,7 @@ describe("Group API Testing", () => {
         id: groupID,
       };
       api
-        .post(`/group/delete`)
+        .post(`/api/group/delete`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -165,7 +165,7 @@ describe("Group API Testing", () => {
         id: defaultGroupID,
       };
       api
-        .post(`/group/delete`)
+        .post(`/api/group/delete`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {

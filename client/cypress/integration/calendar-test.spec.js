@@ -3,7 +3,7 @@ describe("End to End Testing for Calendar", () => {
     //login user without animation (from api)
     const options = {
       method: "POST",
-      url: `${Cypress.env("backend_url")}/user/login`,
+      url: `${Cypress.env("backend_url")}/api/user/login`,
 
       body: {
         email: "e2e@mail.com",
