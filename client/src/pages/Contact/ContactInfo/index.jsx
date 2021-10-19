@@ -155,7 +155,6 @@ export default class ContactInfo extends Component {
       contact: { _id },
     } = this.props.location.state;
     axios(`/api/contacts/updateContactTime/${_id}`);
-
     window.open("mailto:" + this.state.contact.email);
   }
 

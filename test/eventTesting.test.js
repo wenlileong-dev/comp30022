@@ -17,7 +17,7 @@ describe("Event API Testing", () => {
       password: "123qwerty",
     };
     api
-      .post("/user/login")
+      .post("/api/user/login")
       .send(user)
       .end((err, res) => {
         res.should.have.status(200);

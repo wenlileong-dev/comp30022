@@ -8,7 +8,7 @@ const should = require("chai").should();
 require("chai").use(chaiHttp);
 const api = require("chai").request(app).keepOpen();
 
-const userUrl = "http://localhost:5000/user";
+const userUrl = "http://localhost:5000/api/user";
 //user post update
 const testUserUpdate = {
   validBody: {
@@ -129,7 +129,7 @@ describe("User API Testing with login token", () => {
       password: "123qwerty",
     };
     api
-      .post("/user/login")
+      .post("/api/user/login")
       .send(user)
       .end((err, res) => {
         res.should.have.status(200);
@@ -147,7 +147,7 @@ describe("User API Testing with login token", () => {
   describe("get user details", () => {
     it("with valid token", (done) => {
       api
-        .get("/user")
+        .get("/api/user")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -157,7 +157,7 @@ describe("User API Testing with login token", () => {
     });
 
     it("without token", (done) => {
-      api.get("/user").end((err, res) => {
+      api.get("/api/user").end((err, res) => {
         res.body.status.should.be.eql(401);
         res.body.errorMsg.should.be.eql("Access denied...No token provided...");
         done();
@@ -168,7 +168,7 @@ describe("User API Testing with login token", () => {
   describe("user account log out", () => {
     it("already login with valid token", (done) => {
       api
-        .post("/user/logout")
+        .post("/api/user/logout")
         .set("Cookie", `token=""`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
