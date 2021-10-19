@@ -23,10 +23,10 @@ class EditFooter extends Component {
     this.props.handleEdit(true);
   };
 
-  cancle = () => {
+  cancel = () => {
     this.setState({ isEdit: false, error: false });
     this.props.handleEdit(false);
-    this.props.handleCancle();
+    this.props.handleCancel();
   };
 
   update = () => {
@@ -98,10 +98,10 @@ class EditFooter extends Component {
                   Confirm
                 </Button>
                 <Button
-                  id="contactCancle"
+                  id="contactCancel"
                   variant="contained"
                   color="error"
-                  onClick={this.cancle}
+                  onClick={this.cancel}
                 >
                   Cancel
                 </Button>

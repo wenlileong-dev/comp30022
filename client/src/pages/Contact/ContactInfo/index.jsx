@@ -25,7 +25,7 @@ export default class ContactInfo extends Component {
     contact: {
       //...this.props.location.state.contact
     },
-    cancle: true,
+    cancel: true,
   };
 
   updateFirstName = (e) => {
@@ -89,7 +89,7 @@ export default class ContactInfo extends Component {
     // console.log(isEdit);
   };
 
-  handleCancle = () => {
+  handleCancel = () => {
     const contact = this.props.location.state.contact;
     this.setState({ contact });
     PubSub.publish("groupID", { groupID: contact.groupID });
@@ -320,7 +320,7 @@ export default class ContactInfo extends Component {
                 <Grid item xs={12} sm={12}>
                   <EditFooter
                     handleEdit={this.handleEdit}
-                    handleCancle={this.handleCancle}
+                    handleCancel={this.handleCancel}
                     contactInfo={this.state.contact}
                   />
                 </Grid>

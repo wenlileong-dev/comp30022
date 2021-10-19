@@ -34,7 +34,7 @@ export default class GroupSelector extends Component {
       (error) => {}
     );
 
-    // Update groupID when edition is cancled
+    // Update groupID when edition is cancelled
     this.token = PubSub.subscribe("groupID", (msg, stateObj) => {
       this.setState(stateObj);
     });
