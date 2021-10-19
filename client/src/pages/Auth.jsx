@@ -22,7 +22,7 @@ function Auth() {
   // let history = useHistory()
   const onLogin = async () => {
     let loginData = { email, password };
-    let loginUser = await axios.post("/user/login", loginData, {
+    let loginUser = await axios.post("api/user/login", loginData, {
       withCredentials: true,
     });
     // console.log(loginUser.data);
@@ -41,13 +41,13 @@ function Auth() {
 
   const onRegister = async () => {
     let registerData = { firstName, lastName, email, password, phoneNumber };
-    let registerUser = await axios.post("/user/register", registerData);
+    let registerUser = await axios.post("api/user/register", registerData);
     if (!registerUser.data.success) {
       setIsRegisterAlert(true);
       setAlertMessage(registerUser.data.error);
     } else {
       await axios
-        .post(`/group/default/${registerUser.data.user.userID}`)
+        .post(`api/group/default/${registerUser.data.user.userID}`)
         .then((res) => {});
       window.location.href = "/dashboard";
     }

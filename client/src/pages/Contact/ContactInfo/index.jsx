@@ -103,10 +103,7 @@ export default class ContactInfo extends Component {
 
   componentDidMount() {
     if (!this.props.location.state) {
-      axios({
-        method: "GET",
-        url: `http://localhost:3000/api/contacts/info/${"invalid"}`,
-      }).then(
+      axios(`/api/contacts/info/${"invalid"}`).then(
         (response) => {
           if (response.status === 404) {
             this.setState({ isAuth: true, isFound: false });
@@ -129,10 +126,7 @@ export default class ContactInfo extends Component {
         contact,
         contact: { _id },
       } = this.props.location.state;
-      axios({
-        method: "GET",
-        url: `http://localhost:3000/api/contacts/info/${_id}`,
-      }).then(
+      axios(`/api/contacts/info/${_id}`).then(
         (response) => {
           if (response.data.status === 200) {
             this.setState({ isAuth: true, isFound: true, contact });
@@ -160,10 +154,8 @@ export default class ContactInfo extends Component {
     const {
       contact: { _id },
     } = this.props.location.state;
-    axios({
-      method: "GET",
-      url: `http://localhost:3000/api/contacts/updateContactTime/${_id}`,
-    });
+    axios(`/api/contacts/updateContactTime/${_id}`);
+
     window.open("mailto:" + this.state.contact.email);
   }
 

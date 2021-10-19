@@ -19,7 +19,7 @@ function Contact() {
   const [contacts, setContacts] = React.useState([]);
 
   const getGroupContacts = async () => {
-    const result = await axios("/group/all");
+    const result = await axios("api/group/all");
     if (result.data.status !== 200) {
       setIsAuth(false);
       setAuthFailMsg(result.data.errorMsg);

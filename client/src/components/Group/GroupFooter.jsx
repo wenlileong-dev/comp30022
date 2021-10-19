@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 function GroupFooter(props) {
   function deleteGroup() {
     const input = { id: props.groupID };
-    axios.post(`/group/delete`, input).then((res) => {
+    axios.post(`api/group/delete`, input).then((res) => {
       props.getGroupContacts();
     });
   }

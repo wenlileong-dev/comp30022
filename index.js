@@ -25,17 +25,16 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //routing
 
-app.use("/user", userRouter);
+app.use("/api/user", userRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/contacts", contactRouter);
-app.use("/group", group);
+app.use("/api/group", group);
 
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 cron.schedule("* * * * *", () => {
-  console.log("schedule");
   sendEventReminders();
 });
 

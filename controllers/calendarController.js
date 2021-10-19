@@ -233,7 +233,6 @@ exports.sendEventReminders = async () => {
       allEvents[i].time.getMinutes(),
       allEvents[i].time.getSeconds()
     );
-    console.log(eventDateTime - currDateTime);
     if (
       eventDateTime - currDateTime <= 900000 &&
       eventDateTime - currDateTime > 0

@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 function TopGroup(props) {
   function topGroup() {
     const input = { id: props.groupID };
-    axios.post(`/group/top`, input).then((res) => {
+    axios.post(`api/group/top`, input).then((res) => {
       props.getGroupContacts();
     });
   }
