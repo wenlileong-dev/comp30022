@@ -38,6 +38,7 @@ function CalendarPopup(props) {
         open={props.isPopupOpen}
         onClose={props.handleClose}
         data-testid="modal-popup"
+        data-cy="modal-popup"
       >
         <Box sx={style}>
           {isOpen === "day-events" && (

@@ -17,12 +17,12 @@
 ## Team Members
 
 | Name | Student ID | Task | State |
-| :---  | :---: | :---: |---: |
-| Wen Li Leong | 993469| Front End, Back End | Working |
-| Jun Xu | 1074120| Front End, Back End | Working |
-| Ruidi He | 983877| Front End, Back End | Working |
-| Yixin Zhong | 1074472| Front End, Back End | Working |
-| Hong Li |843803| Front End, Back End | Working |
+| :---:  | :---: | :---: | :---: |
+| Wen Li Leong | 993469| Front End, Back End | Finished |
+| Jun Xu | 1074120| Front End, Back End | Finished |
+| Ruidi He | 983877| Front End, Back End | Finished |
+| Yixin Zhong | 1074472| Front End, Back End | Finished |
+| Hong Li |843803| Front End, Back End | Finished |
 
 
 ## General Information
@@ -43,8 +43,8 @@ https://personal-crm-project.herokuapp.com/
 
 ## Frontend Access Details
 ### One possible login detail:
-Email address: test@mail.com \
-Password: 123qwert
+Email address: rachelhrd123@gmail.com \
+Password: 1234qwer
 
 ## Technologies
 Project is created with:

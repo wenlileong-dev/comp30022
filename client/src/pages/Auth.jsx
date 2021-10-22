@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
 // import { useHistory } from "react-router-dom";
@@ -22,10 +22,10 @@ function Auth() {
   // let history = useHistory()
   const onLogin = async () => {
     let loginData = { email, password };
-    let loginUser = await axios.post("/user/login", loginData, {
+    let loginUser = await axios.post("api/user/login", loginData, {
       withCredentials: true,
     });
-    console.log(loginUser.data);
+    // console.log(loginUser.data);
     if (!loginUser.data.success) {
       setIsLoginAlert(true);
       setAlertMessage(loginUser.data.error);
@@ -41,28 +41,25 @@ function Auth() {
 
   const onRegister = async () => {
     let registerData = { firstName, lastName, email, password, phoneNumber };
-    let registerUser = await axios.post("/user/register", registerData);
+    let registerUser = await axios.post("api/user/register", registerData);
     if (!registerUser.data.success) {
       setIsRegisterAlert(true);
       setAlertMessage(registerUser.data.error);
     } else {
-      await axios.post(`/group/default/${registerUser.data.user.userID}`).then((res) => {
-      });
+      await axios
+        .post(`api/group/default/${registerUser.data.user.userID}`)
+        .then((res) => {});
       window.location.href = "/dashboard";
     }
   };
-
 
   // function DefaultGroup {
   //   await axios.post(`/group/default/${RegisterID}}`).then((res) => {
   //     console.log(RegisterID);
   //   });
   // }
-  
 
   return (
-
-
     <div style={{ width: "40%", margin: "auto", marginTop: "20%" }}>
       <Modal show={show} onHide={handleClose} style={{ marginTop: "2vh" }}>
         <Modal.Header closeButton>
@@ -70,12 +67,17 @@ function Auth() {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {isRegisterAlert && <Alert severity="error">{alertMessage}</Alert>}
+            {isRegisterAlert && (
+              <Alert severity="error" data-cy="register-error">
+                {alertMessage}
+              </Alert>
+            )}
             <Form.Group controlId="formBasicFirstname">
               <Form.Label>First name</Form.Label>
               <Form.Control
                 type="firstname"
                 placeholder="Enter first name"
+                data-cy="register-firstName"
                 onChange={(e) => setFirstname(e.target.value)}
               />
             </Form.Group>
@@ -84,6 +86,7 @@ function Auth() {
               <Form.Control
                 type="lastname"
                 placeholder="Enter last name"
+                data-cy="register-lastName"
                 onChange={(e) => setLastname(e.target.value)}
               />
             </Form.Group>
@@ -92,6 +95,7 @@ function Auth() {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
+                data-cy="register-email"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
@@ -100,10 +104,12 @@ function Auth() {
               <Form.Control
                 type="password"
                 placeholder="Enter password"
+                data-cy="register-password"
                 onChange={(e) => setPassword(e.target.value)}
               />
               <Form.Text className="text-muted">
-              password must have at least 8 characters, containing at least one alphabet character and one numerical digit
+                password must have at least 8 characters, containing at least
+                one alphabet character and one numerical digit
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicPhonenumber">
@@ -111,6 +117,7 @@ function Auth() {
               <Form.Control
                 type="phonenumber"
                 placeholder="Enter phone number"
+                data-cy="register-phoneNumber"
                 onChange={(e) => setPhonenumber(e.target.value)}
               />
             </Form.Group>
@@ -120,19 +127,28 @@ function Auth() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={onRegister}>
+          <Button
+            variant="primary"
+            onClick={onRegister}
+            data-cy="register-button"
+          >
             Confirm
           </Button>
         </Modal.Footer>
       </Modal>
       <h1>Welcome!</h1>
       <Form>
-        {isLoginAlert && <Alert severity="error">{alertMessage}</Alert>}
+        {isLoginAlert && (
+          <Alert severity="error" data-cy="login-error">
+            {alertMessage}
+          </Alert>
+        )}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
+            data-cy="login-email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Text className="text-muted">
@@ -145,6 +161,7 @@ function Auth() {
           <Form.Control
             type="password"
             placeholder="Password"
+            data-cy="login-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
@@ -152,6 +169,7 @@ function Auth() {
           variant="primary"
           style={{ marginTop: "2vw" }}
           onClick={handleShow}
+          data-cy="go-register"
         >
           Register
         </Button>
@@ -159,6 +177,7 @@ function Auth() {
           variant="outline-primary"
           style={{ marginTop: "2vw", marginLeft: "1vw" }}
           onClick={onLogin}
+          data-cy="login-button"
         >
           Login
         </Button>

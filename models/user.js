@@ -24,6 +24,13 @@ var UserSchema = new Schema({
     type: String,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  emailToken: {
+    type: String,
+  },
 });
 
 UserSchema.methods.generateAuthToken = function () {
@@ -33,7 +40,7 @@ UserSchema.methods.generateAuthToken = function () {
       name: this.name,
     },
     process.env.JWT_PRIVATE_KEY,
-    { expiresIn: "15m" }
+    { expiresIn: "15h" }
   );
   return token;
 };

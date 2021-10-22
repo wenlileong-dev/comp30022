@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 import { withRouter } from "react-router-dom";
 
 class AddFooter extends Component {
@@ -16,30 +18,17 @@ class AddFooter extends Component {
     this.props.history.push("/contact");
   };
 
-  handleConfirm = () => {
+  handleConfirm = async () => {
     // console.log('confirm');
-    axios({
-      method: "POST",
-      url: "https://personal-crm-project.herokuapp.com/api/contacts/add-contact",
-      data: {
-        contact: {
-          ...this.props,
-        },
-      },
-    }).then(
-      (response) => {
-        this.setState({ error: false, success: true });
-
-        this.setState({ contact: response.data.newContact });
-        // console.log(response);
-        //this.props.history.push(`/contact/info`, {contact:this.state.contact});
-        this.props.history.push(`/contact`);
-      },
-      (error) => {
-        // alert("Invalid Information Form");
-        this.setState({ error: true, success: false });
-      }
-    );
+    let data = { contact: { ...this.props } };
+    try {
+      let result = await axios.post("/api/contacts/add-contact", data);
+      this.setState({ error: false, success: true });
+      this.setState({ contact: result.data.newContact });
+      this.props.history.push(`/contact`);
+    } catch (error) {
+      this.setState({ error: true });
+    }
   };
 
   render() {
@@ -50,31 +39,24 @@ class AddFooter extends Component {
     const { error, success } = this.state;
     return (
       <Fragment>
-        <Button
-          variant="contained"
-          type="submit"
-          onClick={this.back}
-          sx={{
-            marginLeft: "32px",
-          }}
-        >
-          Back to Group
-        </Button>
-
-        <Button
-          variant="contained"
-          type="submit"
-          onClick={this.handleConfirm}
-          sx={{
-            float: "right",
-            marginRight: "34px",
-          }}
-          // style={{display:'block', margin:'auto'}}
-          // disabled={success}
-        >
-          Confirm
-        </Button>
-
+        {/* <Stack  //direction="row"
+        > */}
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={this.handleConfirm}
+            style={{display:'block', margin:'auto'}}
+            // disabled={success}
+          >
+            Confirm
+          </Button>
+          <br/>
+          <Button variant="contained" type="submit" onClick={this.back}
+             style={{display:'block', margin:'auto'}}
+          >
+            Back to Group
+          </Button>
+          {/* </Stack> */}
         <br />
         <br />
         <Alert severity="warning" style={{ display: error ? "" : "none" }}>

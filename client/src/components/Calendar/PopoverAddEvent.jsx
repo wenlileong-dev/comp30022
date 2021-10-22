@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -12,18 +13,22 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import Alert from "@mui/material/Alert";
+
+import EventPeople from "./EventPeople";
 
 function PopoverAddEvent(props) {
   // let today = new Date();
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [date, setDate] = useState(new Date());
-  let [time, setTime] = useState(null);
+  let [time, setTime] = useState(new Date());
   let [alertTime, setAlertTime] = useState(false);
-  let [people, setPeople] = useState("");
+  let [people, setPeople] = useState([]);
   let [eventType, setEventType] = useState("Online");
   let [location, setLocation] = useState("Zoom");
+  let [meetingLink, setMeetingLink] = useState("");
+
+  let [peopleValidate, setPeopleValidate] = useState(false);
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -31,9 +36,9 @@ function PopoverAddEvent(props) {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-  function handlePeople(e) {
-    setPeople(e.target.value);
-  }
+  // function handlePeople(e) {
+  //   setPeople(e.target.value);
+  // }
   function handleEventType(e) {
     setEventType(e.target.value);
     if (e.target.value === "Online") {
@@ -46,6 +51,10 @@ function PopoverAddEvent(props) {
     setLocation(e.target.value);
   }
 
+  function handleMeetingLink(e) {
+    setMeetingLink(e.target.value);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     let input = {
@@ -56,6 +65,7 @@ function PopoverAddEvent(props) {
       people: undefined,
       eventtype: undefined,
       location: undefined,
+      meetingLink: undefined,
     };
     if (title) {
       input.title = title;
@@ -73,6 +83,13 @@ function PopoverAddEvent(props) {
       return;
     }
     if (people) {
+      for (let i = 0; i < people.length; i++) {
+        let splitName = people[i].split(" ");
+        if (splitName.length !== 2) {
+          setPeopleValidate(true);
+          return;
+        }
+      }
       input.people = people;
     }
     if (eventType) {
@@ -81,20 +98,27 @@ function PopoverAddEvent(props) {
     if (location) {
       input.location = location;
     }
+    if (meetingLink) {
+      input.meetingLink = meetingLink;
+    }
     axios.post(`/api/calendar`, input).then((res) => {
-      // console.log(res.data);
       window.location.href = `/calendar`;
     });
   }
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit} data-testid="add-event-form">
+      <form
+        onSubmit={handleSubmit}
+        data-testid="add-event-form"
+        data-cy="add-event-form"
+      >
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
               variant="standard"
               required
               label="Title"
+              data-cy="title"
               onChange={handleTitle}
               value={title}
             />
@@ -103,6 +127,7 @@ function PopoverAddEvent(props) {
             <TextField
               variant="standard"
               label="Description"
+              data-cy="description"
               multiline
               onChange={handleDescription}
               value={description}
@@ -112,6 +137,7 @@ function PopoverAddEvent(props) {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
+                data-cy="date"
                 value={date}
                 onChange={(newValue) => {
                   setDate(newValue);
@@ -136,18 +162,12 @@ function PopoverAddEvent(props) {
             </LocalizationProvider>
             {alertTime && <Alert severity="error">Time is required</Alert>}
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              variant="standard"
-              label="People"
-              multiline
-              placeholder="separate by comma"
-              onChange={handlePeople}
-              value={people}
-            />
-          </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl className="event-type-select" variant="standard">
+            <FormControl
+              className="event-type-select"
+              variant="standard"
+              data-cy="event-type"
+            >
               <InputLabel>Event Type</InputLabel>
               <Select value={eventType} onChange={handleEventType}>
                 <MenuItem value="Online">Online</MenuItem>
@@ -160,29 +180,53 @@ function PopoverAddEvent(props) {
               <TextField
                 variant="standard"
                 label="Location"
+                data-cy="location-offline"
                 onChange={handleLocation}
                 value={location}
                 required
               />
             </Grid>
           ) : (
-            <Grid item xs={12} sm={6}>
-              <FormControl className="event-type-select" variant="standard">
-                <InputLabel>Location</InputLabel>
-                <Select value={location} onChange={handleLocation}>
-                  <MenuItem value="Zoom">Zoom</MenuItem>
-                  <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
-                  <MenuItem value="Google Meet">Google Meet</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            <>
+              <Grid item xs={12} sm={6}>
+                <FormControl
+                  className="event-type-select"
+                  variant="standard"
+                  data-cy="location-online"
+                >
+                  <InputLabel>Location</InputLabel>
+                  <Select value={location} onChange={handleLocation}>
+                    <MenuItem value="Zoom">Zoom</MenuItem>
+                    <MenuItem value="Microsoft Team">Microsoft Team</MenuItem>
+                    <MenuItem value="Google Meet">Google Meet</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="standard"
+                  label="Meeting Link"
+                  data-cy="meetingLink"
+                  onChange={handleMeetingLink}
+                  value={meetingLink}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+            </>
           )}
+          <Grid item xs={12} sm={12}>
+            <EventPeople setPeople={setPeople} people={[]} />
+            {peopleValidate && (
+              <Alert severity="error">Invalid People Input</Alert>
+            )}
+          </Grid>
 
           <Grid item xs={12} sm={12}>
             <Button
               color="primary"
               type="submit"
               variant="contained"
+              data-cy="add-event-confirm-button"
               startIcon={<AddBoxIcon />}
             >
               Add Event

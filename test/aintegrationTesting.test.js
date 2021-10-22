@@ -8,7 +8,7 @@ const should = require("chai").should();
 require("chai").use(chaiHttp);
 const api = require("chai").request(app).keepOpen();
 
-const userUrl = "http://localhost:5000/user";
+const userUrl = "http://localhost:5000/api/user";
 //user post update
 const testUserUpdate = {
   validBody: {
@@ -23,6 +23,7 @@ const testUserId = "614eca3f7677f9a310f2b469";
 
 describe("userPostUpdate integration tests", () => {
   it("should successfully update user details", function (done) {
+    this.timeout(10000);
     request.post(
       {
         headers: { "content-type": "application/json" },
@@ -43,8 +44,8 @@ describe("userPostUpdate integration tests", () => {
 //user Post Login
 const testUserLogin = {
   validBody: {
-    email: "test@mail.com",
-    password: "123qwert",
+    email: "1111@mail.com",
+    password: "123qwerty",
   },
 };
 
@@ -73,7 +74,7 @@ describe("userPostLogin integration tests", () => {
 // after the first test is true
 const testUserRegister = {
   validBody: {
-    email: "123456789@mail.com",
+    email: "123456789009@mail.com",
     password: "Hh3502251",
     firstName: "J1234",
     lastName: "X1234",
@@ -102,11 +103,10 @@ describe("userPostRegister integration tests", () => {
   });
 
   it("should successfully delete the registered user account", function (done) {
-    console.log(userID);
     request.delete(
       {
         headers: { "content-type": "application/json" },
-        url: userUrl + `/deleteUser/${userID}`,
+        url: userUrl + `/deleteUser/${testUserRegister.validBody.email}`,
         body: testUserRegister.validBody,
         json: true,
       },
@@ -125,11 +125,11 @@ describe("User API Testing with login token", () => {
   let userID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
-      .post("/user/login")
+      .post("/api/user/login")
       .send(user)
       .end((err, res) => {
         res.should.have.status(200);
@@ -147,7 +147,7 @@ describe("User API Testing with login token", () => {
   describe("get user details", () => {
     it("with valid token", (done) => {
       api
-        .get("/user")
+        .get("/api/user")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -157,7 +157,7 @@ describe("User API Testing with login token", () => {
     });
 
     it("without token", (done) => {
-      api.get("/user").end((err, res) => {
+      api.get("/api/user").end((err, res) => {
         res.body.status.should.be.eql(401);
         res.body.errorMsg.should.be.eql("Access denied...No token provided...");
         done();
@@ -168,7 +168,7 @@ describe("User API Testing with login token", () => {
   describe("user account log out", () => {
     it("already login with valid token", (done) => {
       api
-        .post("/user/logout")
+        .post("/api/user/logout")
         .set("Cookie", `token=""`)
         .end((err, res) => {
           expect(res.status).to.equal(200);

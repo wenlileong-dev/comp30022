@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 
 import WeeklyDay from "./../Calendar/WeeklyDay";
+import EmptyComponent from "./EmptyComponent";
 
 function WeeklyCalendar(props) {
   return (
@@ -12,7 +13,7 @@ function WeeklyCalendar(props) {
             if (day.length > 0) {
               return <WeeklyDay day={day} key={index} month={props.month} />;
             } else {
-              return <></>;
+              return <EmptyComponent key={`Empty${index}`} />;
             }
           })}
       </Grid>

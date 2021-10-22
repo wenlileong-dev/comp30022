@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -67,9 +68,8 @@ export default class NewContact extends Component {
   };
 
   componentDidMount() {
-    axios({
+    axios("/api/contacts/add-contact", {
       method: "GET",
-      url: `https://personal-crm-project.herokuapp.com/api/contacts/add-contact`,
     }).then(
       (response) => {
         if (response.data.status === 200) {
@@ -88,8 +88,8 @@ export default class NewContact extends Component {
   }
 
   render() {
-    console.log("render", this.state.isAuth);
-    console.log("groupID = ", this.state.groupID);
+    // console.log("render", this.state.isAuth);
+    // console.log("groupID = ", this.state.groupID);
     const { isAuth, authFailMsg } = this.state;
     return (
       <Fragment>
@@ -107,95 +107,111 @@ export default class NewContact extends Component {
             <Box
               // component="form"
               sx={{
-                width: "117ch",
-                height: "110ch",
+                width: "80%",
                 border: "1px solid rgb(221,225,230)",
                 margin: "auto",
-                "& .MuiTextField-root": { m: 4, width: "50ch" },
+                padding: "3rem",
               }}
               noValidate
               autoComplete="off"
             >
-              <TextField
-                required
-                label="First Name Required"
-                variant="filled"
-                onChange={this.saveFirstName}
-              />
-
-              <TextField
-                required
-                label="Last Name Required"
-                variant="filled"
-                onChange={this.saveLastName}
-              />
-
-              <FormControl className="contactSelector" component="fieldset">
-                <FormLabel component="legend">Gender</FormLabel>
-                <RadioGroup
-                  onChange={this.saveGender}
-                  row
-                  aria-label="gender"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
+              <Grid container spacing={6}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    label="First Name Required"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveFirstName}
                   />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    label="Last Name Required"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveLastName}
                   />
-                </RadioGroup>
-              </FormControl>
-
-              <br />
-              <TextField
-                required
-                label="Phone Number Required"
-                variant="filled"
-                onChange={this.savePhone}
-              />
-
-              {/* <br/> */}
-              <TextField
-                required
-                label="Email Address Required"
-                variant="filled"
-                onChange={this.saveEmail}
-              />
-
-              <br />
-              <TextField
-                label="Department (Optional)"
-                variant="filled"
-                onChange={this.saveDepartment}
-              />
-
-              <br />
-              <TextField
-                label="Address (Optional)"
-                variant="filled"
-                onChange={this.saveAddress}
-              />
-
-              <br />
-              <TextField
-                label="Remark (Optional)"
-                variant="filled"
-                onChange={this.saveRemark}
-              />
-
-              <GroupSelector
-                handleGroup={this.handleGroup}
-                isEdit={true}
-                isNew={true}
-              />
-              <br />
-              <br />
-              <AddFooter {...this.state} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl className="contactSelector" component="fieldset">
+                    <FormLabel component="legend">Gender</FormLabel>
+                    <RadioGroup
+                      onChange={this.saveGender}
+                      row
+                      aria-label="gender"
+                      fullWidth
+                      name="row-radio-buttons-group"
+                    >
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio />}
+                        label="Female"
+                      />
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    label="Phone Number Required"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.savePhone}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    label="Email Address Required"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveEmail}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Department (Optional)"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveDepartment}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Address (Optional)"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveAddress}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Remark (Optional)"
+                    variant="filled"
+                    fullWidth
+                    onChange={this.saveRemark}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <GroupSelector
+                    handleGroup={this.handleGroup}
+                    isEdit={true}
+                    isNew={true}
+                  />
+                </Grid>
+                
+                <Grid item xs={12}>
+                  <AddFooter {...this.state} />
+                </Grid>
+                
+              </Grid>
             </Box>
           </>
         )}

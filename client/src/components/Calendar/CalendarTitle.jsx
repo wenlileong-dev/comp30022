@@ -3,6 +3,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 
 import CalendarPopup from "./CalendarPopup";
@@ -31,7 +32,7 @@ function CalendarTitle(props) {
   // }
 
   function handleClose(event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     setIsPopupOpen(false);
   }
   function toggleAddEvent() {
@@ -40,20 +41,35 @@ function CalendarTitle(props) {
 
   return (
     <React.Fragment>
-      <div className="calendar-title">
+      <div className="calendar-header" title="calendar-title">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={2}>
-              <Grid item xs={3} className="calendar-month">
-                <ArrowLeftIcon onClick={props.prevMonth}></ArrowLeftIcon>
+              <Grid item xs={3}>
+                <IconButton
+                  color="primary"
+                  component="span"
+                  data-cy="calendar-prevMonth"
+                  onClick={props.prevMonth}
+                >
+                  <ArrowLeftIcon />
+                </IconButton>
               </Grid>
               <Grid item xs={6}>
-                <span className="calendar-month" title="calendar-title">
-                  {monthNames[props.month]} {props.year}
-                </span>
+                <h1 data-cy="calendar-month-title">
+                  {monthNames[props.month]}
+                </h1>
+                <p data-cy="calendar-year-title">{props.year}</p>
               </Grid>
-              <Grid item xs={3} className="calendar-month">
-                <ArrowRightIcon onClick={props.nextMonth}></ArrowRightIcon>
+              <Grid item xs={3}>
+                <IconButton
+                  color="primary"
+                  component="span"
+                  data-cy="calendar-nextMonth"
+                  onClick={props.nextMonth}
+                >
+                  <ArrowRightIcon />
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
@@ -63,6 +79,7 @@ function CalendarTitle(props) {
               color="primary"
               onClick={toggleAddEvent}
               id="add-event-button"
+              data-cy="add-event-button"
               startIcon={<AddBoxIcon />}
             >
               New Event
@@ -75,6 +92,7 @@ function CalendarTitle(props) {
           renderType="new-event"
           handleClose={handleClose}
           isPopupOpen={isPopupOpen}
+          fetchData={props.fetchData}
         ></CalendarPopup>
       )}
     </React.Fragment>

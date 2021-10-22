@@ -1,5 +1,8 @@
 const bcrypt = require("bcrypt");
+var CryptoJS = require("crypto-js");
+const { sendEmail } = require("./authUser");
 var User = require("../models/user");
+
 // register user acc
 exports.userPostRegister = async (req, res) => {
   try {
@@ -77,6 +80,7 @@ exports.userPostLogin = async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                // password: user.password,
                 phoneNumber: user.phoneNumber,
               },
             });
@@ -116,58 +120,81 @@ exports.userGetDetail = async (req, res) => {
 
 exports.userPostUpdate = async (req, res) => {
   try {
-    let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
-    if (reg.test(req.body.password)) {
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-          if (err) throw err;
-          User.findOne(
-            { email: req.body.email },
-            function (err, duplicateUser) {
-              if (duplicateUser) {
-                if (duplicateUser._id != req.params.id) {
-                  // console.log(duplicateUser._id);
-                  // console.log(req.params.id);
-                  res.status(409).json({
-                    success: false,
-                    message:
-                      "another customer has already registered that email",
-                  });
-                }
-              } else {
-                User.findOneAndUpdate(
-                  { _id: req.params.id },
-                  // update information
-                  {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    phoneNumber: req.body.phoneNumber,
-                    password: hash,
-                  },
-                  { new: true },
-                  // whether the update is successful or not
-                  function (err, updateUser) {
-                    if (err) {
-                      res.status(404).json({
-                        success: false,
-                        message: "User email does not exist",
-                      });
-                    } else {
-                      res
-                        .status(200)
-                        .json({ success: true, updateUser: updateUser });
-                    }
+    if (req.body.password) {
+      // console.log(req.body.password)
+      let reg = /^(?=\S*[a-z])(?=\S*\d)\S{8,}$/;
+      if (reg.test(req.body.password)) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+            if (err) throw err;
+            User.findOne(
+              { email: req.body.email },
+              function (err, duplicateUser) {
+                if (duplicateUser) {
+                  if (duplicateUser._id != req.params.id) {
+                    res.status(409).json({
+                      success: false,
+                      message:
+                        "another customer has already registered that email",
+                    });
                   }
-                );
+                } else {
+                  User.findOneAndUpdate(
+                    { _id: req.params.id },
+                    // update information
+                    {
+                      firstName: req.body.firstName,
+                      lastName: req.body.lastName,
+                      phoneNumber: req.body.phoneNumber,
+                      password: hash,
+                    },
+                    { new: true },
+                    // whether the update is successful or not
+                    function (err, updateUser) {
+                      if (err) {
+                        res.status(404).json({
+                          success: false,
+                          message: "User email does not exist",
+                        });
+                      } else {
+                        res
+                          .status(200)
+                          .json({ success: true, updateUser: updateUser });
+                      }
+                    }
+                  );
+                }
               }
-            }
-          );
+            );
+          });
         });
-      });
+      } else {
+        res
+          .status(200)
+          .json({ success: false, error: "New password not valid!" });
+      }
     } else {
-      res
-        .status(200)
-        .json({ success: false, error: "New password not valid!" });
+      User.findOneAndUpdate(
+        { _id: req.params.id },
+        // update information
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          phoneNumber: req.body.phoneNumber,
+        },
+        { new: true },
+        // whether the update is successful or not
+        function (err, updateUser) {
+          if (err) {
+            res.status(404).json({
+              success: false,
+              message: "User email does not exist",
+            });
+          } else {
+            res.status(200).json({ success: true, updateUser: updateUser });
+          }
+        }
+      );
     }
   } catch {
     res.status(400);
@@ -176,7 +203,50 @@ exports.userPostUpdate = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const userID = req.params.id;
-  const deleteUser = await User.findByIdAndDelete(userID);
+  const email = req.params.email;
+  const deleteUser = await User.findOneAndDelete({ email });
   res.status(200).json({ success: true });
+};
+
+exports.sendVerifyEmail = async (req, res) => {
+  let userID = req.user._id;
+  var emailToken = CryptoJS.AES.encrypt(userID, process.env.EMAIL_TOKEN_KEY)
+    .toString()
+    .replace("/", "OPZ8o0");
+
+  try {
+    let setEmailToken = await User.findByIdAndUpdate(
+      userID,
+      { emailToken },
+      { new: true }
+    );
+    const message = `${process.env.FRONT_END_URL}user/verify/${userID}/${emailToken}`;
+    await sendEmail(setEmailToken.email, "Verify Email", message);
+    res.json({ message: "An Email sent to your account, please verify" });
+  } catch (error) {
+    res.json({ message: "An error occured" });
+  }
+};
+
+exports.verifyUserEmail = async (req, res) => {
+  let { userID, emailToken } = req.params;
+  var bytes = CryptoJS.AES.decrypt(emailToken, process.env.EMAIL_TOKEN_KEY);
+  var originalText = bytes.toString(CryptoJS.enc.Utf8).replace("OPZ8o0", "/");
+  const user = await User.findById(userID);
+  let decryptDBtoken = CryptoJS.AES.decrypt(
+    user.emailToken,
+    process.env.EMAIL_TOKEN_KEY
+  );
+  let dbOriginalText = decryptDBtoken
+    .toString(CryptoJS.enc.Utf8)
+    .replace("OPZ8o0", "/");
+  if (originalText === dbOriginalText) {
+    await User.findByIdAndUpdate(userID, { verified: true });
+    res.json({ status: 200, message: "Your email is verified" });
+  } else {
+    res.json({
+      status: 400,
+      message: "Your link is invalid, please try again",
+    });
+  }
 };

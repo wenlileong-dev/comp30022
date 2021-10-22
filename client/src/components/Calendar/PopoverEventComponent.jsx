@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
@@ -10,7 +10,10 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CardActions from "@mui/material/CardActions";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
+import PeopleEventString from "./PeopleEventString";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -23,6 +26,19 @@ const ExpandMore = styled((props) => {
 }));
 function PopoverEventComponent(props) {
   const [expandNotes, setExpandNotes] = React.useState(false);
+  let [linkDisable, setLinkDisable] = React.useState(false);
+
+  useEffect(() => {
+    checkLinkExist();
+  }, []);
+
+  function checkLinkExist() {
+    if (props.event.meetingLink) {
+      setLinkDisable(false);
+    } else {
+      setLinkDisable(true);
+    }
+  }
 
   const handleExpandNotes = () => {
     setExpandNotes(!expandNotes);
@@ -31,7 +47,18 @@ function PopoverEventComponent(props) {
     props.setEvent(props.event);
     props.openEditEvent();
   }
+
+  function handleOpenMeeting(event) {
+    const newWindow = window.open(
+      props.event.meetingLink,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
+  }
+
   let time = new Date(props.event.time);
+
   return (
     <Grid item xs={9} data-testid="event-day-component">
       <Card style={{ backgroundColor: "#EAEEF3" }}>
@@ -47,7 +74,15 @@ function PopoverEventComponent(props) {
             {props.event.description}
           </Typography>
           <Typography variant="body1" lineHeight={2}>
-            {props.event.people.toString()}
+            {props.event.people &&
+              props.event.people.map((person, index) => {
+                return (
+                  <PeopleEventString
+                    key={`eventPerson ${index}`}
+                    person={person}
+                  />
+                );
+              })}
           </Typography>
           {props.event.eventType === "Online" ? (
             <Typography variant="subtitle1" lineHeight={2}>
@@ -58,19 +93,33 @@ function PopoverEventComponent(props) {
               {props.event.eventType} at {props.event.location}
             </Typography>
           )}
+
           <CardActions disableSpacing>
-            <Button variant="outlined" size="small" id="space-btw-event-button">
-              Open Meeting
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<EditIcon />}
-              onClick={handleOpenEditEvent}
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="outlined"
+                size="small"
+                disabled={linkDisable}
+                onClick={handleOpenMeeting}
+              >
+                Open Event
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<EditIcon />}
+                onClick={handleOpenEditEvent}
+                mx={5}
+              >
+                Edit Event
+              </Button>
+            </Stack>
+
+            <ExpandMore
+              expand={expandNotes}
+              onClick={handleExpandNotes}
+              data-cy="meeting-notes-expansion"
             >
-              Edit Event
-            </Button>
-            <ExpandMore expand={expandNotes} onClick={handleExpandNotes}>
               <ExpandMoreIcon />
             </ExpandMore>
           </CardActions>
@@ -81,7 +130,9 @@ function PopoverEventComponent(props) {
             {props.event.meetingNotes ? (
               <>
                 <Typography variant="h5">Meeting Notes</Typography>
-                <Typography paragraph>{props.event.meetingNotes}</Typography>
+                <Typography paragraph data-cy="meeting-notes-paragraph">
+                  {props.event.meetingNotes}
+                </Typography>
               </>
             ) : (
               <Typography paragraph>

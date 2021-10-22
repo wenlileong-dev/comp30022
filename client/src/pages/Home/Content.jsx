@@ -8,6 +8,8 @@ import NewContact from "../Contact/NewContact";
 import ContactInfo from "../Contact/ContactInfo";
 import Dashboard from "../Dashboard";
 import Login from "../Auth";
+import VerifyEmail from "../VerifyEmail";
+
 function Content() {
   return (
     <React.Fragment>
@@ -31,8 +33,12 @@ function Content() {
         <Route path="/calendar" exact>
           <Calendar />
         </Route>
+
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/user/verify/:userID/:emailToken">
+          <VerifyEmail />
         </Route>
         <Redirect to="/dashboard"></Redirect>
       </Switch>

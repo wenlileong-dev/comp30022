@@ -12,13 +12,14 @@ describe("Group API Testing", () => {
   let token = "";
   let groupID = "";
   let userID = "";
+  let defaultGroupID = "";
   beforeEach((done) => {
     let user = {
-      email: "test@mail.com",
-      password: "123qwert",
+      email: "1111@mail.com",
+      password: "123qwerty",
     };
     api
-      .post("/user/login")
+      .post("/api/user/login")
       .send(user)
       .end((err, res) => {
         res.should.have.status(200);
@@ -38,7 +39,7 @@ describe("Group API Testing", () => {
   describe("get groups", () => {
     it("with valid token", (done) => {
       api
-        .get("/group")
+        .get("/api/group")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           // res.should.have.status(200);
@@ -53,7 +54,7 @@ describe("Group API Testing", () => {
   describe("get all groups", () => {
     it("with valid token", (done) => {
       api
-        .get("/group/all")
+        .get("/api/group/all")
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           // res.should.have.status(200);
@@ -68,13 +69,13 @@ describe("Group API Testing", () => {
   describe("Add Group", () => {
     it("add group with valid input", (done) => {
       let testInput = {
-        "groupName": "group test",
-        "contacts": [],
-        "isTop": false,
-        "isDefault": false
+        groupName: "group test",
+        contacts: [],
+        isTop: false,
+        isDefault: false,
       };
       api
-        .post("/group/create")
+        .post("/api/group/create")
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -84,20 +85,19 @@ describe("Group API Testing", () => {
           done();
         });
     });
-
   });
 
   // 4. update group
   describe("update group", () => {
     it("update group with valid input", (done) => {
       let testInput = {
-        "groupName": "group zz",
-        "contacts": [],
-        "isTop": false,
-        "isDefault": false
+        groupName: "group zz",
+        contacts: [],
+        isTop: false,
+        isDefault: false,
       };
       api
-        .post(`/group/update/${groupID}`)
+        .post(`/api/group/update/${groupID}`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -112,11 +112,11 @@ describe("Group API Testing", () => {
   describe("top group", () => {
     it("top group with valid input", (done) => {
       let testInput = {
-        "isTop": true,
-        id: groupID
+        isTop: true,
+        id: groupID,
       };
       api
-        .post(`/group/top`)
+        .post(`/api/group/top`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {
@@ -130,10 +130,11 @@ describe("Group API Testing", () => {
   describe("create default group", () => {
     it("create default group with valid input", (done) => {
       api
-        .post(`/group/default/${userID}`)
+        .post(`/api/group/default/${userID}`)
         .set("Cookie", `token=${token}`)
         .end((err, res) => {
           res.body.success.should.be.eql(true);
+          defaultGroupID = res.body.order._id;
           done();
         });
     });
@@ -143,10 +144,28 @@ describe("Group API Testing", () => {
   describe("delete group", () => {
     it("delete group with valid groupID", (done) => {
       let testInput = {
-        id: groupID
+        id: groupID,
       };
       api
-        .post(`/group/delete`)
+        .post(`/api/group/delete`)
+        .set("Cookie", `token=${token}`)
+        .send(testInput)
+        .end((err, res) => {
+          res.body.status.should.be.eql(200);
+          res.body.msg.should.be.a("array");
+          done();
+        });
+    });
+  });
+
+  //8. delete default group
+  describe("delete default group", () => {
+    it("delete group with valid groupID", (done) => {
+      let testInput = {
+        id: defaultGroupID,
+      };
+      api
+        .post(`/api/group/delete`)
         .set("Cookie", `token=${token}`)
         .send(testInput)
         .end((err, res) => {

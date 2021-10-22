@@ -3,19 +3,21 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-// import axios from '../commons/axios.js';
+import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthFail from "./../components/AuthFail";
+import InputAdornment from "@mui/material/InputAdornment";
+import Chip from "@mui/material/Chip";
 // import { useHistory } from "react-router-dom";
 
 function Account() {
   const [isAuth, setIsAuth] = useState(false);
   const [authFailMsg, setAuthFailMsg] = useState("");
+  // let history = useHistory();
 
-  // let history = useHistory()
   const logoutUser = async () => {
-    let result = await axios.post("/user/logout");
+    let result = await axios.post("api/user/logout");
     if (result.data.status !== 200) {
       alert(result.data.errorMsg);
     } else {
@@ -29,16 +31,17 @@ function Account() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isVerify, setIsVerify] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
   useEffect(() => {
     getUserDetails();
-    console.log(email);
   }, []);
 
   const getUserDetails = () => {
     axios
-      .get(`/user/`)
+      .get(`api/user/`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (!response.data.success) {
           setIsAuth(false);
           setAuthFailMsg(response.data.errorMsg);
@@ -49,6 +52,7 @@ function Account() {
           setFirstName(response.data.user.firstName);
           setLastName(response.data.user.lastName);
           setPhoneNumber(response.data.user.phoneNumber);
+          setIsVerify(response.data.user.verified);
         }
       })
       .catch((error) => console.error(`Error: ${error}`));
@@ -56,92 +60,115 @@ function Account() {
 
   const onEdit = () => {
     window.location.href = "/user/editInfo";
-    // history.push({
-    //   pathname: "/user/editInfo", state: {
-    //     user: props
-    //   }
-    // })
   };
+
+  const handleVerify = async () => {
+    const sendEmail = await axios.post("api/user/sendVerifyEmail", {});
+    setEmailMessage(sendEmail.data.message);
+  };
+
   return (
     <React.Fragment>
       {isAuth && (
         <>
-          <p>Account Page</p>
           <Box
-            component="form"
             sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              width: "80%",
+              border: "1px solid rgb(221,225,230)",
+              margin: "auto",
+              padding: "3rem",
             }}
             noValidate
             autoComplete="off"
           >
-            <div>
-              <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
-                // defaultValue="123"
-                value={email}
-              />
-              <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
-                // defaultValue="123"
-                value={firstName}
-              />
-              <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
-                // defaultValue="123"/
-                value={lastName}
-              />
-              <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
-                value={phoneNumber}
-                // defaultValue="123"
-              />
-              <Button type="primary" onClick={onEdit}>
-                <Link to="/user/editInfo">Edit</Link>
-              </Button>
-              <Button variant="primary" onClick={logoutUser}>
-                Logout
-              </Button>
-            </div>
+            <Grid container spacing={6}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Email"
+                  fullWidth
+                  // defaultValue="123"
+                  value={email}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: isVerify ? (
+                      <InputAdornment position="start">
+                        <Chip label="Verified" />
+                      </InputAdornment>
+                    ) : (
+                      <></>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="FirstName"
+                  fullWidth
+                  // defaultValue="123"
+                  value={firstName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="LastName"
+                  fullWidth
+                  // defaultValue="123"/
+                  value={lastName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="PhoneNumber"
+                  fullWidth
+                  value={phoneNumber}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  // defaultValue="123"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="primary"
+                  onClick={onEdit}
+                  style={{ marginLeft: "1vw " }}
+                >
+                  <Link to="/user/editInfo">Edit</Link>
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={logoutUser}
+                  style={{ marginLeft: "2vw " }}
+                  data-cy="logout-button"
+                >
+                  Logout
+                </Button>
+                {!isVerify && (
+                  <Button
+                    variant="primary"
+                    onClick={handleVerify}
+                    style={{ marginLeft: "2vw " }}
+                  >
+                    Verify Email
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
+            <p>{emailMessage}</p>
           </Box>
         </>
       )}
-
       {authFailMsg && <AuthFail msg={authFailMsg} />}
-      {/* <div style={{width:'40%', margin:'auto'}}>
-          <Form form={form} layout="vertical">
-            <Form.Item label="Email">
-              <Input placeholder="email" defaultValue={props.location.state.user.email}/>
-            </Form.Item>      
-            <Form.Item label="First Name">
-              <Input placeholder="first name" defaultValue={props.location.state.user.firstName}/>
-            </Form.Item>
-            <Form.Item label="Last Name">
-              <Input placeholder="last name" defaultValue={props.location.state.user.lastName}/>
-            </Form.Item>
-            <Form.Item label="Phone Number">
-              <Input placeholder="phone number" defaultValue={props.location.state.user.phoneNumber}/>
-            </Form.Item>
-            <Form.Item label="Password">
-              <Input placeholder="password" defaultValue={props.location.state.user.password}/>
-            </Form.Item>
-            <Form.Item> */}
-      {/* <Button type="primary" onClick={onEdit}>Edit</Button> */}
-      {/* </Form.Item>
-          </Form> */}
-
-      {/* <Button variant="primary" onClick={logoutUser}>
-        Logout
-      </Button> */}
-      {/* </div> */}
     </React.Fragment>
   );
 }

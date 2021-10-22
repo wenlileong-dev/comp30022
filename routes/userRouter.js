@@ -10,8 +10,12 @@ router.post("/register", userController.userPostRegister);
 router.post("/login", userController.userPostLogin);
 router.post("/logout", userController.userLogout);
 
-router.post("/update/:id", userController.userPostUpdate);
-router.delete("/deleteUser/:id", userController.deleteUser);
-// view detail of snack
+//user profile
 router.get("/", authUser, userController.userGetDetail);
+router.post("/update/:id", userController.userPostUpdate);
+router.delete("/deleteUser/:email", userController.deleteUser);
+
+//email verification
+router.post("/sendVerifyEmail", authUser, userController.sendVerifyEmail);
+router.put("/verify/:userID/:emailToken", userController.verifyUserEmail);
 module.exports = router;
